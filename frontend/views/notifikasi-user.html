@@ -1,0 +1,71 @@
+<!-- ==================== NOTIFIKASI USER ==================== -->
+<div id="page-notifikasi-user" class="page">
+  <div class="phone-frame app-frame">
+    <div class="page-hdr">
+      <button class="back-btn" onclick="goPage('home')"><svg viewBox="0 0 24 24"><use href="#i-back"/></svg></button>
+      <h2>Notifikasi</h2>
+      <button class="txt-btn-sm" onclick="clearNotifs()">Bersihkan</button>
+    </div>
+    <div class="scroll-content">
+      <div class="notif-list">
+        <div class="notif-item unread" onclick="goPage('tracking-user')" style="box-shadow:var(--sh-sm); border:1px solid var(--border);">
+          <div class="notif-ico" style="background:var(--card); border:1px solid var(--border); border-radius:12px; width:46px; height:46px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <img src="https://img.icons8.com/fluency-systems-regular/48/118EEA/truck.png" width="28" height="28">
+          </div>
+          <div class="notif-content">
+            <p class="ni-title" style="font-size:14px; font-weight:700; color:var(--t2); margin-bottom:4px;">Petugas Menuju Lokasi!</p>
+            <p class="ni-body" style="font-size:12px; color:var(--t3); line-height:1.4;">Petugas sedang dalam perjalanan menjemput sampah Anda.</p>
+            <p class="ni-time" style="font-size:11px; color:var(--t4); margin-top:8px;">5 menit lalu</p>
+          </div>
+          <div class="ni-unread"></div>
+        </div>
+        <div class="notif-item unread" onclick="goPage('dompet')" style="box-shadow:var(--sh-sm); border:1px solid var(--border);">
+          <div class="notif-ico" style="background:var(--card); border:1px solid var(--border); border-radius:12px; width:46px; height:46px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <img src="https://img.icons8.com/fluency-systems-regular/48/00D084/banknotes.png" width="28" height="28">
+          </div>
+          <div class="notif-content">
+            <p class="ni-title" style="font-size:14px; font-weight:700; color:var(--t2); margin-bottom:4px;">Dana Rp 6.250 Masuk</p>
+            <p class="ni-body" style="font-size:12px; color:var(--t3); line-height:1.4;">Hasil penjualan sampah telah masuk ke saldo Dompet Anda.</p>
+            <p class="ni-time" style="font-size:11px; color:var(--t4); margin-top:8px;">1 jam lalu</p>
+          </div>
+          <div class="ni-unread"></div>
+        </div>
+        <div class="notif-item" style="box-shadow:var(--sh-sm); border:1px solid var(--border);">
+          <div class="notif-ico" style="background:var(--card); border:1px solid var(--border); border-radius:12px; width:46px; height:46px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <img src="https://img.icons8.com/fluency-systems-regular/48/F43F5E/gift.png" width="28" height="28">
+          </div>
+          <div class="notif-content">
+            <p class="ni-title" style="font-size:14px; font-weight:700; color:var(--t2); margin-bottom:4px;">Poin Reward Bertambah</p>
+            <p class="ni-body" style="font-size:12px; color:var(--t3); line-height:1.4;">Selamat! Anda mendapatkan +25 poin dari penjualan terakhir.</p>
+            <p class="ni-time" style="font-size:11px; color:var(--t4); margin-top:8px;">1 jam lalu</p>
+          </div>
+        </div>
+      </div>
+      <div style="height:90px"></div>
+    </div>
+    <nav class="bottom-nav">
+      <div class="bn-item" id="nav-home" onclick="goPage('home')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/home.png" width="24" height="24">
+        <p>Beranda</p>
+      </div>
+      <div class="bn-item" id="nav-pickup" onclick="goPage('riwayat-pickup')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/box.png" width="24" height="24">
+        <p>Pickup</p>
+      </div>
+      <div class="bn-fab" onclick="goPage('jual-sampah')">
+        <div class="fab-circle">
+          <img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/recycle-sign.png" width="28" height="28">
+        </div>
+        <p>Jual</p>
+      </div>
+      <div class="bn-item" id="nav-reward" onclick="goPage('reward')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/gift.png" width="24" height="24">
+        <p>Reward</p>
+      </div>
+      <div class="bn-item" id="nav-profile" onclick="goPage('profile')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/user.png" width="24" height="24">
+        <p>Profil</p>
+      </div>
+    </nav>
+  </div>
+</div>

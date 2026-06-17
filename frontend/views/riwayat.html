@@ -1,0 +1,78 @@
+<!-- ==================== RIWAYAT ==================== -->
+<div id="page-riwayat" class="page">
+  <div class="phone-frame app-frame">
+    <div class="page-hdr">
+      <button class="back-btn" onclick="goPage('home')"><svg viewBox="0 0 24 24">
+          <use href="#i-back" />
+        </svg></button>
+      <h2>Riwayat Pickup</h2>
+      <button class="icon-btn"></button>
+    </div>
+    <div class="scroll-content">
+      <div class="summary-strip-blue">
+        <div class="ssb-item">
+          <p class="ssb-v">47</p>
+          <p class="ssb-l">Total Pickup</p>
+        </div>
+        <div class="ssb-sep"></div>
+        <div class="ssb-item">
+          <p class="ssb-v" style="color:#3B82F6">Rp 1.2M</p>
+          <p class="ssb-l">Pendapatan</p>
+        </div>
+        <div class="ssb-sep"></div>
+        <div class="ssb-item">
+          <p class="ssb-v" style="color:#EAB308">⭐ 4.9</p>
+          <p class="ssb-l">Avg Rating</p>
+        </div>
+      </div>
+      <div class="filter-scroll">
+        <span class="filter-chip active">Semua</span>
+        <span class="filter-chip">Selesai</span>
+        <span class="filter-chip">Dibatalkan</span>
+      </div>
+      <div class="history-list-p">
+        <div class="history-card-p done">
+          <div class="hcp-hdr"><span>ORD-20250606-014</span><span class="tag-done">Selesai</span></div>
+          <div class="hcp-body">
+            <p>👤 Rizki Dinata</p>
+            <p>📦 Kardus · 5 kg · Rp 7.500</p>
+            <p>⏰ 06 Jun 2025 · 14:30</p>
+          </div>
+          <div class="hcp-footer">
+            <div class="star-row">⭐⭐⭐⭐⭐</div><span style="color:var(--primary)">Rp 7.500</span>
+          </div>
+        </div>
+        <div class="history-card-p done">
+          <div class="hcp-hdr"><span>ORD-20250605-009</span><span class="tag-done">Selesai</span></div>
+          <div class="hcp-body">
+            <p>👤 Siti Nuraini</p>
+            <p>🔩 Besi · 8 kg · Rp 24.000</p>
+            <p>⏰ 05 Jun 2025 · 10:15</p>
+          </div>
+          <div class="hcp-footer">
+            <div class="star-row">⭐⭐⭐⭐⭐</div><span style="color:var(--primary)">Rp 24.000</span>
+          </div>
+        </div>
+      </div>
+      <div style="height:90px"></div>
+    </div>
+    <nav class="bottom-nav blue-nav">
+      <div class="bn-item" onclick="goPage('home')"><span>🏠</span>
+        <p>Beranda</p>
+      </div>
+      <div class="bn-item" onclick="goPage('pickup-masuk')"><span>📥</span>
+        <p>Masuk</p>
+      </div>
+      <div class="bn-fab" onclick="showQRModal()">
+        <div class="fab-circle blue-fab"><span>📷</span></div>
+        <p>Scan</p>
+      </div>
+      <div class="bn-item" onclick="goPage('penimbangan')"><span>⚖️</span>
+        <p>Timbang</p>
+      </div>
+      <div class="bn-item" onclick="goPage('profil')"><span>👤</span>
+        <p>Profil</p>
+      </div>
+    </nav>
+  </div>
+</div>

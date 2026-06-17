@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Petugas – PilahPilih</title>
+  <meta name="description" content="Dashboard Petugas PilahPilih – kelola pickup, navigasi, penimbangan, dan pendapatan." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/dashboard-petugas.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+</head>
+<body>
+
+<!-- SVG ICONS -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <defs>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></symbol>
+  </defs>
+</svg>
+
+<!-- QR MODAL -->
+<div class="modal-overlay" id="qrModal" onclick="closeModal('qrModal')">
+  <div class="modal-card" onclick="event.stopPropagation()">
+    <h3>Scan QR Pickup</h3>
+    <p>Arahkan kamera ke QR Code milik user</p>
+    <div class="qr-viewer">
+      <div class="qr-corners">
+        <div class="qrc tl"></div><div class="qrc tr"></div>
+        <div class="qrc bl"></div><div class="qrc br"></div>
+      </div>
+      <div class="qr-scan-anim"></div>
+    </div>
+    <button class="btn-primary w-full mt16" onclick="document.getElementById('qrModal').style.display='none';goPage('penimbangan');showToast('QR Berhasil Dipindai!')">QR Berhasil Dipindai!</button>
+    <button class="btn-ghost w-full mt8" onclick="document.getElementById('qrModal').style.display='none'">Batal</button>
+  </div>
+</div>
+
+<!-- SUBSCRIPTION LOCK OVERLAY -->
+<div class="modal-overlay" id="subLockOverlay" style="display:none; backdrop-filter: blur(8px); background: rgba(0,0,0,0.85); z-index: 10000; align-items:center; justify-content:center;">
+  <div class="modal-card" style="max-width: 320px; text-align: center; border: 2px solid #ef4444; box-shadow: 0 24px 80px rgba(0,0,0,0.5);">
+    <div style="font-size: 56px; margin-bottom: 16px; animation: bounce 2s infinite;">🛑</div>
+    <h3 style="color: var(--t1); font-size: 22px; font-weight: 900; margin-bottom: 8px;">Akses Ditangguhkan</h3>
+    <p style="color: var(--t3); font-size: 13px; line-height: 1.6; margin-bottom: 24px;">Akun Petugas Anda sedang ditahan. Mohon lunasi tagihan kemitraan bulan ini sebesar <strong style="color: var(--t1); font-size: 14px;">Rp 200.000</strong> untuk membuka kembali akses aplikasi.</p>
+    <button class="btn-primary w-full" style="background: #ef4444; box-shadow: 0 8px 24px rgba(239,68,68,0.4);" onclick="openMockPayment()">Bayar Tagihan Sekarang</button>
+  </div>
+</div>
+
+<!-- MOCK PAYMENT GATEWAY -->
+<div class="modal-overlay" id="payModal" style="display:none; z-index: 10001; align-items:flex-end; justify-content:center;">
+  <div class="modal-card" style="max-width: 440px; width: 100%; border-radius: 24px 24px 0 0; animation: slideUp 0.3s ease; padding: 32px 24px;">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+      <h3 style="font-size:20px; font-weight:800;">Checkout Tagihan</h3>
+      <span onclick="document.getElementById('payModal').style.display='none'" style="cursor:pointer; font-weight:800; color:var(--t3); font-size:18px;">✕</span>
+    </div>
+    <div style="background:var(--bg); border:1.5px dashed var(--border); padding:20px; border-radius:16px; margin-bottom:24px; text-align:center;">
+      <p style="font-size:13px; color:var(--t3); margin-bottom:6px; font-weight: 500;">Total Tagihan Kemitraan</p>
+      <h2 style="font-size:32px; font-weight:900; color:var(--primary); letter-spacing: -0.5px;">Rp 200.000</h2>
+    </div>
+    <p style="font-size:14px; font-weight:700; margin-bottom:12px;">Pilih Metode Pembayaran</p>
+    <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:32px;">
+      <label style="display:flex; align-items:center; gap:12px; padding:16px; border:1.5px solid var(--primary); background: rgba(0,208,132,0.05); border-radius:14px; cursor:pointer;" onclick="this.style.borderColor='var(--primary)'; this.style.background='rgba(0,208,132,0.05)'; this.nextElementSibling.style.borderColor='var(--border)'; this.nextElementSibling.style.background='var(--card)';">
+        <input type="radio" id="payVA" name="paymethod" checked style="accent-color: var(--primary); transform: scale(1.2);" />
+        <span style="font-weight:700; font-size:14px; color: var(--t1);">Transfer Bank (Virtual Account)</span>
+      </label>
+      <label style="display:flex; align-items:center; gap:12px; padding:16px; border:1.5px solid var(--border); background: var(--card); border-radius:14px; cursor:pointer;" onclick="this.style.borderColor='var(--primary)'; this.style.background='rgba(0,208,132,0.05)'; this.previousElementSibling.style.borderColor='var(--border)'; this.previousElementSibling.style.background='var(--card)';">
+        <input type="radio" id="payQris" name="paymethod" style="accent-color: var(--primary); transform: scale(1.2);" />
+        <span style="font-weight:700; font-size:14px; color: var(--t1);">QRIS / e-Wallet (GoPay, OVO, dll)</span>
+      </label>
+    </div>
+    <button class="btn-primary w-full" style="padding: 16px; font-size: 16px;" onclick="showPaymentInstruction()">Lanjutkan Pembayaran →</button>
+  </div>
+</div>
+
+<!-- INSTRUCTION MODAL (QRIS / VA) -->
+<div class="modal-overlay" id="qrisModal" style="display:none; z-index: 10002; align-items:center; justify-content:center; backdrop-filter: blur(4px);">
+  <div class="modal-card" style="max-width: 360px; width: 100%; text-align: center; border-radius: 20px; animation: slideUp 0.3s ease;">
+    <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 8px;">Selesaikan Pembayaran</h3>
+    <p style="font-size: 13px; color: var(--t3); margin-bottom: 24px;">Pindai QR Code atau transfer ke VA berikut sejumlah <strong style="color:var(--primary);">Rp 200.000</strong>.</p>
+    
+    <div id="qrisContent" style="display:none;">
+      <div style="background: white; padding: 16px; border-radius: 16px; display: inline-block; box-shadow: 0 4px 20px rgba(0,0,0,0.1); margin-bottom: 16px;">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=PembayaranKemitraanPilahPilih" alt="QRIS" style="width: 180px; height: 180px; display: block;" />
+      </div>
+      <p style="font-size: 13px; font-weight: 600; color: var(--t1); margin-bottom: 24px;">Scan dengan aplikasi M-Banking atau e-Wallet</p>
+    </div>
+
+    <div id="vaContent" style="display:none;">
+      <p style="font-size: 12px; color: var(--t3); margin-bottom: 4px;">Nomor Virtual Account BCA</p>
+      <div style="background: var(--bg); padding: 16px; border: 1.5px dashed var(--primary); border-radius: 12px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center;">
+        <h2 style="font-size: 24px; font-weight: 900; letter-spacing: 2px;">8800 1234 5678</h2>
+        <span style="font-size: 20px; cursor: pointer; color: var(--primary);" onclick="showToast('✅ Nomor disalin')">📋</span>
+      </div>
+    </div>
+    
+    <button class="btn-primary w-full" style="background: var(--primary); padding: 16px; font-size: 16px;" onclick="processFinalPayment()">✅ Saya Sudah Bayar</button>
+    <button class="btn-ghost w-full mt8" onclick="document.getElementById('qrisModal').style.display='none'">Kembali</button>
+  </div>
+</div>
+
+<div id="toast"></div>
+<div id="app-root"></div>
+
+<script src="js/api.js"></script>
+<script src="js/dashboard-petugas.js?v=2"></script>
+</body>
+</html>

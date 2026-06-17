@@ -1,0 +1,48 @@
+<!-- ===== SECTION: NOTIFIKASI ADMIN ===== -->
+<div class="section-content">
+  <div class="admin-table-card">
+    <div class="atc-hdr">
+      <h3>Pusat Notifikasi Sistem</h3>
+      <div class="atc-actions">
+        <button class="btn-primary-sm" onclick="clearAllNotifs()">🧹 Tandai Semua Dibaca</button>
+      </div>
+    </div>
+    <div class="notif-admin-list" id="adminNotifList">
+      <div class="notif-admin-item unread">
+        <div class="na-ico red-ico">⚠️</div>
+        <div class="na-info">
+          <p class="na-title">TPS Sudirman Kritis!</p>
+          <p class="na-body">Kapasitas TPS Sudirman mencapai 92%. Perlu penjemputan segera agar tidak meluber ke jalan.</p>
+          <p class="na-time">Hari ini, 08:15 WIB</p>
+        </div>
+        <div class="na-actions"><button>Kirim Armada</button></div>
+      </div>
+      <div class="notif-admin-item unread">
+        <div class="na-ico yellow-ico">💰</div>
+        <div class="na-info">
+          <p class="na-title">Saldo Talangan Sistem Menipis</p>
+          <p class="na-body">Sisa saldo talangan Bank Sampah tersisa Rp 450.000. Segera lakukan top-up saldo.</p>
+          <p class="na-time">Hari ini, 07:30 WIB</p>
+        </div>
+        <div class="na-actions"><button onclick="document.getElementById('topupModal').classList.add('show')">Top Up</button></div>
+      </div>
+      <div class="notif-admin-item">
+        <div class="na-ico blue-ico">👥</div>
+        <div class="na-info">
+          <p class="na-title">Pendaftaran Petugas Baru</p>
+          <p class="na-body">Budi Wahyono mendaftar sebagai petugas pickup area Pekanbaru Kota. Menunggu verifikasi berkas KTP.</p>
+          <p class="na-time">Kemarin, 14:20 WIB</p>
+        </div>
+        <div class="na-actions"><button>Tinjau Profil</button></div>
+      </div>
+      <div class="notif-admin-item">
+        <div class="na-ico green-ico">✅</div>
+        <div class="na-info">
+          <p class="na-title">Pencairan Berhasil</p>
+          <p class="na-body">Penarikan dana Rp 250.000 dari User "Ahmad Fauzi" berhasil diproses ke Bank BCA.</p>
+          <p class="na-time">Kemarin, 10:05 WIB</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,104 @@
+<!-- ==================== DASHBOARD PETUGAS ==================== -->
+<div id="page-home" class="page">
+  <div class="phone-frame app-frame">
+    <div class="app-header" style="background: var(--primary); border: none;">
+      <div class="hdr-left" onclick="goPage('profil')" style="cursor:pointer;" title="Buka Profil">
+        <div class="hdr-av" id="petugasInitials" style="background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.4); box-shadow: none; color: white;">--</div>
+        <div>
+          <p class="hdr-greet" style="color: rgba(255,255,255,0.8);">Mode Petugas</p>
+          <p class="hdr-name" id="petugasName" style="color: white;">Memuat...</p>
+        </div>
+      </div>
+      <div class="hdr-right">
+        <button class="status-pill active" id="statusPill" onclick="toggleStatus(this)" style="background: rgba(255,255,255,0.15); color: white; border: none;">🟢 Online</button>
+        <button class="icon-btn has-badge" onclick="goPage('notifikasi')" style="background: rgba(255,255,255,0.15); border: none; color: white;"><img src="https://img.icons8.com/fluency-systems-regular/48/ffffff/bell.png" width="20"><span class="badge-dot" style="display:none; border-color: var(--primary);" id="notifBadge">0</span></button>
+      </div>
+    </div>
+
+    <div class="scroll-content" style="background: var(--bg); padding-top: 0;">
+      <!-- DANA STYLE HERO -->
+      <div class="dana-hero" style="background: var(--primary); padding: 12px 20px 48px; color: white; border-bottom-left-radius: 24px; border-bottom-right-radius: 24px;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+          <div>
+            <p style="font-size:13px; font-weight:500; opacity:0.9; margin-bottom:4px;">Saldo Dompet Petugas</p>
+            <h2 id="petugasWalletBalance" style="font-size:32px; font-weight:800; letter-spacing:-0.02em;">Rp 0</h2>
+          </div>
+          <div>
+            <button class="btn-primary-sm" style="background: rgba(255,255,255,0.15); border: none; color: white; font-weight:600; padding: 6px 14px;" onclick="showTopUpModal()">+ Top Up</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- DANA QUICK ACTIONS -->
+      <div class="dana-actions" style="margin: -32px 20px 20px; background: var(--surface); border-radius: 16px; padding: 16px; display: flex; justify-content: space-between; box-shadow: var(--sh-md); border: 1px solid var(--border); position: relative; z-index: 10;">
+        <div class="da-item" onclick="goPage('pickup-masuk')" style="text-align:center; flex:1; cursor:pointer;">
+          <div style="width:44px; height:44px; margin:0 auto 8px; border-radius:14px; background:var(--primary-light); display:flex; align-items:center; justify-content:center; position:relative;"><img src="https://img.icons8.com/fluency-systems-regular/48/118EEA/inbox.png" width="24"><div class="mi-badge" id="badgeMasuk" style="display:none; position:absolute; top:-6px; right:-6px; background:var(--red); color:white; border-radius:99px; font-size:10px; font-weight:700; padding:2px 6px; border:2px solid var(--surface);">0</div></div>
+          <p style="font-size:11px; font-weight:600; color:var(--t1);">Masuk</p>
+        </div>
+        <div class="da-item" onclick="goPage('pickup-berjalan')" style="text-align:center; flex:1; cursor:pointer;">
+          <div style="width:44px; height:44px; margin:0 auto 8px; border-radius:14px; background:var(--primary-light); display:flex; align-items:center; justify-content:center; position:relative;"><img src="https://img.icons8.com/fluency-systems-regular/48/118EEA/truck.png" width="24"><div class="mi-badge active" id="badgeJalan" style="display:none; position:absolute; top:-6px; right:-6px; background:var(--primary); color:white; border-radius:99px; font-size:10px; font-weight:700; padding:2px 6px; border:2px solid var(--surface);">0</div></div>
+          <p style="font-size:11px; font-weight:600; color:var(--t1);">Berjalan</p>
+        </div>
+        <div class="da-item" onclick="showQRModal()" style="text-align:center; flex:1; cursor:pointer;">
+          <div style="width:44px; height:44px; margin:0 auto 8px; border-radius:14px; background:var(--primary-light); display:flex; align-items:center; justify-content:center;"><img src="https://img.icons8.com/fluency-systems-regular/48/118EEA/qr-code.png" width="24"></div>
+          <p style="font-size:11px; font-weight:600; color:var(--t1);">Scan QR</p>
+        </div>
+        <div class="da-item" onclick="goPage('penimbangan')" style="text-align:center; flex:1; cursor:pointer;">
+          <div style="width:44px; height:44px; margin:0 auto 8px; border-radius:14px; background:var(--primary-light); display:flex; align-items:center; justify-content:center;"><img src="https://img.icons8.com/fluency-systems-regular/48/118EEA/weight-kg.png" width="24"></div>
+          <p style="font-size:11px; font-weight:600; color:var(--t1);">Timbang</p>
+        </div>
+      </div>
+
+      <!-- STATISTIK HARI INI -->
+      <div style="margin: 0 20px 20px; background: var(--surface); border-radius: 16px; padding: 16px; box-shadow: var(--sh-sm); border: 1px solid var(--border);">
+        <p style="font-size:13px; font-weight:700; color:var(--t1); margin-bottom:12px;">Statistik Hari Ini · <span id="todayDate" style="color:var(--t3); font-weight:500;"></span></p>
+        <div style="display:flex; justify-content:space-between;">
+            <div style="text-align:center; flex:1; cursor:pointer;" onclick="goPage('pickup-masuk')"><p id="statMasuk" style="font-size:22px; font-weight:800; color:var(--primary); margin-bottom:2px;">0</p><p style="font-size:11px; color:var(--t3); font-weight:500;">Masuk</p></div>
+            <div style="width:1px; background:var(--border); margin:0 8px;"></div>
+            <div style="text-align:center; flex:1; cursor:pointer;" onclick="goPage('riwayat')"><p id="statSelesai" style="font-size:22px; font-weight:800; color:var(--primary); margin-bottom:2px;">0</p><p style="font-size:11px; color:var(--t3); font-weight:500;">Selesai</p></div>
+            <div style="width:1px; background:var(--border); margin:0 8px;"></div>
+            <div style="text-align:center; flex:1; cursor:pointer;" onclick="goPage('profil')"><p id="statRating" style="font-size:22px; font-weight:800; color:var(--primary); margin-bottom:2px;">0.0</p><p style="font-size:11px; color:var(--t3); font-weight:500;">Rating</p></div>
+        </div>
+      </div>
+
+      <!-- ACTIVE PICKUP -->
+      <div class="section-hdr"><h3>Pickup Aktif</h3><span class="live-badge" style="display:none" id="liveBadge">● LIVE</span></div>
+      <div id="activePickupContainer">
+        <p style="text-align:center;color:var(--t4);padding:20px;">Tidak ada pickup berjalan</p>
+      </div>
+
+      <!-- PICKUP MENUNGGU -->
+      <div class="section-hdr"><h3>Pickup Menunggu</h3><a onclick="goPage('pickup-masuk')">Lihat Semua ›</a></div>
+      <div class="wait-pickup-row" id="waitPickupContainer">
+        <p style="text-align:center;color:var(--t4);padding:20px;">Tidak ada pickup baru</p>
+      </div>
+
+      <div style="height:90px"></div>
+    </div>
+
+    <nav class="bottom-nav">
+      <div class="bn-item" id="nav-home" onclick="goPage('home')">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:4px"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+        <p>Beranda</p>
+      </div>
+      <div class="bn-item" id="nav-masuk" onclick="goPage('pickup-masuk')">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:4px"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"></polyline><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path></svg>
+        <p>Masuk</p>
+      </div>
+      <div class="bn-fab" onclick="showQRModal()">
+        <div class="fab-circle" style="display:flex;align-items:center;justify-content:center;">
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="5" height="5"></rect><rect x="16" y="3" width="5" height="5"></rect><rect x="3" y="16" width="5" height="5"></rect><path d="M21 16v5h-5"></path><line x1="10" y1="10" x2="14" y2="14"></line></svg>
+        </div>
+        <p>Scan</p>
+      </div>
+      <div class="bn-item" id="nav-timbang" onclick="goPage('penimbangan')">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:4px"><line x1="12" y1="2" x2="12" y2="22"></line><line x1="3" y1="6" x2="21" y2="6"></line><circle cx="6" cy="14" r="3"></circle><circle cx="18" cy="14" r="3"></circle><polyline points="6 6 6 11"></polyline><polyline points="18 6 18 11"></polyline></svg>
+        <p>Timbang</p>
+      </div>
+      <div class="bn-item" id="nav-profil" onclick="goPage('profil')">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:4px"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        <p>Profil</p>
+      </div>
+    </nav>
+  </div>
+</div>

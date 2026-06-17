@@ -1,0 +1,21 @@
+<!-- ===== SECTION: SMART CITY ===== -->
+<div class="section-content">
+  <div class="sc-map-container">
+    <div class="sc-map-hdr">
+      <h3>Peta Sebaran Smart City (Pekanbaru)</h3>
+      <div class="sc-map-filters">
+        <button class="scmf-btn active" onclick="pickMapFilter(this)">Semua</button>
+        <button class="scmf-btn" onclick="pickMapFilter(this)">TPS Overload</button>
+        <button class="scmf-btn" onclick="pickMapFilter(this)">Aktivitas Tinggi</button>
+      </div>
+    </div>
+    <div class="sc-map" style="padding: 0; background: transparent; overflow: hidden;">
+      <div id="realSmartCityMap" style="height: 400px; width: 100%; z-index: 1;"></div>
+    </div>
+    <div class="sc-stats-row">
+      <div class="scs-card"><h4>TPS Kritis</h4><div class="scs-v red-text">2</div><small>Perlu evakuasi</small></div>
+      <div class="scs-card"><h4>Petugas Aktif</h4><div class="scs-v green-text">48</div><small>Di lapangan</small></div>
+      <div class="scs-card"><h4>Volume Hari Ini</h4><div class="scs-v blue-text">14.2T</div><small>Total sampah</small></div>
+    </div>
+  </div>
+</div>

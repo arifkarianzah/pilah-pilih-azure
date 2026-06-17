@@ -1,0 +1,85 @@
+<!-- ==================== REWARD ==================== -->
+<div id="page-reward" class="page">
+  <div class="phone-frame app-frame">
+    <div class="page-hdr">
+      <button class="back-btn" onclick="goPage('home')"><svg viewBox="0 0 24 24"><use href="#i-back"/></svg></button>
+      <h2>🏆 Reward & Poin</h2>
+      <span></span>
+    </div>
+    <div class="scroll-content">
+      <div class="reward-hero">
+        <div class="rh-glow"></div>
+        <div class="rh-top">
+          <span class="rh-level-badge">🥇 GOLD</span>
+          <div><p class="rh-pts-label">Total Poin</p><h1 class="rh-pts">2,450 <small>pts</small></h1></div>
+        </div>
+        <div class="level-track">
+          <div class="lt-item"><span class="lt-ico">🥉</span><p>Bronze</p></div>
+          <div class="lt-line filled"></div>
+          <div class="lt-item"><span class="lt-ico">🥈</span><p>Silver</p></div>
+          <div class="lt-line filled"></div>
+          <div class="lt-item active"><span class="lt-ico big">🥇</span><p><strong>Gold</strong></p></div>
+          <div class="lt-line"></div>
+          <div class="lt-item"><span class="lt-ico">💎</span><p>Platinum</p></div>
+        </div>
+        <div class="rh-progress-row">
+          <p>Perlu <strong>550 poin lagi</strong> → Platinum 💎</p>
+          <div class="progress-track"><div class="progress-fill" style="width:68%"></div></div>
+        </div>
+      </div>
+      <div class="tab-bar">
+        <button class="tab-btn active" onclick="switchTab(this,'rewardGrid')">Tukar Poin</button>
+        <button class="tab-btn" onclick="switchTab(this,'leaderboard')">Leaderboard</button>
+        <button class="tab-btn" onclick="switchTab(this,'badges')">Badge</button>
+      </div>
+      <div id="rewardGrid" class="tab-content active">
+        <div class="reward-grid" id="rewardContainer">
+          <p style="text-align:center;padding:20px;color:var(--t4);grid-column: span 2;">Memuat hadiah...</p>
+        </div>
+      </div>
+      <div id="leaderboard" class="tab-content">
+        <div class="lb-list">
+          <div class="lb-row lb-gold"><span class="lb-rank">🥇</span><div class="lb-av">AS</div><div class="lb-info"><p>Agus Susanto</p><small>8,420 pts</small></div><span class="lb-badge plat">Platinum</span></div>
+          <div class="lb-row lb-silver"><span class="lb-rank">🥈</span><div class="lb-av">SN</div><div class="lb-info"><p>Siti Nuraini</p><small>7,150 pts</small></div><span class="lb-badge plat">Platinum</span></div>
+          <div class="lb-row lb-bronze"><span class="lb-rank">🥉</span><div class="lb-av">BW</div><div class="lb-info"><p>Bima Wicaksono</p><small>5,890 pts</small></div><span class="lb-badge gold-b">Gold</span></div>
+          <div class="lb-row lb-me"><span class="lb-rank me-rank">42</span><div class="lb-av me-av">RD</div><div class="lb-info"><p><strong>Rizki Dinata (Saya)</strong></p><small>2,450 pts</small></div><span class="lb-badge gold-b">Gold</span></div>
+        </div>
+      </div>
+      <div id="badges" class="tab-content">
+        <div class="badges-grid">
+          <div class="bdg earned"><div class="bdg-ico">🌱</div><p>First Timer</p></div>
+          <div class="bdg earned"><div class="bdg-ico">♻️</div><p>Recycler</p></div>
+          <div class="bdg earned"><div class="bdg-ico">🏆</div><p>Top Seller</p></div>
+          <div class="bdg earned"><div class="bdg-ico">⚡</div><p>Speed Star</p></div>
+          <div class="bdg locked"><div class="bdg-ico">🔒</div><p>Eco Warrior</p></div>
+          <div class="bdg locked"><div class="bdg-ico">🔒</div><p>Planet Saver</p></div>
+        </div>
+      </div>
+      <div style="height:90px"></div>
+    </div>
+    <nav class="bottom-nav">
+      <div class="bn-item" onclick="goPage('home')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/home.png" width="24" height="24">
+        <p>Beranda</p>
+      </div>
+      <div class="bn-item" onclick="goPage('riwayat-pickup')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/box.png" width="24" height="24">
+        <p>Pickup</p>
+      </div>
+      <div class="bn-fab" onclick="goPage('jual-sampah')">
+        <div class="fab-circle">
+          <img src="https://img.icons8.com/color/48/recycle-sign.png" width="28" height="28">
+        </div>
+        <p>Jual</p>
+      </div>
+      <div class="bn-item active" onclick="goPage('reward')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/gift.png" width="24" height="24">
+        <p>Reward</p>
+      </div>
+      <div class="bn-item" onclick="goPage('profile')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/user.png" width="24" height="24">
+        <p>Profil</p>
+      </div>
+    </nav>
+  </div>
+</div>

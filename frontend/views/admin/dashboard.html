@@ -1,0 +1,129 @@
+<!-- ==================== ADMIN DASHBOARD ==================== -->
+<div class="section-content">
+  <!-- STAT CARDS -->
+  <div class="admin-stats">
+    <div class="as-card" onclick="goSection('users')">
+      <div class="asc-ico blue-bg"><svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></div>
+      <div>
+        <p class="asc-v" id="dashTotalUser">--</p>
+        <p class="asc-l">Total User</p>
+        <p class="asc-g up">+12.4% ↑</p>
+      </div>
+    </div>
+    <div class="as-card" onclick="goSection('petugas-mgmt')">
+      <div class="asc-ico green-bg"><svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg></div>
+      <div>
+        <p class="asc-v" id="dashTotalPetugas">--</p>
+        <p class="asc-l">Total Petugas</p>
+        <p class="asc-g up">+5.2% ↑</p>
+      </div>
+    </div>
+
+    <div class="as-card" onclick="goSection('laporan')">
+      <div class="asc-ico blue-bg"><svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg></div>
+      <div>
+        <p class="asc-v" id="dashTotalPickup">--</p>
+        <p class="asc-l">Total Pickup</p>
+        <p class="asc-g up">+18.9% ↑</p>
+      </div>
+    </div>
+    <div class="as-card" onclick="goSection('laporan')">
+      <div class="asc-ico green-bg"><svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></div>
+      <div>
+        <p class="asc-v">--</p>
+        <p class="asc-l">Total Sampah</p>
+        <p class="asc-g up">+22.3% ↑</p>
+      </div>
+    </div>
+    <div class="as-card" onclick="goSection('laporan')">
+      <div class="asc-ico purple-bg"><svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg></div>
+      <div>
+        <p class="asc-v">--</p>
+        <p class="asc-l">Pendapatan Bulan Ini</p>
+        <p class="asc-g up">+15.6% ↑</p>
+      </div>
+    </div>
+
+    <div class="as-card">
+      <div class="asc-ico teal-bg"><svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></div>
+      <div>
+        <p class="asc-v">--</p>
+        <p class="asc-l">Avg Rating</p>
+        <p class="asc-g up">+0.2% ↑</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHARTS ROW 1 -->
+  <div class="charts-row">
+    <div class="chart-card big-chart">
+      <div class="chart-hdr">
+        <div>
+          <h3>Pendapatan Bulanan</h3>
+          <p>vs Target 2025</p>
+        </div>
+        <select class="chart-sel" onchange="showToast(' Data ' + this.value)">
+          <option>2025</option>
+          <option>2024</option>
+        </select>
+      </div>
+      <div class="chart-body"><canvas id="revenueChart"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-hdr">
+        <h3>Distribusi Sampah</h3>
+        <p>Berdasarkan jenis</p>
+      </div>
+      <div class="chart-body"><canvas id="wasteChart"></canvas></div>
+    </div>
+  </div>
+
+  <!-- CHARTS ROW 2 -->
+  <div class="charts-row">
+    <div class="chart-card">
+      <div class="chart-hdr">
+        <h3>Pertumbuhan Pickup</h3>
+      </div>
+      <div class="chart-body"><canvas id="pickupChart"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-hdr">
+        <h3>User Baru</h3>
+      </div>
+      <div class="chart-body"><canvas id="userChart"></canvas></div>
+    </div>
+  </div>
+
+  <!-- RECENT TRANSACTIONS -->
+  <div class="admin-table-card">
+    <div class="atc-hdr">
+      <h3>Transaksi Terbaru</h3>
+      <div class="atc-actions">
+        <div class="search-wrap"><span><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span><input type="text" placeholder="Cari transaksi..." /></div>
+        <button class="btn-primary-sm" onclick="goSection('laporan')"><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px;"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg> Laporan Lengkap</button>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>User</th>
+            <th>Petugas</th>
+            <th>Kategori</th>
+            <th>Berat</th>
+            <th>Pendapatan</th>
+            <th>Status</th>
+            <th>Waktu</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="txnTableBody">
+          <tr>
+            <td colspan="9" style="text-align:center;padding:20px;">Memuat transaksi...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+<!-- ===== SECTION: USERS ===== -->
+<div class="section-content">
+  <div class="admin-table-card">
+    <div class="atc-hdr">
+      <div class="t-tabs">
+        <button class="t-tab active" onclick="switchUserTab(this,'semua')">Semua (12.458)</button>
+        <button class="t-tab" onclick="switchUserTab(this,'user')">User</button>
+        <button class="t-tab" onclick="switchUserTab(this,'petugas')">Petugas</button>
+        <button class="t-tab" onclick="switchUserTab(this,'bank')">Bank Sampah</button>
+      </div>
+      <div class="atc-actions">
+        <div class="search-wrap"><span>🔍</span><input type="text" placeholder="Cari user..." oninput="filterUsersList(this.value)" /></div>
+        <button class="btn-primary-sm" onclick="openAddModal('user')">➕ Tambah User</button>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead><tr><th>#</th><th>Nama</th><th>Email</th><th>Role</th><th>Level</th><th>Total Pickup</th><th>Status</th><th>Bergabung</th><th>Aksi</th></tr></thead>
+        <tbody id="userTableBody">
+          <tr><td colspan="9" style="text-align:center;padding:20px;">Memuat data pengguna...</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="table-pagination">
+      <span>Menampilkan 1-5 dari <span id="usersTotal">--</span> pengguna</span>
+      <div class="page-btns">
+        <button class="pb disabled">←</button>
+        <button class="pb active">1</button>
+        <button class="pb">2</button>
+        <button class="pb">3</button>
+        <span>...</span>
+        <button class="pb">→</button>
+      </div>
+    </div>
+  </div>
+</div>

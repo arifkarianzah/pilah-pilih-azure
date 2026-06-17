@@ -1,0 +1,54 @@
+<!-- ==================== RIWAYAT PENJUALAN ==================== -->
+<div id="page-riwayat-penjualan" class="page">
+  <div class="phone-frame app-frame">
+    <div class="page-hdr">
+      <button class="back-btn" onclick="goPage('home')"><svg viewBox="0 0 24 24"><use href="#i-back"/></svg></button>
+      <h2 style="display:flex;align-items:center;gap:6px;"><img src="https://img.icons8.com/fluency/48/000000/money-bag.png" style="width:24px;height:24px;object-fit:contain;"/> Riwayat Penjualan</h2>
+      <button class="icon-btn">🔽</button>
+    </div>
+    <div class="scroll-content">
+      <div class="summary-strip">
+        <div class="ss-item"><p class="ssv" id="statTotalKg">0 kg</p><p class="ssl">Total Terjual</p></div>
+        <div class="ss-sep"></div>
+        <div class="ss-item"><p class="ssv green-text" id="statTotalRp">Rp 0</p><p class="ssl">Pendapatan</p></div>
+        <div class="ss-sep"></div>
+        <div class="ss-item"><p class="ssv gold-text" id="statTotalPts">0 pts</p><p class="ssl">Total Poin</p></div>
+      </div>
+      <div class="filter-scroll">
+        <span class="filter-chip active">Semua</span>
+        <span class="filter-chip">Plastik</span>
+        <span class="filter-chip">Kertas</span>
+        <span class="filter-chip">Logam</span>
+        <span class="filter-chip">Elektronik</span>
+      </div>
+      <div class="history-list" id="riwayatList">
+        <p style="text-align:center;padding:20px;color:var(--t4);">Memuat riwayat...</p>
+      </div>
+      <div style="height:90px"></div>
+    </div>
+    <nav class="bottom-nav">
+      <div class="bn-item" id="nav-home" onclick="goPage('home')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/home.png" width="24" height="24">
+        <p>Beranda</p>
+      </div>
+      <div class="bn-item" id="nav-pickup" onclick="goPage('riwayat-pickup')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/box.png" width="24" height="24">
+        <p>Pickup</p>
+      </div>
+      <div class="bn-fab" onclick="goPage('jual-sampah')">
+        <div class="fab-circle">
+          <img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/recycle-sign.png" width="28" height="28">
+        </div>
+        <p>Jual</p>
+      </div>
+      <div class="bn-item" id="nav-reward" onclick="goPage('reward')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/gift.png" width="24" height="24">
+        <p>Reward</p>
+      </div>
+      <div class="bn-item" id="nav-profile" onclick="goPage('profile')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/user.png" width="24" height="24">
+        <p>Profil</p>
+      </div>
+    </nav>
+  </div>
+</div>

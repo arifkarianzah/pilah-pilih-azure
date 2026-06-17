@@ -1,0 +1,49 @@
+<!-- ===== SECTION: HARGA ===== -->
+<div class="section-content">
+  <div class="admin-table-card">
+    <div class="atc-hdr">
+      <h3>💰 Daftar Harga Sampah</h3>
+      <div class="atc-actions">
+        <button class="btn-primary-sm" onclick="openAddModal('kategori')">➕ Tambah Kategori</button>
+      </div>
+    </div>
+    <div class="price-grid">
+      <div class="price-card" id="pc-plastik">
+        <div class="pc-ico green-bg">♻️</div>
+        <div class="pc-info">
+          <p class="pc-name">Plastik PET</p>
+          <p class="pc-cat">Plastik</p>
+        </div>
+        <div class="pc-price">
+          <input class="price-input" value="2000" type="number" />
+          <span>/kg</span>
+        </div>
+        <button class="pc-save" onclick="showToast('✅ Harga Plastik PET disimpan')">Simpan</button>
+      </div>
+      <div class="price-card">
+        <div class="pc-ico yellow-bg">📦</div>
+        <div class="pc-info"><p class="pc-name">Kardus</p><p class="pc-cat">Kertas</p></div>
+        <div class="pc-price"><input class="price-input" value="1500" type="number" /><span>/kg</span></div>
+        <button class="pc-save" onclick="showToast('✅ Harga Kardus disimpan')">Simpan</button>
+      </div>
+      <div class="price-card">
+        <div class="pc-ico gray-bg">🔩</div>
+        <div class="pc-info"><p class="pc-name">Besi</p><p class="pc-cat">Logam</p></div>
+        <div class="pc-price"><input class="price-input" value="3000" type="number" /><span>/kg</span></div>
+        <button class="pc-save" onclick="showToast('✅ Harga Besi disimpan')">Simpan</button>
+      </div>
+      <div class="price-card">
+        <div class="pc-ico purple-bg">💻</div>
+        <div class="pc-info"><p class="pc-name">Elektronik</p><p class="pc-cat">E-Waste</p></div>
+        <div class="pc-price"><input class="price-input" value="15000" type="number" /><span>/kg</span></div>
+        <button class="pc-save" onclick="showToast('✅ Harga Elektronik disimpan')">Simpan</button>
+      </div>
+      <div class="price-card">
+        <div class="pc-ico teal-bg">🍶</div>
+        <div class="pc-info"><p class="pc-name">Botol Kaca</p><p class="pc-cat">Kaca</p></div>
+        <div class="pc-price"><input class="price-input" value="500" type="number" /><span>/kg</span></div>
+        <button class="pc-save" onclick="showToast('✅ Harga Botol Kaca disimpan')">Simpan</button>
+      </div>
+    </div>
+  </div>
+</div>

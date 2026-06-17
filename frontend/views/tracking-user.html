@@ -1,0 +1,59 @@
+<!-- ==================== TRACKING USER ==================== -->
+<div id="page-tracking-user" class="page">
+  <div class="phone-frame app-frame">
+    <div class="page-hdr">
+      <button class="back-btn" onclick="goPage('home')"><svg viewBox="0 0 24 24"><use href="#i-back"/></svg></button>
+      <h2>🗺 Lacak Petugas</h2>
+      <button class="icon-btn" onclick="showToast('🔄 Memperbarui posisi...'); setTimeout(() => showToast('📍 Posisi terbaru didapatkan!'), 1500)">🔄</button>
+    </div>
+    <div class="scroll-content">
+      <div id="map" style="width: 100%; height: 350px; border-radius: 16px; margin-bottom: 20px; z-index: 1;"></div>
+      <div class="nav-card" style="box-shadow: var(--sh-md); border: 1px solid var(--border); padding: 20px;">
+        <div class="nc-route" style="margin-bottom: 20px; position: relative;">
+          <div style="position: absolute; left: 15px; top: 20px; bottom: 20px; width: 2px; background: var(--border2); z-index: 0;"></div>
+          <div class="nc-start" style="display:flex; align-items:flex-start; gap: 12px; margin-bottom: 16px; position: relative; z-index: 1;">
+            <div style="background:var(--card); border: 2px solid var(--blue); width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink: 0;"><img src="https://img.icons8.com/fluency-systems-filled/48/118EEA/marker.png" width="16" height="16"></div>
+            <div>
+              <p style="font-size:12px; color:var(--t4); font-weight:600; margin-bottom:2px;">POSISI PETUGAS</p>
+              <h4 style="font-size:15px; color:var(--t2); margin:0;">Menuju Lokasi Anda</h4>
+            </div>
+          </div>
+          <div class="nc-end" style="display:flex; align-items:flex-start; gap: 12px; position: relative; z-index: 1;">
+            <div style="background:var(--blue); width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink: 0; box-shadow: var(--sh-blue);"><img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/home.png" width="16" height="16"></div>
+            <div>
+              <p style="font-size:12px; color:var(--t4); font-weight:600; margin-bottom:2px;">TUJUAN (ANDA)</p>
+              <h4 style="font-size:15px; color:var(--t2); margin:0; line-height: 1.4;">Jl. Sudirman No. 45, Pekanbaru</h4>
+            </div>
+          </div>
+        </div>
+        <div class="nc-actions">
+          <button class="btn-primary w-full" style="font-weight: 700; display:flex; align-items:center; justify-content:center; gap:8px;" onclick="goPage('chat')"><img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/chat.png" width="20" height="20"> Chat Petugas</button>
+        </div>
+      </div>
+    </div>
+    <nav class="bottom-nav">
+      <div class="bn-item" id="nav-home" onclick="goPage('home')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/home.png" width="24" height="24">
+        <p>Beranda</p>
+      </div>
+      <div class="bn-item active" id="nav-pickup" onclick="goPage('riwayat-pickup')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/box.png" width="24" height="24">
+        <p>Pickup</p>
+      </div>
+      <div class="bn-fab" onclick="goPage('jual-sampah')">
+        <div class="fab-circle">
+          <img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/recycle-sign.png" width="28" height="28">
+        </div>
+        <p>Jual</p>
+      </div>
+      <div class="bn-item" id="nav-reward" onclick="goPage('reward')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/gift.png" width="24" height="24">
+        <p>Reward</p>
+      </div>
+      <div class="bn-item" id="nav-profile" onclick="goPage('profile')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/user.png" width="24" height="24">
+        <p>Profil</p>
+      </div>
+    </nav>
+  </div>
+</div>

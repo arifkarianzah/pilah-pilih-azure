@@ -1,0 +1,150 @@
+<!-- ==================== DASHBOARD PETUGAS ==================== -->
+<div id="page-home" class="page">
+  <div class="phone-frame app-frame">
+    <div class="app-header blue-header">
+      <div class="hdr-left">
+        <div class="hdr-av blue-av">BW</div>
+        <div>
+          <p class="hdr-greet">Mode Petugas 🚛</p>
+          <p class="hdr-name">Budi Wahyono</p>
+        </div>
+      </div>
+      <div class="hdr-right">
+        <button class="status-pill active" id="statusPill" onclick="toggleStatus(this)">🟢 Online</button>
+        <button class="icon-btn has-badge" onclick="goPage('notifikasi')">🔔<span class="badge-dot">5</span></button>
+      </div>
+    </div>
+
+    <div class="scroll-content">
+      <!-- STATS -->
+      <div class="p-stats-card">
+        <p class="psc-title">📊 Statistik Hari Ini · <span id="todayDate"></span></p>
+        <div class="p-stats-row">
+          <div class="ps-item green"><div>📥</div><p class="psi-v" id="statMasuk">5</p><p class="psi-l">Masuk</p></div>
+          <div class="ps-item blue"><div>✅</div><p class="psi-v" id="statSelesai">12</p><p class="psi-l">Selesai</p></div>
+          <div class="ps-item gold"><div>💰</div><p class="psi-v" id="statPendapatan">Rp 85K</p><p class="psi-l">Pendapatan</p></div>
+          <div class="ps-item purple"><div>⭐</div><p class="psi-v" id="statRating">4.9</p><p class="psi-l">Rating</p></div>
+        </div>
+      </div>
+
+      <!-- ACTIVE PICKUP -->
+      <div class="section-hdr"><h3>Pickup Aktif</h3><span class="live-badge">● LIVE</span></div>
+      <div class="active-pickup-card" onclick="goPage('pickup-berjalan')">
+        <div class="apc-hdr"><span>ORD-20250608-001</span><span class="tag-onway">Berjalan</span></div>
+        <div class="apc-user">
+          <div class="apc-av">RD</div>
+          <div class="apc-info">
+            <p>Rizki Dinata</p>
+            <p>📍 Jl. Sudirman No. 45, Jak-Pus</p>
+          </div>
+          <div class="apc-actions">
+            <button onclick="event.stopPropagation();goPage('chat')">💬</button>
+            <button onclick="event.stopPropagation();goPage('tracking')">🗺</button>
+          </div>
+        </div>
+        <div class="apc-tags">
+          <span>♻️ Plastik</span><span>⚖️ ~3 kg</span><span>⏰ 10:00</span>
+        </div>
+        <div class="apc-btns">
+          <button class="btn-ghost half" onclick="event.stopPropagation();goPage('tracking')">🗺 Navigasi</button>
+          <button class="btn-primary half" onclick="event.stopPropagation();goPage('penimbangan')">⚖️ Timbang</button>
+        </div>
+      </div>
+
+      <!-- PICKUP MENUNGGU -->
+      <div class="section-hdr"><h3>Pickup Menunggu</h3><a onclick="goPage('pickup-masuk')">Lihat Semua ›</a></div>
+      <div class="wait-pickup-row">
+        <div class="wait-card urgent" onclick="goPage('pickup-masuk')">
+          <span class="wc-badge urgent-badge">⚡ Segera</span>
+          <p class="wc-user">Rina Halim</p>
+          <p class="wc-addr">📍 0.5 km</p>
+          <p class="wc-type">♻️ Plastik ~2kg</p>
+        </div>
+        <div class="wait-card" onclick="goPage('pickup-masuk')">
+          <span class="wc-badge time-badge">⏰ 11:00</span>
+          <p class="wc-user">Siti Nuraini</p>
+          <p class="wc-addr">📍 1.2 km</p>
+          <p class="wc-type">📦 Kardus ~5kg</p>
+        </div>
+        <div class="wait-card" onclick="goPage('pickup-masuk')">
+          <span class="wc-badge time-badge">⏰ 13:00</span>
+          <p class="wc-user">Ahmad Fauzi</p>
+          <p class="wc-addr">📍 2.1 km</p>
+          <p class="wc-type">🔩 Besi ~8kg</p>
+        </div>
+      </div>
+
+      <!-- MENU PETUGAS -->
+      <div class="section-hdr"><h3>Menu Petugas</h3></div>
+      <div class="menu-grid">
+        <div class="menu-item" onclick="goPage('pickup-masuk')">
+          <div class="mi-ico green">📥</div><p>Pickup Masuk</p><div class="mi-badge">5</div>
+        </div>
+        <div class="menu-item" onclick="goPage('pickup-berjalan')">
+          <div class="mi-ico orange">🏃</div><p>Berjalan</p><div class="mi-badge active">1</div>
+        </div>
+        <div class="menu-item" onclick="goPage('riwayat')">
+          <div class="mi-ico blue">📋</div><p>Riwayat</p>
+        </div>
+        <div class="menu-item" onclick="goPage('tracking')">
+          <div class="mi-ico teal">🗺</div><p>Navigasi</p>
+        </div>
+        <div class="menu-item" onclick="showQRModal()">
+          <div class="mi-ico purple">📷</div><p>Scan QR</p>
+        </div>
+        <div class="menu-item" onclick="goPage('penimbangan')">
+          <div class="mi-ico gold">⚖️</div><p>Timbang</p>
+        </div>
+        <div class="menu-item" onclick="goPage('pendapatan')">
+          <div class="mi-ico pink">💰</div><p>Pendapatan</p>
+        </div>
+        <div class="menu-item" onclick="goPage('profil')">
+          <div class="mi-ico indigo">👤</div><p>Profil</p>
+        </div>
+      </div>
+
+      <!-- DAILY PROGRESS -->
+      <div class="progress-card">
+        <div class="pc-hdr">
+          <div>
+            <p class="pc-title">Target Harian</p>
+            <p class="pc-sub">12/20 pickup selesai</p>
+          </div>
+          <span class="pc-pct">60%</span>
+        </div>
+        <div class="progress-track wide"><div class="progress-fill" style="width:60%"></div></div>
+        <div class="pc-footer">
+          <span>📦 Sisa: 8 pickup</span>
+          <span>💰 Target: Rp 150K</span>
+        </div>
+      </div>
+
+      <div style="height:90px"></div>
+    </div>
+
+    <nav class="bottom-nav blue-nav">
+      <div class="bn-item active" id="nav-home" onclick="goPage('home')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/home.png" width="24" height="24">
+        <p>Beranda</p>
+      </div>
+      <div class="bn-item" id="nav-pickup" onclick="goPage('pickup-masuk')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/download.png" width="24" height="24">
+        <p>Masuk</p>
+      </div>
+      <div class="bn-fab" onclick="showQRModal()">
+        <div class="fab-circle blue-fab">
+          <img src="https://img.icons8.com/fluency-systems-regular/48/FFFFFF/qr-code.png" width="28" height="28">
+        </div>
+        <p>Scan</p>
+      </div>
+      <div class="bn-item" id="nav-timbang" onclick="goPage('penimbangan')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/scales.png" width="24" height="24">
+        <p>Timbang</p>
+      </div>
+      <div class="bn-item" id="nav-profile" onclick="goPage('profil')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/user.png" width="24" height="24">
+        <p>Profil</p>
+      </div>
+    </nav>
+  </div>
+</div>

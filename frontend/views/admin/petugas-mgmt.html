@@ -1,0 +1,28 @@
+<!-- ===== SECTION: PETUGAS MANAGEMENT ===== -->
+<div class="section-content">
+  <div class="admin-stats petugas-stats">
+    <div class="as-card"><div class="asc-ico green-bg">🟢</div><div><p class="asc-v">198</p><p class="asc-l">Petugas Online</p><p class="asc-g up">69.7%</p></div></div>
+    <div class="as-card"><div class="asc-ico red-bg">🔴</div><div><p class="asc-v">86</p><p class="asc-l">Petugas Offline</p><p class="asc-g down">30.3%</p></div></div>
+    <div class="as-card"><div class="asc-ico gold-bg">⭐</div><div><p class="asc-v">4.87</p><p class="asc-l">Avg Rating</p><p class="asc-g up">+0.12 ↑</p></div></div>
+    <div class="as-card"><div class="asc-ico purple-bg">📦</div><div><p class="asc-v">1,284</p><p class="asc-l">Pickup Hari Ini</p><p class="asc-g up">+8.2% ↑</p></div></div>
+  </div>
+  <div class="admin-table-card">
+    <div class="atc-hdr">
+      <h3>Daftar Petugas</h3>
+      <div class="atc-actions">
+        <div class="search-wrap"><span>🔍</span><input type="text" placeholder="Cari petugas..." oninput="filterPetugas(this.value)" /></div>
+        <button class="btn-primary-sm" onclick="openAddModal('petugas')">➕ Tambah Petugas</button>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead><tr><th>Nama</th><th>Area</th><th>Status</th><th>Pickup Hari Ini</th><th>Rating</th><th>Pendapatan Bulan</th><th>Aksi</th></tr></thead>
+        <tbody>
+          <tr><td><div class="t-user"><div class="t-av blue-av-t">BW</div>Budi Wahyono</div></td><td>Jakarta Pusat</td><td><span class="status-online">🟢 Online</span></td><td>12</td><td>⭐ 4.9</td><td>Rp 1.247K</td><td><div class="t-act-btns"><button class="t-edit">Detail</button><button class="t-block">Nonaktif</button></div></td></tr>
+          <tr><td><div class="t-user"><div class="t-av blue-av-t">AF</div>Ahmad Fauzi</div></td><td>Jakarta Selatan</td><td><span class="status-online">🟢 Online</span></td><td>9</td><td>⭐ 4.8</td><td>Rp 985K</td><td><div class="t-act-btns"><button class="t-edit">Detail</button><button class="t-block">Nonaktif</button></div></td></tr>
+          <tr><td><div class="t-user"><div class="t-av blue-av-t">HD</div>Hadi Dermawan</div></td><td>Jakarta Barat</td><td><span class="status-offline">🔴 Offline</span></td><td>0</td><td>⭐ 4.7</td><td>Rp 754K</td><td><div class="t-act-btns"><button class="t-edit">Detail</button><button class="t-unblock">Aktifkan</button></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

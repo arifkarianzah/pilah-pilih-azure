@@ -1,0 +1,75 @@
+<!-- ==================== PENIMBANGAN ==================== -->
+<div id="page-penimbangan" class="page">
+  <div class="phone-frame app-frame">
+    <div class="page-hdr">
+      <button class="back-btn" onclick="goPage('home')"><svg viewBox="0 0 24 24"><use href="#i-back"/></svg></button>
+      <h2>⚖️ Form Penimbangan</h2><span></span>
+    </div>
+    <div class="scroll-content">
+      <div class="form-card">
+        <div class="order-info-bar">
+          <div><span>Order</span><strong>ORD-20250608-001</strong></div>
+          <div><span>User</span><strong>Rizki Dinata</strong></div>
+          <div><span>Kategori</span><strong>Plastik PET</strong></div>
+        </div>
+        <div class="fg">
+          <label>Berat Aktual (kg) *</label>
+          <div class="weight-ctrl large">
+            <button onclick="chgW2(-0.1)">−</button>
+            <div class="w-display large-wd"><span id="w2Val">2.8</span><small>kg</small></div>
+            <button onclick="chgW2(0.1)">+</button>
+          </div>
+        </div>
+        <div class="fg"><label>Harga / kg</label>
+          <div class="ig"><span>💰</span><input type="text" value="Rp 2.000" id="hargaKg" class="ig-input" /></div>
+        </div>
+        <div class="total-box">
+          <p>Total Harga</p>
+          <h2 id="totalHarga">Rp 5.600</h2>
+          <small id="totalFormula">2.8 kg × Rp 2.000</small>
+        </div>
+        <div class="fg"><label>Foto Sampah</label>
+          <div class="upload-box" onclick="document.getElementById('pTimbang1').click()"><div class="ub-inner">📷<p>Upload Foto Sampah</p></div></div>
+          <input type="file" id="pTimbang1" accept="image/*" style="display:none;" onchange="showToast('📷 Foto sampah dipilih!')" />
+        </div>
+        <div class="fg"><label>Foto Timbangan</label>
+          <div class="upload-box" onclick="document.getElementById('pTimbang2').click()"><div class="ub-inner">⚖️<p>Upload Foto Timbangan</p></div></div>
+          <input type="file" id="pTimbang2" accept="image/*" style="display:none;" onchange="showToast('⚖️ Foto timbangan dipilih!')" />
+        </div>
+        <div class="fg"><label>Tanda Tangan Digital User</label>
+          <div class="sig-pad" id="sigPad">
+            <canvas id="sigCanvas" width="300" height="120"></canvas>
+            <div class="sig-placeholder" id="sigPH">✍️<p>Minta User untuk tanda tangan di sini</p></div>
+            <button class="sig-clear" onclick="clearSig()">Hapus</button>
+          </div>
+        </div>
+        <button class="btn-primary w-full" onclick="konfirmasiTimbang()">✅ Konfirmasi Penimbangan</button>
+        <div style="height:30px"></div>
+      </div>
+    </div>
+    <nav class="bottom-nav blue-nav">
+      <div class="bn-item" id="nav-home" onclick="goPage('home')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/home.png" width="24" height="24">
+        <p>Beranda</p>
+      </div>
+      <div class="bn-item" id="nav-pickup" onclick="goPage('pickup-masuk')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/download.png" width="24" height="24">
+        <p>Masuk</p>
+      </div>
+      <div class="bn-fab" onclick="showQRModal()">
+        <div class="fab-circle blue-fab">
+          <img src="https://img.icons8.com/fluency-systems-regular/48/FFFFFF/qr-code.png" width="28" height="28">
+        </div>
+        <p>Scan</p>
+      </div>
+      <div class="bn-item active" id="nav-timbang" onclick="goPage('penimbangan')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/scales.png" width="24" height="24">
+        <p>Timbang</p>
+      </div>
+      <div class="bn-item" id="nav-profile" onclick="goPage('profil')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/user.png" width="24" height="24">
+        <p>Profil</p>
+      </div>
+    </nav>
+  </div>
+</div>

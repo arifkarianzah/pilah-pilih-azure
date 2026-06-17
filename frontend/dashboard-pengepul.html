@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Dashboard Pengepul – PilahPilih</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    /* Professional Menu List Styles */
+    .prof-menu-list { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; }
+    .prof-menu-item { 
+      display: flex; align-items: center; padding: 16px; background: var(--card2); 
+      border: 1px solid var(--border); border-radius: 12px; cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .prof-menu-item:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .pmi-icon { 
+      width: 40px; height: 40px; border-radius: 8px; background: rgba(59, 130, 246, 0.1); 
+      color: var(--primary); display: flex; align-items: center; justify-content: center; margin-right: 16px;
+    }
+    .pmi-text { flex: 1; }
+    .pmi-text h4 { margin: 0 0 4px 0; color: var(--t1); font-size: 15px; font-weight: 600; }
+    .pmi-text p { margin: 0; color: var(--t4); font-size: 12px; }
+    .pmi-arrow { color: var(--t4); }
+    
+    /* Elegant Bottom Nav Icons */
+    .bn-item svg { width: 22px; height: 22px; margin-bottom: 4px; opacity: 0.6; transition: all 0.2s; }
+    .bn-item.active svg { opacity: 1; stroke: var(--primary); stroke-width: 2.5; }
+    .bn-item span { display: none; } /* Hide old emojis */
+  </style>
+  <link rel="stylesheet" href="css/dashboard-petugas.css">
+
+</head>
+<body class="flex">
+  <!-- SVG Icons -->
+  <svg width="0" height="0" style="display:none;">
+    <symbol id="i-logout" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></symbol>
+    <symbol id="i-truck" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 22a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm10 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM3 3h4l2.5 12h11M16 8l3 3v4M4 8h12"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><line fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" x1="19" y1="12" x2="5" y2="12"></line><polyline fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="12 19 5 12 12 5"></polyline></symbol>
+  </svg>
+
+  <div id="app-root"></div>
+
+  <!-- Modal: Top Up (Multi-step Realistic) -->
+  <div class="modal-overlay" id="modalTopup" onclick="closeModal('modalTopup')">
+    <div class="modal-card" onclick="event.stopPropagation()">
+      <div id="topupStep1">
+        <h3>Top Up Saldo</h3>
+        <p style="color:var(--t3);font-size:13px;margin-bottom:16px;">Pilih nominal & metode pembayaran.</p>
+        
+        <!-- Nominal Presets -->
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px;">
+          <button class="btn-ghost" style="padding:8px; font-size:13px;" onclick="document.getElementById('topupAmount').value='100000'">Rp 100.000</button>
+          <button class="btn-ghost" style="padding:8px; font-size:13px;" onclick="document.getElementById('topupAmount').value='500000'">Rp 500.000</button>
+          <button class="btn-ghost" style="padding:8px; font-size:13px;" onclick="document.getElementById('topupAmount').value='1000000'">Rp 1.000.000</button>
+          <button class="btn-ghost" style="padding:8px; font-size:13px;" onclick="document.getElementById('topupAmount').value='5000000'">Rp 5.000.000</button>
+        </div>
+
+        <div class="fg">
+          <label style="text-align: left;">Atau Masukkan Nominal (Min. Rp 50.000)</label>
+          <div class="ig">
+            <input type="number" id="topupAmount" class="ig-input" placeholder="Contoh: 100000" style="padding-left: 14px;">
+          </div>
+        </div>
+
+        <div class="fg" style="margin-top:16px;">
+          <label style="text-align: left;">Metode Pembayaran (Transfer Bank)</label>
+          <select id="topupBank" class="ig-input" style="width:100%; margin-top:4px; background-color: var(--card2); color: var(--t1);">
+            <option value="BCA" style="background-color: var(--card2); color: var(--t1);">BCA Virtual Account</option>
+            <option value="MANDIRI" style="background-color: var(--card2); color: var(--t1);">Mandiri Virtual Account</option>
+            <option value="BNI" style="background-color: var(--card2); color: var(--t1);">BNI Virtual Account</option>
+            <option value="BRI" style="background-color: var(--card2); color: var(--t1);">BRI BRIVA</option>
+          </select>
+        </div>
+
+        <div style="display:flex; gap:8px; margin-top: 24px;">
+          <button class="btn-ghost w-full" onclick="closeModal('modalTopup')">Batal</button>
+          <button class="btn-primary w-full" onclick="nextTopupStep()">Lanjut Bayar</button>
+        </div>
+      </div>
+
+      <div id="topupStep2" style="display:none; text-align:center;">
+        <h3 style="margin-bottom:8px;">Instruksi Pembayaran</h3>
+        <p style="color:var(--t4);font-size:13px;margin-bottom:16px;">Transfer sesuai nominal ke nomor Virtual Account di bawah ini.</p>
+        
+        <div style="background:var(--card2); border:1px dashed var(--border); padding:16px; border-radius:12px; margin-bottom:16px;">
+          <p style="font-size:12px; color:var(--t3); font-weight:600; text-transform:uppercase;" id="lblTopupBank">BCA VIRTUAL ACCOUNT</p>
+          <h2 style="color:var(--primary); font-size:24px; letter-spacing:2px; margin:8px 0;" id="lblTopupVA">8077 0812 3456</h2>
+          <p style="font-size:12px; color:var(--t4);">a.n PilahPilih - Bank Sampah</p>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; background:var(--bg); padding:12px; border-radius:8px; margin-bottom:24px;">
+          <span style="font-size:13px; color:var(--t3);">Total Pembayaran</span>
+          <span style="font-size:16px; font-weight:700; color:var(--t1);" id="lblTopupAmount">Rp 0</span>
+        </div>
+
+        <div style="display:flex; gap:8px;">
+          <button class="btn-ghost w-full" onclick="closeModal('modalTopup')">Nanti Saja</button>
+          <button class="btn-primary w-full" onclick="simulatePayment()" id="btnSimulatePay">Saya Sudah Bayar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Pengajuan Pembelian -->
+  <div class="modal-overlay" id="modalBuy" onclick="closeModal('modalBuy')">
+    <div class="modal-card" onclick="event.stopPropagation()">
+      <h3 id="buyTitle">Penawaran Pembelian</h3>
+      <p style="color:var(--t3);font-size:13px;margin-bottom:16px;">Stok tersedia: <span id="buyMaxStock" class="text-accent">0</span> kg</p>
+      <input type="hidden" id="buyCategoryId">
+      <div class="fg">
+        <label style="text-align: left;">Berat Estimasi (kg)</label>
+        <div class="ig">
+          <input type="number" id="buyWeight" class="ig-input" oninput="calcBuyTotal()" placeholder="Maks: stok" style="padding-left: 14px;">
+        </div>
+      </div>
+      <div class="fg">
+        <label style="text-align: left;">Harga Beli per Kg (Rp)</label>
+        <div class="ig">
+          <input type="number" id="buyPrice" class="ig-input" oninput="calcBuyTotal()" placeholder="Penawaran harga Anda" style="padding-left: 14px;">
+        </div>
+      </div>
+      <div class="price-summary" style="margin-top: 16px;">
+        <div class="ps-row bold">
+          <span>Total Pembelian</span>
+          <span id="buyTotal" class="text-accent">Rp 0</span>
+        </div>
+      </div>
+      <div style="display:flex; gap:8px; margin-top: 16px;">
+        <button class="btn-ghost w-full" onclick="closeModal('modalBuy')">Batal</button>
+        <button class="btn-primary w-full" onclick="submitBuy(false)">Ajukan Beli</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Jadwalkan Pickup -->
+  <div class="modal-overlay" id="modalSchedule" onclick="closeModal('modalSchedule')">
+    <div class="modal-card" onclick="event.stopPropagation()">
+      <h3>Jadwalkan Pengambilan</h3>
+      <input type="hidden" id="scheduleTrxId">
+      <div class="fg">
+        <label style="text-align: left;">Tanggal & Waktu</label>
+        <div style="display:flex; gap:8px;">
+          <div class="ig" style="flex:2"><input type="date" id="schDate" class="ig-input" style="padding-left: 14px;"></div>
+          <div class="ig" style="flex:1"><input type="time" id="schTime" class="ig-input" style="padding-left: 14px;"></div>
+        </div>
+      </div>
+      <div class="fg">
+        <label style="text-align: left;">Nama Driver</label>
+        <div class="ig"><input type="text" id="schDriver" class="ig-input" placeholder="Nama sopir" style="padding-left: 14px;"></div>
+      </div>
+      <div class="fg">
+        <label style="text-align: left;">Plat Nomor</label>
+        <div class="ig"><input type="text" id="schPlate" class="ig-input" placeholder="Contoh: BM 1234 XX" style="padding-left: 14px;"></div>
+      </div>
+      <div style="display:flex; gap:8px; margin-top: 16px;">
+        <button class="btn-ghost w-full" onclick="closeModal('modalSchedule')">Batal</button>
+        <button class="btn-primary w-full" onclick="submitSchedule()">Jadwalkan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Timbang Ulang & Verifikasi -->
+  <div class="modal-overlay" id="modalVerify" onclick="closeModal('modalVerify')">
+    <div class="modal-card" onclick="event.stopPropagation()">
+      <h3>Verifikasi Penerimaan</h3>
+      <input type="hidden" id="verifyTrxId">
+      <div class="fg">
+        <label style="text-align: left;">Berat Aktual (kg)</label>
+        <div class="ig"><input type="number" id="vrfActualWeight" class="ig-input" placeholder="Berat aktual" style="padding-left: 14px;"></div>
+      </div>
+      <div class="fg">
+        <label style="text-align: left;">Catatan (Opsional)</label>
+        <div class="ig"><textarea id="vrfNotes" class="textarea" rows="2" placeholder="Catatan perbedaan..."></textarea></div>
+      </div>
+      <div style="display:flex; gap:8px; margin-top: 16px;">
+        <button class="btn-ghost w-full" onclick="closeModal('modalVerify')">Batal</button>
+        <button class="btn-primary w-full" onclick="submitVerify()">Verifikasi</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" style="z-index: 2000;">Notifikasi</div>
+
+  <script src="js/api.js?v=2"></script>
+  <script src="js/dashboard-pengepul.js?v=2"></script>
+</body>
+</html>

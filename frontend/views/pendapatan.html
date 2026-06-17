@@ -1,0 +1,56 @@
+<!-- ==================== PENDAPATAN ==================== -->
+<div id="page-pendapatan" class="page">
+  <div class="phone-frame app-frame">
+    <div class="page-hdr">
+      <button class="back-btn" onclick="goPage('home')"><svg viewBox="0 0 24 24"><use href="#i-back"/></svg></button>
+      <h2>💰 Pendapatan</h2>
+      <span></span>
+    </div>
+    <div class="scroll-content">
+      <div class="earnings-card">
+        <div class="ec-blur"></div>
+        <p class="ec-label">Total Pendapatan Bulan Ini</p>
+        <h1 class="ec-amount">Rp 1.247.500</h1>
+        <div class="ec-meta">
+          <div><p class="ecm-l">Pickup Selesai</p><p class="ecm-v">47</p></div>
+          <div class="ec-sep"></div>
+          <div><p class="ecm-l">Avg per Pickup</p><p class="ecm-v">Rp 26.500</p></div>
+          <div class="ec-sep"></div>
+          <div><p class="ecm-l">Rating</p><p class="ecm-v">⭐ 4.9</p></div>
+        </div>
+        <button class="ec-btn" onclick="showToast('💸 Tarik pendapatan ke rekening...')">💸 Tarik Pendapatan</button>
+      </div>
+      <div class="section-hdr"><h3>Riwayat Pendapatan</h3></div>
+      <div class="earn-list">
+        <div class="earn-row"><div class="er-ico">📦</div><div class="er-info"><p>Pickup Kardus - Rizki D.</p><small>08 Jun · 11:30</small></div><p class="er-amt">+Rp 7.500</p></div>
+        <div class="earn-row"><div class="er-ico">🔩</div><div class="er-info"><p>Pickup Besi - Ahmad F.</p><small>07 Jun · 14:00</small></div><p class="er-amt">+Rp 24.000</p></div>
+        <div class="earn-row"><div class="er-ico">♻️</div><div class="er-info"><p>Pickup Plastik - Siti N.</p><small>06 Jun · 09:30</small></div><p class="er-amt">+Rp 5.000</p></div>
+      </div>
+      <div style="height:90px"></div>
+    </div>
+    <nav class="bottom-nav blue-nav">
+      <div class="bn-item" id="nav-home" onclick="goPage('home')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/home.png" width="24" height="24">
+        <p>Beranda</p>
+      </div>
+      <div class="bn-item" id="nav-pickup" onclick="goPage('pickup-masuk')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/download.png" width="24" height="24">
+        <p>Masuk</p>
+      </div>
+      <div class="bn-fab" onclick="showQRModal()">
+        <div class="fab-circle blue-fab">
+          <img src="https://img.icons8.com/fluency-systems-regular/48/FFFFFF/qr-code.png" width="28" height="28">
+        </div>
+        <p>Scan</p>
+      </div>
+      <div class="bn-item" id="nav-timbang" onclick="goPage('penimbangan')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/scales.png" width="24" height="24">
+        <p>Timbang</p>
+      </div>
+      <div class="bn-item" id="nav-profile" onclick="goPage('profil')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/user.png" width="24" height="24">
+        <p>Profil</p>
+      </div>
+    </nav>
+  </div>
+</div>

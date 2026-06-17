@@ -1,0 +1,41 @@
+<!-- ==================== SALDO PENGEPUL ==================== -->
+<div id="page-dompet" class="page">
+  <div class="phone-frame app-frame">
+    <div class="app-header blue-header">
+      <div class="hdr-left">
+        <button style="background:transparent; border:none; color:white; padding:8px; margin-right:8px; cursor:pointer; display:flex; align-items:center;" onclick="goPage('home')"><svg width="24" height="24" viewBox="0 0 24 24"><use href="#i-back"/></svg></button>
+        <div>
+          <p class="hdr-name">Saldo Pengepul</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="main-content" style="padding-top: 16px;">
+      <div class="earnings-card" style="margin-top: 0; padding-bottom: 24px;">
+        <div class="ec-blur"></div>
+        <p class="ec-label">Total Saldo Aktif</p>
+        <h2 class="ec-amount" id="dompetTersedia">Rp 0</h2>
+        <div class="ec-meta" style="margin-top: 16px;">
+          <div>
+            <p class="ecm-l">Saldo Ditahan (Escrow)</p>
+            <p class="ecm-v" style="color: #F59E0B;" id="dompetDitahan">Rp 0</p>
+          </div>
+        </div>
+        <button class="btn-primary w-full" style="margin-top: 24px;" onclick="showTopupModal()">+ Top Up Saldo</button>
+      </div>
+      
+      <div class="section-hdr" style="margin-top: 24px;">
+        <h3>Riwayat Top Up</h3>
+      </div>
+      <div id="topupHistory" style="margin-top: 12px; display: flex; flex-direction: column; gap: 12px;">
+        <!-- Riwayat akan diisi oleh JS, namun untuk sekarang karena API topup history tidak ada, kita tampilkan placeholder profesional -->
+        <div style="background: var(--card2); border: 1px solid var(--border); padding: 16px; border-radius: 12px; text-align: center; color: var(--t4); font-size: 13px;">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin: 0 auto 8px auto; display: block; opacity: 0.5;">
+            <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          Riwayat top up belum tersedia.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

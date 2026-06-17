@@ -1,0 +1,102 @@
+<!-- ==================== PICKUP MASUK ==================== -->
+<div id="page-pickup-masuk" class="page">
+  <div class="phone-frame app-frame">
+    <div class="page-hdr">
+      <button class="back-btn" onclick="goPage('home')"><svg viewBox="0 0 24 24"><use href="#i-back"/></svg></button>
+      <h2>📥 Pickup Masuk</h2>
+      <span></span>
+    </div>
+    <div class="scroll-content">
+      <div class="filter-scroll">
+        <span class="filter-chip active">Semua (5)</span>
+        <span class="filter-chip">Terdekat</span>
+        <span class="filter-chip">Terbaru</span>
+        <span class="filter-chip">Terberat</span>
+      </div>
+
+      <div class="pm-pickup-list">
+        <!-- Card 1 URGENT -->
+        <div class="pm-pickup-card urgent">
+          <div class="pmpc-hdr"><span>ORD-001 · Plastik</span><span class="urgent-tag">⚡ Segera</span></div>
+          <div class="pmpc-user">
+            <div class="pmpc-av">RD</div>
+            <div>
+              <p>Rizki Dinata</p>
+              <p class="pmpc-addr">📍 0.8 km · Jl. Sudirman No. 45</p>
+              <p class="pmpc-addr">⏰ 10:00 - 11:00</p>
+            </div>
+            <p class="pmpc-weight">~3 kg</p>
+          </div>
+          <div class="pmpc-est"><span>Est. Rp 6.000</span><span>+30 pts</span></div>
+          <div class="pmpc-btns">
+            <button class="btn-ghost half" onclick="goPage('tracking')">🗺 Lihat Peta</button>
+            <button class="btn-primary half" onclick="acceptPickup(this)">✓ Terima</button>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="pm-pickup-card">
+          <div class="pmpc-hdr"><span>ORD-002 · Kardus</span><span class="time-tag">11:00</span></div>
+          <div class="pmpc-user">
+            <div class="pmpc-av">SN</div>
+            <div>
+              <p>Siti Nuraini</p>
+              <p class="pmpc-addr">📍 1.2 km · Jl. Gatot Subroto</p>
+              <p class="pmpc-addr">⏰ 11:00 - 12:00</p>
+            </div>
+            <p class="pmpc-weight">~5 kg</p>
+          </div>
+          <div class="pmpc-est"><span>Est. Rp 7.500</span><span>+37 pts</span></div>
+          <div class="pmpc-btns">
+            <button class="btn-ghost half" onclick="goPage('tracking')">🗺 Lihat Peta</button>
+            <button class="btn-primary half" onclick="acceptPickup(this)">✓ Terima</button>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="pm-pickup-card">
+          <div class="pmpc-hdr"><span>ORD-003 · Besi</span><span class="time-tag">13:00</span></div>
+          <div class="pmpc-user">
+            <div class="pmpc-av">AF</div>
+            <div>
+              <p>Ahmad Fauzi</p>
+              <p class="pmpc-addr">📍 2.1 km · Jl. HR Rasuna Said</p>
+              <p class="pmpc-addr">⏰ 13:00 - 14:00</p>
+            </div>
+            <p class="pmpc-weight">~8 kg</p>
+          </div>
+          <div class="pmpc-est"><span>Est. Rp 24.000</span><span>+48 pts</span></div>
+          <div class="pmpc-btns">
+            <button class="btn-ghost half" onclick="goPage('tracking')">🗺 Lihat Peta</button>
+            <button class="btn-primary half" onclick="acceptPickup(this)">✓ Terima</button>
+          </div>
+        </div>
+      </div>
+      <div style="height:90px"></div>
+    </div>
+    <nav class="bottom-nav blue-nav">
+      <div class="bn-item" id="nav-home" onclick="goPage('home')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/home.png" width="24" height="24">
+        <p>Beranda</p>
+      </div>
+      <div class="bn-item active" id="nav-pickup" onclick="goPage('pickup-masuk')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/download.png" width="24" height="24">
+        <p>Masuk</p>
+      </div>
+      <div class="bn-fab" onclick="showQRModal()">
+        <div class="fab-circle blue-fab">
+          <img src="https://img.icons8.com/fluency-systems-regular/48/FFFFFF/qr-code.png" width="28" height="28">
+        </div>
+        <p>Scan</p>
+      </div>
+      <div class="bn-item" id="nav-timbang" onclick="goPage('penimbangan')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/scales.png" width="24" height="24">
+        <p>Timbang</p>
+      </div>
+      <div class="bn-item" id="nav-profile" onclick="goPage('profil')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/user.png" width="24" height="24">
+        <p>Profil</p>
+      </div>
+    </nav>
+  </div>
+</div>

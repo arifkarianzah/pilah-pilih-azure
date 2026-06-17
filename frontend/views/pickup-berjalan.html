@@ -1,0 +1,72 @@
+<!-- ==================== PICKUP BERJALAN ==================== -->
+<div id="page-pickup-berjalan" class="page">
+  <div class="phone-frame app-frame">
+    <div class="page-hdr">
+      <button class="back-btn" onclick="goPage('home')"><svg viewBox="0 0 24 24"><use href="#i-back"/></svg></button>
+      <h2>🏃 Pickup Berjalan</h2><span></span>
+    </div>
+    <div class="scroll-content">
+      <div class="active-pickup-card large">
+        <div class="apc-hdr"><span>ORD-20250608-001</span><span class="tag-onway">Berjalan</span></div>
+        <div class="apc-user">
+          <div class="apc-av">RD</div>
+          <div class="apc-info">
+            <p>Rizki Dinata</p>
+            <p>📍 Jl. Sudirman No. 45</p>
+            <p>📱 +62 812-3456-7890</p>
+          </div>
+        </div>
+        <div class="small-steps">
+          <div class="ss-item done"><span>✓</span><p>Diterima</p></div>
+          <div class="ss-line done"></div>
+          <div class="ss-item active"><span>🚛</span><p>Menuju</p></div>
+          <div class="ss-line"></div>
+          <div class="ss-item"><span>📷</span><p>Konfirmasi</p></div>
+          <div class="ss-line"></div>
+          <div class="ss-item"><span>⚖️</span><p>Timbang</p></div>
+          <div class="ss-line"></div>
+          <div class="ss-item"><span>✅</span><p>Selesai</p></div>
+        </div>
+        <div class="mini-map tall" onclick="goPage('tracking')">
+          <div class="mini-map-inner active-map">🗺 Buka Navigasi · ETA: 8 menit · 0.8 km</div>
+        </div>
+        <div class="waste-detail">
+          <h4>Detail Sampah</h4>
+          <div class="wd-row"><span>Kategori</span><strong>Plastik PET</strong></div>
+          <div class="wd-row"><span>Est. Berat</span><strong>~3 kg</strong></div>
+          <div class="wd-row"><span>Kondisi</span><strong>Bersih</strong></div>
+          <div class="wd-row"><span>Catatan</span><strong>Di depan pagar</strong></div>
+        </div>
+        <div class="apc-btns">
+          <button class="btn-ghost half" onclick="goPage('chat')">💬 Chat User</button>
+          <button class="btn-primary half" onclick="showQRModal()">📷 Scan QR</button>
+        </div>
+      </div>
+      <div style="height:90px"></div>
+    </div>
+    <nav class="bottom-nav blue-nav">
+      <div class="bn-item" id="nav-home" onclick="goPage('home')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/home.png" width="24" height="24">
+        <p>Beranda</p>
+      </div>
+      <div class="bn-item" id="nav-pickup" onclick="goPage('pickup-masuk')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/download.png" width="24" height="24">
+        <p>Masuk</p>
+      </div>
+      <div class="bn-fab" onclick="showQRModal()">
+        <div class="fab-circle blue-fab">
+          <img src="https://img.icons8.com/fluency-systems-regular/48/FFFFFF/qr-code.png" width="28" height="28">
+        </div>
+        <p>Scan</p>
+      </div>
+      <div class="bn-item" id="nav-timbang" onclick="goPage('penimbangan')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/scales.png" width="24" height="24">
+        <p>Timbang</p>
+      </div>
+      <div class="bn-item" id="nav-profile" onclick="goPage('profil')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/user.png" width="24" height="24">
+        <p>Profil</p>
+      </div>
+    </nav>
+  </div>
+</div>

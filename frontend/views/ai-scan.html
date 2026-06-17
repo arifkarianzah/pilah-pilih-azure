@@ -1,0 +1,67 @@
+<!-- ==================== AI SCAN ==================== -->
+<div id="page-ai-scan" class="page">
+  <div class="phone-frame dark-frame" style="position:relative;">
+    <div class="page-hdr dark-hdr">
+      <button class="back-btn light" onclick="goPage('jual-sampah')"><svg viewBox="0 0 24 24">
+          <use href="#i-back" />
+        </svg></button>
+      <h2>AI Scan Sampah</h2>
+      <span></span>
+    </div>
+    <div class="scanner-area">
+      <div class="scan-frame">
+        <div class="sf-corner tl"></div>
+        <div class="sf-corner tr"></div>
+        <div class="sf-corner bl"></div>
+        <div class="sf-corner br"></div>
+        <div class="scan-line-anim"></div>
+        <div class="scan-center">♻️</div>
+      </div>
+      <div class="scan-ctrl-row">
+        <button class="scan-ctrl" onclick="showToast('💡 Flash aktif')">🔦</button>
+        <button class="scan-shutter" onclick="simulateScan()">
+          <div class="shutter-inner"></div>
+        </button>
+        <button class="scan-ctrl" onclick="document.getElementById('aiGaleri').click()">🖼</button>
+        <input type="file" id="aiGaleri" accept="image/*" style="display:none;"
+          onchange="showToast('🖼 Gambar dipilih!'); simulateScan();" />
+      </div>
+      <p class="scan-hint">Arahkan kamera ke sampah untuk deteksi AI</p>
+    </div>
+    <div class="ai-result" id="aiResult">
+      <div class="ai-result-hdr">
+        <span class="ai-r-badge">AI Terdeteksi</span>
+        <span class="ai-r-conf">95% Akurasi</span>
+      </div>
+      <div class="ai-r-body">
+        <div class="ai-r-main">
+          <div class="ai-r-ico">♻️</div>
+          <div>
+            <h3>Plastik PET (Botol)</h3>
+            <p>Kategori: Plastik</p>
+          </div>
+        </div>
+        <div class="ai-stats">
+          <div class="ai-st">
+            <p class="ais-v">~1.2 kg</p>
+            <p class="ais-l">Est. Berat</p>
+          </div>
+          <div class="ai-st">
+            <p class="ais-v">Rp 2.400</p>
+            <p class="ais-l">Est. Harga</p>
+          </div>
+          <div class="ai-st">
+            <p class="ais-v">85%</p>
+            <p class="ais-l">Daur Ulang</p>
+          </div>
+        </div>
+        <div class="ai-tip">Cuci bersih dan pisahkan tutup botol untuk nilai jual lebih tinggi.</div>
+      </div>
+      <div class="ai-r-actions">
+        <button class="btn-ghost" onclick="document.getElementById('aiResult').classList.remove('show')">Scan
+          Ulang</button>
+        <button class="btn-primary" onclick="goPage('jual-sampah')">Gunakan Data →</button>
+      </div>
+    </div>
+  </div>
+</div>

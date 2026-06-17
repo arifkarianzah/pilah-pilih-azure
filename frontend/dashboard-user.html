@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard User – PilahPilih</title>
+  <meta name="description" content="Dashboard pengguna PilahPilih – jual sampah, pickup, reward, dan dompet digital." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="css/styles.css?v=3" />
+  <link rel="stylesheet" href="css/dashboard-user.css?v=3" />
+  <!-- Leaflet CSS & JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+</head>
+<body>
+
+<!-- SVG ICONS -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <defs>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></symbol>
+  </defs>
+</svg>
+
+<!-- ==================== MODALS ==================== -->
+<!-- Success Modal -->
+<div class="modal-overlay" id="successModal" onclick="closeModal('successModal')">
+  <div class="modal-card" onclick="event.stopPropagation()">
+    <div class="modal-success-anim">✅</div>
+    <h3>Berhasil! 🎉</h3>
+    <p id="successDesc">Pickup berhasil diajukan. Petugas akan segera konfirmasi.</p>
+    <div class="modal-stats">
+      <div><p class="ms-l">Estimasi Pendapatan</p><p class="ms-v green-text">Rp 5.000</p></div>
+      <div><p class="ms-l">Bonus Poin</p><p class="ms-v gold-text">+25 pts ⭐</p></div>
+    </div>
+    <button class="btn-primary w-full" onclick="closeModal('successModal')">Oke, Mengerti!</button>
+    <button class="btn-ghost w-full mt8" onclick="goPage('tracking-user');closeModal('successModal')">📍 Pantau Tracking</button>
+  </div>
+</div>
+
+<!-- Reward Modal -->
+<div class="modal-overlay" id="rewardModal" onclick="closeModal('rewardModal')">
+  <div class="modal-card" onclick="event.stopPropagation()">
+    <div class="modal-reward-ico" id="rewardIco">🎁</div>
+    <h3 id="rewardModalTitle">Tukar Poin</h3>
+    <p>Konfirmasi penukaran reward</p>
+    <div class="modal-stats">
+      <div><p class="ms-l">Poin Kamu</p><p class="ms-v gold-text">2,450 pts</p></div>
+      <div><p class="ms-l">Biaya Tukar</p><p class="ms-v red-text" id="rewardCost">-500 pts</p></div>
+    </div>
+    <button class="btn-primary w-full" onclick="closeModal('rewardModal');showToast('✅ Reward berhasil ditukar!')">✅ Konfirmasi Tukar</button>
+    <button class="btn-ghost w-full mt8" onclick="closeModal('rewardModal')">Batal</button>
+  </div>
+</div>
+
+<!-- Map Modal -->
+<div class="modal-overlay" id="mapModal" onclick="closeModal('mapModal')">
+  <div class="modal-card" style="padding:0; overflow:hidden;" onclick="event.stopPropagation()">
+    <div style="padding:16px 20px; border-bottom:1px solid rgba(0,0,0,0.05); display:flex; justify-content:space-between; align-items:center;">
+      <h3 style="margin:0; font-size:16px;">Pilih Lokasi</h3>
+      <button class="icon-btn" onclick="closeModal('mapModal')">❌</button>
+    </div>
+    <div style="padding:12px 20px; border-bottom:1px solid rgba(0,0,0,0.05); display:flex; gap:8px;">
+      <input type="text" id="mapSearchInput" placeholder="Cari alamat atau tempat..." style="flex:1; padding:10px 14px; border:1px solid rgba(255,255,255,0.1); border-radius:10px; background:rgba(0,0,0,0.2); color:white; font-size:13px;" onkeypress="if(event.key==='Enter') searchLocation()" />
+      <button onclick="searchLocation()" style="padding:0 16px; background:linear-gradient(135deg,#00D084,#00A86B); color:white; border:none; border-radius:10px; cursor:pointer; font-weight:600; font-size:13px;">Cari</button>
+    </div>
+    <div id="selectionMap" style="width:100%; height:300px;"></div>
+    <div style="padding:16px 20px;">
+      <button class="btn-primary w-full" onclick="confirmMapSelection()">Konfirmasi Lokasi</button>
+    </div>
+  </div>
+</div>
+
+<!-- Mandatory Rating Modal -->
+<div class="modal-overlay" id="mandatoryRatingModal" style="background:rgba(0,0,0,0.8); z-index:9999;">
+  <div class="modal-card" style="padding:24px;">
+    <div style="text-align:center; font-size:48px; margin-bottom:10px;">⭐</div>
+    <h3 style="text-align:center; margin-bottom:10px;">Beri Nilai Petugas</h3>
+    <p style="text-align:center; font-size:14px; color:var(--t4); margin-bottom:20px;">Pickup telah selesai! Silakan beri nilai untuk melanjutkan.</p>
+    
+    <div style="display:flex; justify-content:center; gap:10px; margin-bottom:20px;" id="starRatingContainer">
+      <span class="star" onclick="selectStar(1)" style="font-size:32px; cursor:pointer; color:var(--t4);">★</span>
+      <span class="star" onclick="selectStar(2)" style="font-size:32px; cursor:pointer; color:var(--t4);">★</span>
+      <span class="star" onclick="selectStar(3)" style="font-size:32px; cursor:pointer; color:var(--t4);">★</span>
+      <span class="star" onclick="selectStar(4)" style="font-size:32px; cursor:pointer; color:var(--t4);">★</span>
+      <span class="star" onclick="selectStar(5)" style="font-size:32px; cursor:pointer; color:var(--t4);">★</span>
+    </div>
+    
+    <input type="hidden" id="mandatoryRatingValue" value="0">
+    <input type="hidden" id="mandatoryPickupId" value="">
+    
+    <button class="btn-primary w-full" id="btnSubmitRating" onclick="submitRating()" disabled>Kirim Penilaian</button>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<script src="js/api.js"></script>
+<script src="js/dashboard-user.js?v=3"></script>
+  <div id="app-root"></div>
+</body>
+</html>

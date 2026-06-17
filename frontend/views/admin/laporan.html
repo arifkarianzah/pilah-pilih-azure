@@ -1,0 +1,30 @@
+<!-- ===== SECTION: LAPORAN & ANALITIK ===== -->
+<div class="section-content">
+  <div class="lap-filter-row">
+    <div class="period-tabs">
+      <button class="p-tab active" onclick="pickPeriod(this)">Harian</button>
+      <button class="p-tab" onclick="pickPeriod(this)">Mingguan</button>
+      <button class="p-tab" onclick="pickPeriod(this)">Bulanan</button>
+      <button class="p-tab" onclick="pickPeriod(this)">Tahunan</button>
+    </div>
+    <div class="export-btns">
+      <button class="exp-btn pdf">📄 Export PDF</button>
+      <button class="exp-btn excel">📊 Export Excel</button>
+      <button class="exp-btn csv">📑 Export CSV</button>
+    </div>
+  </div>
+  <div class="charts-row">
+    <div class="chart-card big-chart">
+      <div class="chart-hdr">
+        <div><h3>Laporan Pendapatan</h3><p>Tren pendapatan sistem dari waktu ke waktu</p></div>
+      </div>
+      <div style="height: 280px; width: 100%;"><canvas id="lapRevChart"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-hdr">
+        <div><h3>Distribusi Kategori</h3><p>Proporsi jenis sampah yang diangkut</p></div>
+      </div>
+      <div style="height: 280px; width: 100%;"><canvas id="lapWasteChart"></canvas></div>
+    </div>
+  </div>
+</div>

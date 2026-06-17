@@ -1,0 +1,20 @@
+<!-- ==================== CHAT ==================== -->
+<div id="page-chat" class="page">
+  <div class="phone-frame app-frame">
+    <div class="chat-header">
+      <button class="back-btn" onclick="goPage('home')"><svg viewBox="0 0 24 24"><use href="#i-back"/></svg></button>
+      <div class="ch-info"><div class="ch-av blue-av-chat">RD</div><div><p class="ch-name">Rizki Dinata</p><p class="ch-status" style="color:var(--blue)">● ORD-001 · Aktif</p></div></div>
+      <div class="ch-actions"><span onclick="callUser()" style="cursor:pointer;">📞</span><span>⋮</span></div>
+    </div>
+    <div class="chat-msgs" id="chatMsgs">
+      <div class="chat-date">Hari ini, 08 Jun 2025</div>
+      <div class="chat-msg recv"><div class="cm-av blue-cm-av">RD</div><div class="cm-bubble recv-b"><p>Halo pak, kapan kira-kira tiba?</p><span>10:02</span></div></div>
+      <div class="chat-msg sent"><div class="cm-bubble sent-b-blue"><p>Saya sedang dalam perjalanan, sekitar 8 menit lagi 🚛</p><span>10:03</span></div></div>
+    </div>
+    <div class="chat-input-bar">
+      <button class="ci-attach" onclick="showToast('📎 Attach file')">📎</button>
+      <input type="text" class="ci-input" id="chatInput" placeholder="Ketik pesan..." />
+      <button class="ci-send blue-send" onclick="sendMsg()"><svg viewBox="0 0 24 24"><use href="#i-send"/></svg></button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+{
+  "name": "pilah-pilih-frontend",
+  "version": "1.0.0",
+  "description": "Pilah Pilih – Smart Waste Management Frontend",
+  "scripts": {
+    "dev": "npx --yes serve . -p 3000",
+    "start": "npx --yes serve . -p 3000",
+    "open": "start http://localhost:3000"
+  },
+  "keywords": [
+    "waste",
+    "management",
+    "frontend",
+    "pwa"
+  ],
+  "author": "Pilah Pilih Team",
+  "license": "MIT",
+  "dependencies": {
+    "serve": "^14.2.6"
+  }
+}

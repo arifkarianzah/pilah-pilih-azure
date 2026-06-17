@@ -1,0 +1,12 @@
+{
+  "name": "pilah-pilih-waste-management",
+  "version": "2.1.0",
+  "description": "Pilah Pilih - Smart Waste Management System",
+  "scripts": {
+    "dev": "npx serve frontend -p 3000 --no-clipboard",
+    "start": "npx serve frontend -p 3000"
+  },
+  "keywords": ["waste", "management", "recycling", "eco", "smart-city"],
+  "author": "Pilah Pilih Team",
+  "license": "MIT"
+}

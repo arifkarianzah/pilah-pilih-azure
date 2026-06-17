@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login – PilahPilih Smart Waste Management</title>
+  <meta name="description" content="Masuk atau daftar ke platform PilahPilih – jual sampah, pickup, reward, dan lebih banyak lagi." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    /* ===== LOGIN PAGE SPECIFIC STYLES ===== */
+    body { background: var(--bg); min-height: 100vh; display: flex; flex-direction: column; }
+    
+    /* FIX GLOBAL SVG FILL ISSUE */
+    svg[fill="none"] { fill: none !important; }
+    svg[stroke="currentColor"] { stroke: currentColor !important; }
+
+    /* SPLASH */
+    #splash-screen {
+      position: fixed; inset: 0; z-index: 9999;
+      background: linear-gradient(145deg, #0A1628 0%, #0D2818 40%, #0A1628 100%);
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; transition: opacity 0.6s ease;
+    }
+    #splash-screen.hide { opacity: 0; pointer-events: none; }
+
+    .splash-orb { position: absolute; border-radius: 50%; filter: blur(60px); animation: orbPulse 4s ease-in-out infinite; }
+    .orb1 { width:280px;height:280px;background:radial-gradient(rgba(0,208,132,0.3),transparent);top:-80px;right:-80px; }
+    .orb2 { width:200px;height:200px;background:radial-gradient(rgba(59,130,246,0.2),transparent);bottom:60px;left:-60px;animation-delay:1.5s; }
+    .orb3 { width:150px;height:150px;background:radial-gradient(rgba(139,92,246,0.15),transparent);top:50%;right:20px;animation-delay:3s; }
+    @keyframes orbPulse { 0%,100%{transform:scale(1);opacity:0.6} 50%{transform:scale(1.2);opacity:1} }
+
+    .splash-center { text-align: center; z-index: 1; padding: 24px; }
+    .splash-logo-ring {
+      width:96px;height:96px;
+      background:linear-gradient(135deg,#00D084,#00A86B);
+      border-radius:28px;display:flex;align-items:center;justify-content:center;
+      margin:0 auto 24px;
+      box-shadow:0 4px 24px rgba(0,208,132,0.35);
+      animation:logoFloat 3s ease-in-out infinite;
+    }
+    .splash-logo-ring svg { width:52px;height:52px;fill:white; }
+    @keyframes logoFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+    .splash-name { font-size:42px;font-weight:900;color:#fff;letter-spacing:-1px;margin-bottom:8px; }
+    .splash-name span { color:#00D084; }
+    .splash-tagline { font-size:13px;font-weight:500;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:2px;margin-bottom:48px; }
+    .splash-loader-track { width:220px;height:3px;background:rgba(255,255,255,0.1);border-radius:99px;overflow:hidden;margin:0 auto 12px; }
+    .splash-loader-fill { height:100%;background:linear-gradient(90deg,#00D084,#00FFB0);border-radius:99px;width:0;transition:width 0.3s ease; }
+    .splash-loading-text { font-size:12px;color:rgba(255,255,255,0.4); }
+    .splash-badge { position:absolute;bottom:24px;font-size:12px;color:rgba(255,255,255,0.25);z-index:1; }
+
+    /* MAIN LOGIN CONTAINER */
+    .login-page {
+      display: none;
+      min-height: 100vh;
+      width: 100%;
+      background: var(--bg);
+    }
+    .login-page.show { display: flex; animation: fadeInUp 0.5s ease; }
+    @keyframes fadeInUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+    /* SPLIT LAYOUT */
+    .split-layout { display: flex; min-height: 100vh; width: 100%; }
+    
+    /* === SISI KIRI (BRANDING) === */
+    .split-left {
+      flex: 1.2; background: linear-gradient(145deg, #071321 0%, #0b2416 100%);
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      position: relative; overflow: hidden; padding: 40px; color: white;
+      border-right: 1px solid rgba(255,255,255,0.05);
+    }
+    .sl-glow { position: absolute; width: 800px; height: 800px; background: radial-gradient(rgba(0,208,132,0.12), transparent 70%); top: -200px; left: -200px; border-radius: 50%; pointer-events: none; }
+    .sl-content { z-index: 2; max-width: 520px; width: 100%; }
+    .sl-logo { width: 80px; height: 80px; background: linear-gradient(135deg, #00D084, #00A86B); border-radius: 24px; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 32px rgba(0,208,132,0.4); margin-bottom: 40px; position: relative; }
+    .sl-logo svg { width: 44px; height: 44px; fill: white; }
+    .sl-title { font-size: 52px; font-weight: 900; line-height: 1.1; margin-bottom: 24px; letter-spacing: -1.5px; }
+    .sl-title span { color: #00D084; }
+    .sl-desc { font-size: 16px; color: rgba(255,255,255,0.6); line-height: 1.6; margin-bottom: 48px; max-width: 400px; }
+    
+    .sl-cards { display: flex; flex-direction: column; gap: 16px; }
+    .sl-card { background: rgba(255,255,255,0.04); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 20px 24px; display: flex; align-items: center; gap: 20px; transition: all 0.3s cubic-bezier(0.4,0,0.2,1); }
+    .sl-card:hover { transform: translateX(10px); background: rgba(255,255,255,0.06); border-color: rgba(0,208,132,0.4); box-shadow: 0 12px 32px rgba(0,0,0,0.2); }
+    .slc-icon { font-size: 28px; background: rgba(255,255,255,0.05); width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; border-radius: 16px; flex-shrink: 0; }
+    .slc-text h4 { font-size: 18px; font-weight: 800; margin-bottom: 4px; color: white; }
+    .slc-text p { font-size: 13px; color: rgba(255,255,255,0.4); }
+
+    /* === SISI KANAN (FORM AUTH) === */
+    .split-right {
+      flex: 1; max-width: 600px; background: var(--bg);
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      padding: 40px; position: relative;
+    }
+    .sr-wrapper { width: 100%; max-width: 420px; margin: auto; }
+    .sr-header { margin-bottom: 32px; text-align: left; }
+    .sr-header h2 { font-size: 32px; font-weight: 800; color: var(--t1); margin-bottom: 8px; letter-spacing: -0.5px; }
+    .sr-header p { font-size: 14px; color: var(--t3); line-height: 1.5; }
+
+    @media (max-width: 992px) {
+      .split-left { display: none; }
+      .split-right { max-width: 100%; padding: 24px; }
+      .sr-header { text-align: center; }
+    }
+
+    /* TABS */
+    .auth-tabs { display:flex;background:var(--card);border-radius:14px;padding:6px;margin-bottom:28px;border:1px solid var(--border); }
+    .atab { flex:1;padding:12px;border-radius:10px;font-size:14px;font-weight:600;color:var(--t3);transition:all 0.25s cubic-bezier(0.4,0,0.2,1); }
+    .atab.active { background:var(--surface);color:var(--t1);box-shadow:var(--sh-sm); border: 1px solid var(--border); }
+
+    .auth-form { display:none; }
+    .auth-form.active { display:block;animation:fadeIn 0.3s ease; }
+    @keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+
+    /* INPUT GROUPS */
+    .input-group {
+      display:flex;align-items:center;
+      background:var(--card);border:1.5px solid var(--border);
+      border-radius:14px;margin-bottom:12px;
+      transition:all 0.15s ease;overflow:hidden;
+    }
+    .input-group:focus-within { border-color:#00D084;box-shadow:0 0 0 3px rgba(0,208,132,0.12); }
+    .ig-icon { padding:0 14px;font-size:18px;flex-shrink:0; }
+    .ig-input { flex:1;padding:15px 0;background:transparent;border:none;font-size:14px;color:var(--t1);font-family:var(--font); }
+    .ig-input::placeholder { color:var(--t4); }
+    .ig-eye { padding:0 14px;color:var(--t3);font-size:18px; }
+
+    .auth-meta-row { display:flex;justify-content:space-between;align-items:center;margin-bottom:16px; }
+    .check-label { display:flex;align-items:center;gap:8px;font-size:13px;color:var(--t3);cursor:pointer; }
+    .check-label input { accent-color:#00D084; }
+    .txt-link { font-size:13px;color:#00D084;font-weight:600;cursor:pointer; }
+    
+    /* KTP UPLOAD */
+    .ktp-upload-wrap { margin-bottom: 16px; transition: all 0.3s ease; }
+    .ktp-label { font-size: 12px; color: var(--t3); margin-bottom: 8px; font-weight: 500; }
+    .ktp-dropzone {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      border: 1.5px dashed var(--border2); border-radius: 14px;
+      padding: 24px 20px; text-align: center; cursor: pointer;
+      background: var(--card); transition: all 0.2s ease;
+      position: relative; overflow: hidden; min-height: 120px;
+    }
+    .ktp-dropzone:hover { border-color: #00D084; background: rgba(0,208,132,0.05); }
+    .ktp-dropzone.has-file { border-color: #00D084; border-style: solid; padding: 0; }
+    .ktp-icon { font-size: 28px; margin-bottom: 8px; opacity: 0.8; }
+    .ktp-text { font-size: 12px; color: var(--t3); font-weight: 500; }
+    .ktp-sub { font-size: 10px; color: var(--t4); margin-top: 4px; }
+    #ktpPreview { width: 100%; height: 120px; object-fit: cover; display: none; }
+
+    /* ROLE SELECTOR */
+    .role-row { margin-bottom:24px; }
+    .role-row-label { font-size:13px;color:var(--t1);margin-bottom:12px;font-weight:600; }
+    .role-chips-wrap { display:flex;flex-wrap:wrap;gap:10px; }
+    .role-c {
+      padding:10px 16px;border-radius:99px;
+      border:1.5px solid var(--border);background:var(--card);
+      font-size:13px;font-weight:600;color:var(--t3);
+      cursor:pointer;transition:all 0.2s cubic-bezier(0.4,0,0.2,1);
+    }
+    .role-c:hover { border-color:var(--t3); color:var(--t2); }
+    .role-c.active { background:rgba(0,208,132,0.1);border-color:#00D084;color:#00D084; box-shadow: 0 4px 12px rgba(0,208,132,0.15); }
+
+    /* MAIN BUTTON */
+    .btn-login {
+      width:100%;padding:15px 24px;
+      background:linear-gradient(135deg,#00D084,#00A86B);
+      color:white;border-radius:14px;font-size:15px;font-weight:700;
+      cursor:pointer;transition:all 0.25s cubic-bezier(0.4,0,0.2,1);
+      box-shadow:0 4px 24px rgba(0,208,132,0.35);
+      border:none;font-family:var(--font);
+    }
+    .btn-login:hover { transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,208,132,0.45); }
+    .btn-login:active { transform:translateY(0); }
+
+    .btn-ghost-login {
+      width:100%;padding:14px 24px;background:transparent;
+      border:1.5px solid var(--border2);color:var(--t2);
+      border-radius:14px;font-size:15px;font-weight:600;
+      cursor:pointer;transition:all 0.15s ease;font-family:var(--font);
+      margin-top:10px;
+    }
+    .btn-ghost-login:hover { border-color:#00D084;color:#00D084;background:rgba(0,208,132,0.08); }
+
+    /* DIVIDER */
+    .divider-or { display:flex;align-items:center;gap:12px;margin:16px 0;color:var(--t4);font-size:12px; }
+    .divider-or::before,.divider-or::after { content:'';flex:1;height:1px;background:var(--border); }
+
+    /* SOCIAL BUTTONS */
+    .social-row { display:flex;gap:10px;margin-bottom:16px; }
+    .social-btn {
+      flex:1;padding:12px;background:var(--card);
+      border:1.5px solid var(--border);border-radius:12px;
+      font-size:13px;font-weight:500;color:var(--t2);
+      cursor:pointer;transition:all 0.15s ease;font-family:var(--font);
+    }
+    .social-btn:hover { border-color:#00D084;background:rgba(0,208,132,0.08); }
+
+    /* OTP SCREEN */
+    .otp-screen { display:none; }
+    .otp-screen.active { display:flex;flex-direction:column;align-items:center; animation:fadeIn 0.3s ease; }
+    .verify-emoji { font-size:64px;margin-bottom:16px;animation:iconFloat 3s ease-in-out infinite; }
+    @keyframes iconFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+    .otp-row { display:flex;gap:10px;justify-content:center;margin-bottom:20px; }
+    .otp-box {
+      width:50px;height:58px;text-align:center;
+      font-size:22px;font-weight:800;color:var(--t1);
+      background:var(--card);border:2px solid var(--border);
+      border-radius:14px;transition:all 0.15s ease;font-family:var(--font);
+    }
+    .otp-box:focus { border-color:#00D084;box-shadow:0 0 0 3px rgba(0,208,132,0.15);outline:none; }
+    .otp-timer-txt { font-size:13px;color:var(--t3);margin-bottom:20px; }
+    .text-accent { color:#00D084;font-weight:700; }
+
+    /* FORGOT PASSWORD */
+    .forgot-screen { display:none; }
+    .forgot-screen.active { display:flex;flex-direction:column;align-items:center; animation:fadeIn 0.3s ease; }
+
+    /* SELECT / INPUT BASE */
+    .ig { display:flex;align-items:center;background:var(--card);border:1.5px solid var(--border);border-radius:14px;transition:all 0.15s ease;overflow:hidden;margin-bottom:12px; }
+    .ig:focus-within { border-color:#00D084;box-shadow:0 0 0 3px rgba(0,208,132,0.12); }
+    .ig span { padding:0 14px;font-size:16px;flex-shrink:0; }
+    .ig input,.ig select { flex:1;padding:14px 0;background:transparent;border:none;font-size:14px;color:var(--t1);font-family:var(--font); }
+    .ig input::placeholder { color:var(--t4); }
+    .ig select { padding-right:8px; }
+    .ig select option { background:var(--card);color:var(--t1); }
+
+    /* TOAST */
+    #toast {
+      position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);
+      background:#1E1E1E;color:white;padding:12px 24px;border-radius:99px;
+      font-size:14px;font-weight:500;white-space:nowrap;
+      transition:all 0.3s cubic-bezier(0.4,0,0.2,1);
+      z-index:9999;border:1px solid rgba(255,255,255,0.12);
+      box-shadow:0 8px 32px rgba(0,0,0,0.4);
+      opacity:0;
+    }
+    #toast.show { transform:translateX(-50%) translateY(0);opacity:1; }
+
+    /* BACK BUTTON */
+    .back-link {
+      display:flex;align-items:center;gap:8px;
+      color:var(--t3);font-size:13px;font-weight:500;
+      cursor:pointer;margin-bottom:24px;width:fit-content;
+      transition:color 0.15s ease;
+    }
+    .back-link:hover { color:#00D084; }
+    .back-link svg { width:18px;height:18px; }
+
+    .w-full { width:100%; }
+    .mt8 { margin-top:8px; }
+    .mt12 { margin-top:12px; }
+    .mt16 { margin-top:16px; }
+  </style>
+</head>
+<body>
+
+<!-- ===== SPLASH SCREEN ===== -->
+<div id="splash-screen">
+  <div class="splash-orb orb1"></div>
+  <div class="splash-orb orb2"></div>
+  <div class="splash-orb orb3"></div>
+  <div class="splash-center">
+    <div class="splash-logo-ring">
+      <svg viewBox="0 0 24 24"><path d="M7 19H4.5c-1.4 0-2.5-1.1-2.5-2.5V14l2-2V16h3l-1.5 3zM20 10l-1.5 1.5L20 13v3h-2.5l-1.5 3H21.5c1.4 0 2.5-1.1 2.5-2.5V14l-2-2zM12 4l2.5 4.5H9.5L12 4zm2 10h-4v2l-3.5-3.5L10 9h4l3.5 3.5L14 16z"/></svg>
+    </div>
+    <h1 class="splash-name">Pilah<span>Pilih</span></h1>
+    <p class="splash-tagline">Smart Waste Management System</p>
+    <div class="trust-badges">
+      <span class="trust-badge"><svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Terverifikasi</span>
+      <span class="trust-badge"><svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> SSL Aman</span>
+      <span class="trust-badge"><svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> Eco</span>
+    </div>
+    <div class="splash-loader-track">
+      <div class="splash-loader-fill" id="splashFill"></div>
+    </div>
+    <p class="splash-loading-text" id="splashTxt">Memuat sistem...</p>
+  </div>
+  <div class="splash-badge">Platform Enterprise · v2.0</div>
+</div>
+
+<!-- ===== MAIN LOGIN PAGE ===== -->
+<div class="login-page split-layout" id="loginPage">
+  
+  <!-- === SISI KIRI (BRANDING) === -->
+  <div class="split-left">
+    <div class="sl-glow"></div>
+    <div class="sl-content">
+      <div class="sl-logo">
+        <svg viewBox="0 0 24 24"><path d="M7 19H4.5c-1.4 0-2.5-1.1-2.5-2.5V14l2-2V16h3l-1.5 3zM20 10l-1.5 1.5L20 13v3h-2.5l-1.5 3H21.5c1.4 0 2.5-1.1 2.5-2.5V14l-2-2zM12 4l2.5 4.5H9.5L12 4zm2 10h-4v2l-3.5-3.5L10 9h4l3.5 3.5L14 16z"/></svg>
+      </div>
+      <h1 class="sl-title">Pilah<span>Pilih</span></h1>
+      <p class="sl-desc">Platform Enterprise untuk pengelolaan sampah pintar. Bergabunglah dengan puluhan ribu mitra kami untuk menciptakan lingkungan yang lebih bersih dan berkelanjutan.</p>
+      
+      <div class="sl-cards">
+        <div class="sl-card">
+          <div class="slc-icon"><svg viewBox="0 0 24 24" width="28" height="28" stroke="#00D084" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>
+          <div class="slc-text">
+            <h4>1M+ Kg</h4>
+            <p>Sampah berhasil didaur ulang</p>
+          </div>
+        </div>
+        <div class="sl-card">
+          <div class="slc-icon"><svg viewBox="0 0 24 24" width="28" height="28" stroke="#00D084" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <div class="slc-text">
+            <h4>50K+ Mitra</h4>
+            <p>Terhubung dalam ekosistem hijau</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p style="position: absolute; bottom: 32px; font-size: 12px; color: rgba(255,255,255,0.4);">© 2025 PilahPilih Enterprise · Secure SSL Verification</p>
+  </div>
+
+  <!-- === SISI KANAN (FORM) === -->
+  <div class="split-right">
+    <div class="sr-wrapper">
+
+      <!-- === VIEW: LOGIN/REGISTER === -->
+      <div id="view-auth">
+        
+        <div class="sr-header">
+          <h2>Selamat Datang</h2>
+          <p>Masuk atau buat akun baru untuk mengakses dashboard Anda.</p>
+        </div>
+
+        <!-- TABS -->
+        <div class="auth-tabs">
+          <button class="atab active" id="tabLogin" onclick="switchTab('login')">Masuk</button>
+          <button class="atab" id="tabReg" onclick="switchTab('register')">Daftar</button>
+        </div>
+
+        <!-- LOGIN FORM -->
+        <div id="formLogin" class="auth-form active">
+          <div class="input-group">
+            <span class="ig-icon"><svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
+            <input type="email" class="ig-input" id="loginEmail" placeholder="Email atau No. HP" autocomplete="email" />
+          </div>
+          <div class="input-group">
+            <span class="ig-icon"><svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+            <input type="password" class="ig-input" id="loginPwd" placeholder="Password" autocomplete="current-password" />
+            <button class="ig-eye" onclick="togglePwd('loginPwd',this)" type="button"><svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+          </div>
+          <div class="auth-meta-row">
+            <label class="check-label"><input type="checkbox" id="rememberMe" /> Ingat saya</label>
+            <span class="txt-link" onclick="showView('forgot')">Lupa Password?</span>
+          </div>
+
+          <button class="btn-login" onclick="doLogin()" id="btnLogin">
+            <span id="btnLoginText">Masuk Sekarang →</span>
+          </button>
+
+          <div class="divider-or"><span>atau masuk dengan</span></div>
+          <div class="social-row">
+            <button class="social-btn" onclick="socialLogin('Google')">Google</button>
+            <button class="social-btn" onclick="socialLogin('Facebook')">Facebook</button>
+          </div>
+        </div>
+
+        <!-- REGISTER FORM -->
+        <div id="formRegister" class="auth-form">
+          <div class="input-group">
+            <span class="ig-icon"><svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+            <input type="text" class="ig-input" id="regName" placeholder="Nama Lengkap" autocomplete="name" />
+          </div>
+          <div class="input-group">
+            <span class="ig-icon"><svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
+            <input type="email" class="ig-input" id="regEmail" placeholder="Email" autocomplete="email" />
+          </div>
+          <div class="input-group">
+            <span class="ig-icon"><svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></span>
+            <input type="tel" class="ig-input" id="regPhone" placeholder="+62 xxx xxxx xxxx" autocomplete="tel" />
+          </div>
+          <div class="input-group">
+            <span class="ig-icon"><svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+            <input type="password" class="ig-input" id="regPwd" placeholder="Password (min 8 karakter)" autocomplete="new-password" />
+            <button class="ig-eye" onclick="togglePwd('regPwd',this)" type="button"><svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+          </div>
+          <div class="input-group" style="margin-bottom: 24px; position: relative;">
+            <span class="ig-icon"><svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
+            <select class="ig-input" id="regRole" onchange="toggleKtpUpload(this.value)" style="cursor: pointer; appearance: none; padding-right: 40px; font-weight: 600;">
+              <option value="user">Daftar sebagai User</option>
+              <option value="petugas">Daftar sebagai Petugas</option>
+            </select>
+            <span style="position: absolute; right: 16px; top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--t3); display: flex;">
+              <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </span>
+          </div>
+          
+          <div class="ktp-upload-wrap" id="ktpWrap">
+            <p class="ktp-label">Upload Foto KTP (Wajib)</p>
+            <label class="ktp-dropzone" id="ktpDropzone">
+              <input type="file" id="regKTP" accept="image/*" hidden onchange="handleKtpUpload(this)" />
+              <div class="ktp-icon"><svg viewBox="0 0 24 24" width="32" height="32" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+              <p class="ktp-text">Klik atau seret foto KTP ke sini</p>
+              <p class="ktp-sub">Format: JPG, PNG (Maks. 5MB)</p>
+              <img id="ktpPreview" src="" alt="KTP Preview" />
+            </label>
+          </div>
+          
+          <button class="btn-login" onclick="doRegister()">Daftar Sekarang</button>
+          <p style="text-align:center;font-size:11px;color:var(--t4);margin-top:12px;">
+            Dengan mendaftar, Anda menyetujui <span style="color:#00D084;cursor:pointer;">Syarat & Ketentuan</span>
+          </p>
+        </div>
+      </div>
+
+      <!-- === VIEW: OTP VERIFICATION === -->
+      <div id="view-otp" style="display:none;">
+        <div class="otp-screen active">
+          <span class="back-link" onclick="showView('auth')">
+            <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+            Kembali
+          </span>
+          <div class="verify-emoji" style="color: var(--primary); margin-bottom: 24px;"><svg viewBox="0 0 24 24" width="48" height="48" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
+          <h2 style="font-size:24px;font-weight:800;color:var(--t1);margin-bottom:8px;">Verifikasi OTP</h2>
+          <p style="font-size:14px;color:var(--t3);margin-bottom:32px;text-align:center;line-height:1.5;">Kode 6 digit telah dikirim ke Email / No. HP: <br/><strong id="otpTarget" style="color:var(--t1);">+62 812-xxxx-xxxx</strong></p>
+          <div class="otp-row">
+            <input class="otp-box" maxlength="1" id="otp0" oninput="otpNext(this,0)" />
+            <input class="otp-box" maxlength="1" id="otp1" oninput="otpNext(this,1)" />
+            <input class="otp-box" maxlength="1" id="otp2" oninput="otpNext(this,2)" />
+            <input class="otp-box" maxlength="1" id="otp3" oninput="otpNext(this,3)" />
+            <input class="otp-box" maxlength="1" id="otp4" oninput="otpNext(this,4)" />
+            <input class="otp-box" maxlength="1" id="otp5" oninput="otpNext(this,5)" />
+          </div>
+          <p class="otp-timer-txt">Kirim ulang dalam <span id="otpTimer" class="text-accent">02:00</span></p>
+          <button class="btn-login" style="margin-bottom: 12px;" onclick="verifyOTP()">Verifikasi</button>
+          <button class="btn-ghost-login" style="margin: 0;" onclick="resendOTP()">Kirim Ulang Kode</button>
+        </div>
+      </div>
+
+      <!-- === VIEW: FORGOT PASSWORD === -->
+      <div id="view-forgot" style="display:none;">
+        <div class="forgot-screen active">
+          <span class="back-link" onclick="showView('auth')">
+            <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+            Kembali ke Login
+          </span>
+          <div class="verify-emoji" style="color: var(--primary); margin-bottom: 24px;"><svg viewBox="0 0 24 24" width="48" height="48" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+          <h2 style="font-size:24px;font-weight:800;color:var(--t1);margin-bottom:8px;text-align:center;">Lupa Password?</h2>
+          <p style="font-size:14px;color:var(--t3);margin-bottom:32px;text-align:center;line-height:1.5;">Masukkan email atau nomor HP untuk menerima link reset password.</p>
+          <div class="input-group" style="margin-bottom:24px; width:100%;">
+            <span class="ig-icon"><svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
+            <input type="text" class="ig-input" id="forgotEmail" placeholder="Email atau No. HP" />
+          </div>
+          <button class="btn-login" style="margin-bottom: 12px;" onclick="sendReset()">Kirim Kode Reset</button>
+        </div>
+      </div>
+
+    </div><!-- /sr-wrapper -->
+  </div><!-- /split-right -->
+</div><!-- /split-layout -->
+
+<div id="toast"></div>
+
+<script src="js/api.js"></script>
+<script src="js/login.js"></script>
+</body>
+</html>

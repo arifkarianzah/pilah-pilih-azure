@@ -1,0 +1,71 @@
+<!-- ==================== NOTIFIKASI ==================== -->
+<div id="page-notifikasi" class="page">
+  <div class="phone-frame app-frame">
+    <div class="page-hdr">
+      <button class="back-btn" onclick="goPage('home')"><svg viewBox="0 0 24 24"><use href="#i-back"/></svg></button>
+      <h2>Notifikasi</h2>
+      <button class="txt-btn-sm" onclick="clearNotifs()">Bersihkan</button>
+    </div>
+    <div class="scroll-content">
+      <div class="notif-list">
+        <div class="notif-item unread" onclick="goPage('pickup-masuk')" style="box-shadow:var(--sh-sm); border:1px solid var(--border);">
+          <div class="notif-ico" style="background:var(--card); border:1px solid var(--border); border-radius:12px; width:46px; height:46px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <img src="https://img.icons8.com/fluency-systems-regular/48/118EEA/inbox.png" width="28" height="28">
+          </div>
+          <div class="notif-content">
+            <p class="ni-title" style="font-size:14px; font-weight:700; color:var(--t2); margin-bottom:4px;">Pickup Baru Masuk!</p>
+            <p class="ni-body" style="font-size:12px; color:var(--t3); line-height:1.4;">ORD-004 · Rina Halim · Plastik ~2kg · 0.5km</p>
+            <p class="ni-time" style="font-size:11px; color:var(--t4); margin-top:8px;">3 menit lalu</p>
+          </div>
+          <div class="ni-unread"></div>
+        </div>
+        <div class="notif-item unread" onclick="goPage('pendapatan')" style="box-shadow:var(--sh-sm); border:1px solid var(--border);">
+          <div class="notif-ico" style="background:var(--card); border:1px solid var(--border); border-radius:12px; width:46px; height:46px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <img src="https://img.icons8.com/fluency-systems-regular/48/00D084/banknotes.png" width="28" height="28">
+          </div>
+          <div class="notif-content">
+            <p class="ni-title" style="font-size:14px; font-weight:700; color:var(--t2); margin-bottom:4px;">+Rp 7.500 Diterima!</p>
+            <p class="ni-body" style="font-size:12px; color:var(--t3); line-height:1.4;">Pembayaran pickup ORD-001 berhasil</p>
+            <p class="ni-time" style="font-size:11px; color:var(--t4); margin-top:8px;">1 jam lalu</p>
+          </div>
+          <div class="ni-unread"></div>
+        </div>
+        <div class="notif-item" style="box-shadow:var(--sh-sm); border:1px solid var(--border);">
+          <div class="notif-ico" style="background:var(--card); border:1px solid var(--border); border-radius:12px; width:46px; height:46px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <img src="https://img.icons8.com/fluency-systems-regular/48/EAB308/star.png" width="28" height="28">
+          </div>
+          <div class="notif-content">
+            <p class="ni-title" style="font-size:14px; font-weight:700; color:var(--t2); margin-bottom:4px;">Rating Baru: 5 Bintang</p>
+            <p class="ni-body" style="font-size:12px; color:var(--t3); line-height:1.4;">Rizki Dinata memberikan rating sempurna</p>
+            <p class="ni-time" style="font-size:11px; color:var(--t4); margin-top:8px;">2 jam lalu</p>
+          </div>
+        </div>
+      </div>
+      <div style="height:90px"></div>
+    </div>
+    <nav class="bottom-nav blue-nav">
+      <div class="bn-item" id="nav-home" onclick="goPage('home')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/home.png" width="24" height="24">
+        <p>Beranda</p>
+      </div>
+      <div class="bn-item" id="nav-pickup" onclick="goPage('pickup-masuk')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/download.png" width="24" height="24">
+        <p>Masuk</p>
+      </div>
+      <div class="bn-fab" onclick="showQRModal()">
+        <div class="fab-circle blue-fab">
+          <img src="https://img.icons8.com/fluency-systems-regular/48/FFFFFF/qr-code.png" width="28" height="28">
+        </div>
+        <p>Scan</p>
+      </div>
+      <div class="bn-item" id="nav-timbang" onclick="goPage('penimbangan')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/scales.png" width="24" height="24">
+        <p>Timbang</p>
+      </div>
+      <div class="bn-item" id="nav-profile" onclick="goPage('profil')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/user.png" width="24" height="24">
+        <p>Profil</p>
+      </div>
+    </nav>
+  </div>
+</div>

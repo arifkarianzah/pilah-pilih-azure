@@ -1,0 +1,58 @@
+<!-- ===== SECTION: SETTINGS ===== -->
+<div class="section-content">
+  <div class="admin-profile-box">
+    <div class="apb-av">SA</div>
+    <div style="flex:1;">
+      <p class="apb-name">Super Admin PilahPilih</p>
+      <p class="apb-email">admin@pilahpilih.id</p>
+    </div>
+    <button class="btn-primary-sm">Edit Profil</button>
+  </div>
+  
+  <div class="settings-grid">
+    <div class="settings-card">
+      <h3>Sistem Platform</h3>
+      <div class="set-item">
+        <label>Maintenance Mode</label>
+        <div class="toggle-sw" onclick="this.classList.toggle('active')"><div class="toggle-thumb"></div></div>
+      </div>
+      <div class="set-item">
+        <label>Pendaftaran User Baru</label>
+        <div class="toggle-sw active" onclick="this.classList.toggle('active')"><div class="toggle-thumb"></div></div>
+      </div>
+      <div class="set-item">
+        <label>Radius Maksimal Pickup</label>
+        <input type="number" class="set-input" value="15" /> <span style="font-size:12px;color:var(--t4);margin-left:8px;">Km</span>
+      </div>
+    </div>
+    
+    <div class="settings-card">
+      <h3>Pengaturan Saldo & Biaya</h3>
+      <div class="set-item">
+        <label>Biaya Layanan (User)</label>
+        <input type="number" class="set-input" value="1000" /> <span style="font-size:12px;color:var(--t4);margin-left:8px;">Rp</span>
+      </div>
+      <div class="set-item">
+        <label>Batas Minimal Penarikan</label>
+        <input type="number" class="set-input" value="50000" /> <span style="font-size:12px;color:var(--t4);margin-left:8px;">Rp</span>
+      </div>
+      <button class="btn-primary-full" style="width:100%;margin:16px 0 0;" onclick="showToast('✅ Pengaturan berhasil disimpan')">Simpan Konfigurasi</button>
+    </div>
+    
+    <div class="settings-card">
+      <h3>Keamanan Data</h3>
+      <div class="set-item">
+        <label>Ganti Password Admin</label>
+        <button class="btn-ghost" style="padding:6px 12px;font-size:11px;">Ubah</button>
+      </div>
+      <div class="set-item">
+        <label>Backup Database SQL</label>
+        <button class="btn-ghost" style="padding:6px 12px;font-size:11px;">Unduh .sql</button>
+      </div>
+      <div class="set-item">
+        <label>Bersihkan Log Sistem</label>
+        <button class="btn-danger-full" style="padding:6px 12px;font-size:11px;width:auto;margin:0;">Clear Log</button>
+      </div>
+    </div>
+  </div>
+</div>

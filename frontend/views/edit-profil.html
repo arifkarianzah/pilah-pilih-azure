@@ -1,0 +1,52 @@
+<!-- ==================== EDIT PROFIL ==================== -->
+<div id="page-edit-profil" class="page">
+  <div class="phone-frame app-frame">
+    <div class="page-hdr">
+      <button class="back-btn" onclick="goPage('profile')"><svg viewBox="0 0 24 24"><use href="#i-back"/></svg></button>
+      <h2>✏️ Edit Profil</h2>
+      <span></span>
+    </div>
+    <div class="scroll-content">
+      <div class="form-card" style="text-align: center;">
+        <div style="position: relative; display: inline-block; margin-bottom: 20px;">
+          <div class="ph-av" style="width: 80px; height: 80px; font-size: 32px; margin: 0 auto; line-height: 80px;">RD</div>
+          <button class="icon-btn" style="position: absolute; bottom: 0; right: -10px; background: var(--primary); color: white; border-radius: 50%; width: 32px; height: 32px; font-size: 14px;" onclick="document.getElementById('editProfilePic').click()">📷</button>
+          <input type="file" id="editProfilePic" accept="image/*" style="display: none;" onchange="handleUserAvatarUpload(event)" />
+        </div>
+        
+        <div class="fg" style="text-align: left;">
+          <label>Nama Lengkap</label>
+          <div class="ig">
+            <span>👤</span>
+            <input type="text" id="editName" class="ig-input" placeholder="Masukkan nama Anda" />
+          </div>
+        </div>
+        <div class="fg" style="text-align: left;">
+          <label>Email</label>
+          <div class="ig">
+            <span>✉️</span>
+            <input type="email" id="editEmail" class="ig-input" placeholder="contoh@email.com" />
+          </div>
+        </div>
+        <div class="fg" style="text-align: left;">
+          <label>No. Handphone</label>
+          <div class="ig">
+            <span>📱</span>
+            <input type="tel" id="editPhone" class="ig-input" placeholder="08..." />
+          </div>
+        </div>
+        <div class="fg" style="text-align: left;">
+          <label>Alamat Default</label>
+          <div class="ig">
+            <span>📍</span>
+            <input type="text" id="editAddress" class="ig-input" placeholder="Alamat rumah" />
+          </div>
+        </div>
+        
+        <button class="btn-primary w-full mt16" onclick="saveProfileChanges()">💾 Simpan Perubahan</button>
+        <button class="btn-ghost w-full mt16" style="color: var(--red); border-color: var(--red);" onclick="API.Auth.logout()">🚪 Keluar Akun</button>
+      </div>
+      <div style="height:90px"></div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,120 @@
+<!-- ==================== JUAL SAMPAH ==================== -->
+<div id="page-jual-sampah" class="page">
+  <div class="phone-frame app-frame">
+    <div class="page-hdr">
+      <button class="back-btn" onclick="goPage('home')"><svg viewBox="0 0 24 24">
+          <use href="#i-back" />
+        </svg></button>
+      <h2>Jual Sampah</h2>
+      <button class="icon-btn" onclick="goPage('ai-scan')"></button>
+    </div>
+    <div class="scroll-content">
+      <div class="ai-banner" onclick="goPage('ai-scan')">
+        <div>
+          <span class="ai-tag">AI Powered</span>
+          <p class="ai-btitle">Scan Sampah Otomatis</p>
+          <p class="ai-bsub">Deteksi jenis & estimasi harga instant</p>
+        </div>
+        <div class="ai-icon">📸</div>
+      </div>
+      <div class="form-card">
+        <div class="fg"><label>Nama Sampah *</label>
+          <div class="ig"><span></span><input type="text" id="wasteNameInput"
+              placeholder="Contoh: Botol Plastik, Kardus..." /></div>
+        </div>
+        <div class="fg"><label>Kategori Sampah *</label>
+          <div class="cat-wrap">
+            <div class="cat-chip active" onclick="pickCat(this)">Plastik</div>
+            <div class="cat-chip" onclick="pickCat(this)">Kertas</div>
+            <div class="cat-chip" onclick="pickCat(this)">Kardus</div>
+            <div class="cat-chip" onclick="pickCat(this)">Kaleng</div>
+            <div class="cat-chip" onclick="pickCat(this)">Besi</div>
+            <div class="cat-chip" onclick="pickCat(this)">Aluminium</div>
+            <div class="cat-chip" onclick="pickCat(this)">Botol Kaca</div>
+            <div class="cat-chip" onclick="pickCat(this)">Elektronik</div>
+            <div class="cat-chip" onclick="pickCat(this)">Baterai</div>
+          </div>
+        </div>
+        <div class="fg"><label>Estimasi Berat *</label>
+          <div class="weight-ctrl">
+            <button onclick="chgWeight(-0.5)">−</button>
+            <div class="w-display"><span id="wVal">2.5</span><small>kg</small></div>
+            <button onclick="chgWeight(0.5)">+</button>
+          </div>
+          <p class="price-hint">Estimasi harga: <strong id="priceEst">Rp 6.250</strong></p>
+        </div>
+        <div class="fg"><label>Kondisi Sampah</label>
+          <div class="cond-wrap">
+            <span class="cond-chip active" onclick="pickCond(this)">Bersih</span>
+            <span class="cond-chip" onclick="pickCond(this)">Kotor</span>
+            <span class="cond-chip" onclick="pickCond(this)">Campuran</span>
+          </div>
+        </div>
+        <div class="fg"><label>Foto Sampah</label>
+          <div class="upload-box" onclick="handleUpload()">
+            <div class="ub-inner">📷<p>Upload Foto</p><small>JPG, PNG · Max 5MB</small></div>
+          </div>
+        </div>
+        <div class="fg"><label>Lokasi Penjemputan</label>
+          <div class="ig"><span></span><input type="text" placeholder="Masukkan alamat penjemputan..."
+              id="locationInput" /></div>
+          <div class="mini-map" onclick="openMapSelection('locationInput')">
+            <div class="mini-map-inner"> Pilih di Peta</div>
+          </div>
+        </div>
+        <div class="fg"><label>Metode Pembayaran *</label>
+          <div class="cond-wrap" id="paymentMethodWrap">
+            <span class="cond-chip active" onclick="pickPayment(this)" data-val="wallet">Transfer ke Saldo</span>
+            <span class="cond-chip" onclick="pickPayment(this)" data-val="cash">Uang Tunai (Cash)</span>
+          </div>
+          <small style="color:var(--t4); margin-top:8px; display:block;">Catatan: Untuk pembayaran tunai, pastikan
+            Petugas membawanya saat penjemputan.</small>
+        </div>
+        <div class="form-row-2">
+          <div class="fg half"><label>Tanggal</label>
+            <div class="ig"><span>📅</span><input type="date" class="ig-input" /></div>
+          </div>
+          <div class="fg half"><label>Jam</label>
+            <div class="ig"><span></span><input type="time" class="ig-input" /></div>
+          </div>
+        </div>
+        <div class="fg"><label>Catatan</label>
+          <textarea class="textarea" placeholder="Contoh: Sampah ada di depan pagar..."></textarea>
+        </div>
+        <div class="price-summary">
+          <div class="ps-row"><span>Estimasi Berat</span><span id="psSummBerat">2.5 kg</span></div>
+          <div class="ps-row"><span>Harga / kg (Pekanbaru)</span><span id="psHargaKg">Rp 2.500</span></div>
+          <div class="ps-div"></div>
+          <div class="ps-row bold"><span>Est. Pendapatan</span><span class="green" id="psTotal">Rp 6.250</span></div>
+          <div class="ps-row"><span>Bonus Poin</span><span class="gold" id="psBonus">+25 pts ⭐</span></div>
+        </div>
+        <button class="btn-primary w-full" onclick="submitPickup()">Ajukan Pickup Sekarang</button>
+      </div>
+      <div style="height:30px"></div>
+    </div>
+    <nav class="bottom-nav">
+      <div class="bn-item" onclick="goPage('home')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/home.png" width="24" height="24">
+        <p>Beranda</p>
+      </div>
+      <div class="bn-item" onclick="goPage('riwayat-pickup')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/box.png" width="24" height="24">
+        <p>Pickup</p>
+      </div>
+      <div class="bn-fab active" onclick="goPage('jual-sampah')">
+        <div class="fab-circle">
+          <img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/recycle-sign.png" width="28" height="28">
+        </div>
+        <p>Jual</p>
+      </div>
+      <div class="bn-item" onclick="goPage('reward')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/gift.png" width="24" height="24">
+        <p>Reward</p>
+      </div>
+      <div class="bn-item" onclick="goPage('profile')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/user.png" width="24" height="24">
+        <p>Profil</p>
+      </div>
+    </nav>
+  </div>
+</div>

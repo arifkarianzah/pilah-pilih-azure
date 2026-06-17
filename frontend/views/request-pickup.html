@@ -1,0 +1,60 @@
+<!-- ==================== REQUEST PICKUP ==================== -->
+<div id="page-request-pickup" class="page">
+  <div class="phone-frame app-frame">
+    <div class="page-hdr">
+      <button class="back-btn" onclick="goPage('home')"><svg viewBox="0 0 24 24"><use href="#i-back"/></svg></button>
+      <h2>🚛 Request Pickup</h2><span></span>
+    </div>
+    <div class="scroll-content">
+      <div class="form-card">
+        <div class="info-banner">ℹ️ Isi form berikut untuk menjadwalkan pickup sampah Anda</div>
+        <div class="fg"><label>Jenis Sampah</label>
+          <div class="ig"><span>♻️</span><select class="ig-input"><option>Plastik</option><option>Kertas / Kardus</option><option>Logam</option><option>Elektronik</option><option>Campuran</option></select></div>
+        </div>
+        <div class="fg"><label>Estimasi Berat (kg)</label><div class="ig"><span>⚖️</span><input type="number" class="ig-input" placeholder="Estimasi berat" /></div></div>
+        <div class="fg"><label>Alamat Pickup</label>
+          <div class="ig"><span>📍</span><input type="text" class="ig-input" value="Jl. Sudirman No. 45, Pekanbaru" id="locationInputReq" /></div>
+          <div class="mini-map" onclick="openMapSelection('locationInputReq')">
+            <div class="mini-map-inner">🗺️ Pilih di Peta</div>
+          </div>
+        </div>
+        <div class="form-row-2">
+          <div class="fg half"><label>Tanggal</label><div class="ig"><span>📅</span><input type="date" class="ig-input" /></div></div>
+          <div class="fg half"><label>Waktu</label><div class="ig"><span>⏰</span><input type="time" class="ig-input" /></div></div>
+        </div>
+        <div class="fg"><label>Catatan</label><textarea class="textarea" placeholder="Informasi tambahan..."></textarea></div>
+        <div class="nearest-officer">
+          <div class="no-ico">🚛</div>
+          <div class="no-info"><p>Petugas Terdekat</p><small>Budi Wahyono · ⭐ 4.9 · 0.8 km</small></div>
+          <span class="no-eta">~15 mnt</span>
+        </div>
+        <button class="btn-primary w-full mt16" onclick="showToast('✅ Request pickup berhasil!')">🚀 Buat Request Pickup</button>
+        <div style="height:20px"></div>
+      </div>
+    </div>
+    <nav class="bottom-nav">
+      <div class="bn-item" id="nav-home" onclick="goPage('home')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/home.png" width="24" height="24">
+        <p>Beranda</p>
+      </div>
+      <div class="bn-item" id="nav-pickup" onclick="goPage('riwayat-pickup')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/box.png" width="24" height="24">
+        <p>Pickup</p>
+      </div>
+      <div class="bn-fab" onclick="goPage('jual-sampah')">
+        <div class="fab-circle">
+          <img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/recycle-sign.png" width="28" height="28">
+        </div>
+        <p>Jual</p>
+      </div>
+      <div class="bn-item" id="nav-reward" onclick="goPage('reward')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/gift.png" width="24" height="24">
+        <p>Reward</p>
+      </div>
+      <div class="bn-item" id="nav-profile" onclick="goPage('profile')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/user.png" width="24" height="24">
+        <p>Profil</p>
+      </div>
+    </nav>
+  </div>
+</div>

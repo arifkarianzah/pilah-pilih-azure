@@ -1,0 +1,64 @@
+<!-- ==================== PROFIL PETUGAS ==================== -->
+<div id="page-profil" class="page">
+  <div class="phone-frame app-frame">
+    <div class="profile-hero-blue">
+      <div class="phb-blur"></div>
+      <div class="phb-top-bar">
+        <button class="back-btn light" onclick="goPage('home')"><svg viewBox="0 0 24 24"><use href="#i-back"/></svg></button>
+        <button class="icon-btn light" onclick="goPage('edit-profil')">✏️</button>
+      </div>
+      <div class="phb-av-wrap">
+        <div class="phb-av">BW</div>
+        <div class="phb-online">🟢</div>
+      </div>
+      <h2 class="phb-name">Budi Wahyono</h2>
+      <p class="phb-role">Petugas Pickup Terverifikasi ✓</p>
+      <div class="phb-stats">
+        <div class="phs-item"><p class="phs-v">47</p><p class="phs-l">Pickup</p></div>
+        <div class="phs-sep"></div>
+        <div class="phs-item"><p class="phs-v">⭐ 4.9</p><p class="phs-l">Rating</p></div>
+        <div class="phs-sep"></div>
+        <div class="phs-item"><p class="phs-v">Rp 1.2M</p><p class="phs-l">Pendapatan</p></div>
+      </div>
+    </div>
+    <div class="scroll-content">
+      <div style="height:8px"></div>
+      <div class="pm-group">
+        <p class="pm-group-lbl">AKUN</p>
+        <div class="pm-item" onclick="goPage('edit-profil')"><span class="pm-ico">👤</span><span class="pm-lbl">Edit Profil</span><span class="pm-arr">›</span></div>
+        <div class="pm-item" onclick="goPage('pendapatan')"><span class="pm-ico">💰</span><span class="pm-lbl">Pendapatan Saya</span><span class="pm-arr">›</span></div>
+        <div class="pm-item" onclick="goPage('riwayat')"><span class="pm-ico">📋</span><span class="pm-lbl">Riwayat Pickup</span><span class="pm-arr">›</span></div>
+      </div>
+      <div class="pm-group">
+        <p class="pm-group-lbl">PENGATURAN</p>
+        <div class="pm-item" onclick="toggleTheme()"><span class="pm-ico">🌙</span><span class="pm-lbl">Mode Gelap</span><div class="toggle-sw active"><div class="toggle-thumb"></div></div></div>
+        <div class="pm-item" onclick="goPage('chat')"><img src="https://img.icons8.com/fluency-systems-regular/48/000000/headset.png" width="24" height="24" style="margin-right:12px"><span class="pm-lbl">Pusat Bantuan</span><span class="pm-arr">›</span></div>
+      </div>
+      <button class="btn-danger w-full mt16 mb90" onclick="logout()"><img src="https://img.icons8.com/fluency-systems-regular/48/FFFFFF/exit.png" width="20" height="20" style="vertical-align:middle; margin-right:8px"> Keluar dari Akun</button>
+    </div>
+    <nav class="bottom-nav blue-nav">
+      <div class="bn-item" id="nav-home" onclick="goPage('home')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/home.png" width="24" height="24">
+        <p>Beranda</p>
+      </div>
+      <div class="bn-item" id="nav-pickup" onclick="goPage('pickup-masuk')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/download.png" width="24" height="24">
+        <p>Masuk</p>
+      </div>
+      <div class="bn-fab" onclick="showQRModal()">
+        <div class="fab-circle blue-fab">
+          <img src="https://img.icons8.com/fluency-systems-regular/48/FFFFFF/qr-code.png" width="28" height="28">
+        </div>
+        <p>Scan</p>
+      </div>
+      <div class="bn-item" id="nav-timbang" onclick="goPage('penimbangan')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/scales.png" width="24" height="24">
+        <p>Timbang</p>
+      </div>
+      <div class="bn-item active" id="nav-profile" onclick="goPage('profil')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/user.png" width="24" height="24">
+        <p>Profil</p>
+      </div>
+    </nav>
+  </div>
+</div>

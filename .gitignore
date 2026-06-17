@@ -1,0 +1,6 @@
+node_modules/
+.env
+backend/database/pilahpilih.db
+backend/database/pilahpilih.db-wal
+backend/database/pilahpilih.db-shm
+.DS_Store
