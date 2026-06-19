@@ -303,6 +303,7 @@ db.exec(SCHEMA)
     // Auto-seed Categories
     const categoriesCount = await db.get('SELECT COUNT(*) as c FROM waste_categories');
     if (categoriesCount && categoriesCount.c === 0) {
+      await db.run('ALTER TABLE waste_categories CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
       const defaultCategories = [
         { name: 'Kertas & Kardus', icon: '📦', price: 2500, desc: 'Buku, koran, kardus bekas.' },
         { name: 'Botol Plastik', icon: '🍾', price: 3000, desc: 'Botol air mineral, botol minuman.' },
