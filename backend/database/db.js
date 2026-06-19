@@ -16,7 +16,8 @@ const pool = mysql.createPool({
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
-  multipleStatements: true // Required for executing multiple schema creation queries
+  multipleStatements: true, // Required for executing multiple schema creation queries
+  ssl: process.env.DB_HOST && process.env.DB_HOST.includes('azure.com') ? { rejectUnauthorized: false } : undefined
 });
 
 pool.getConnection()
