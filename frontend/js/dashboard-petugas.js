@@ -817,6 +817,11 @@ async function fetchChat() {
     const res = await API.Pickup.getChat(window.currentPickupId);
     if (res.success) {
       const user = API.Storage.getUser();
+      // Only update if message count changes to prevent keyboard dismissal on mobile
+      const newCount = res.data.length;
+      if (msgsContainer.dataset.msgCount == newCount) return;
+      msgsContainer.dataset.msgCount = newCount;
+      
       msgsContainer.innerHTML = res.data.map(m => {
         const isMe = m.sender_id === user.id;
         const time = new Date(m.created_at).toLocaleTimeString('id-ID', {hour:'2-digit', minute:'2-digit'});
