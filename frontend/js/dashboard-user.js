@@ -382,9 +382,19 @@ let chatPollInterval = null;
 
 async function loadChat() {
   if (!window.currentPickupId) {
-    showToast('⚠️ Tidak ada pickup aktif');
-    goPage('home');
-    return;
+    try {
+      const res = await API.Pickup.getAll();
+      if (res.success && res.data.length > 0) {
+        window.currentPickupId = res.data[0].id; // Ambil riwayat chat terbaru
+      } else {
+        showToast('⚠️ Belum ada riwayat chat/pickup');
+        goPage('home');
+        return;
+      }
+    } catch(e) {
+      goPage('home');
+      return;
+    }
   }
   
   // Update chat header with correct name
