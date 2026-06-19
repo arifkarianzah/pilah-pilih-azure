@@ -23,9 +23,9 @@ router.get('/dashboard', authenticate, authorize('admin'), async (req, res, next
     const totalRevenue = { s: transactionRevenue.s + adminIncome.s };
 
     const monthly = await db.all(`
-      SELECT strftime('%Y-%m', created_at) as month, COUNT(*) as total_orders,
+      SELECT DATE_FORMAT(created_at, '%Y-%m') as month, COUNT(*) as total_orders,
              COALESCE(SUM(weight_kg),0) as total_kg, COALESCE(SUM(total_price),0) as total_revenue
-      FROM transactions WHERE status='completed' AND created_at >= date('now', '-6 months')
+      FROM transactions WHERE status='completed' AND created_at >= DATE_SUB(NOW(), INTERVAL 6 MONTH)
       GROUP BY month ORDER BY month ASC
     `);
 
