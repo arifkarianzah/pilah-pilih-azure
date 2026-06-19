@@ -928,16 +928,31 @@ function openMapSelection(inputId = 'locationInput') {
   }, 300);
 }
 
-function confirmMapSelection() {
+async function confirmMapSelection() {
   if (UserApp.selectionMarker) {
     const targetId = UserApp.currentMapInputTarget || 'locationInput';
     const inp = document.getElementById(targetId);
     if (inp) {
-      inp.value = 'Titik Peta: ' + UserApp.selectionMarker.getLatLng().lat.toFixed(4) + ', ' + UserApp.selectionMarker.getLatLng().lng.toFixed(4);
+      const lat = UserApp.selectionMarker.getLatLng().lat;
+      const lng = UserApp.selectionMarker.getLatLng().lng;
+      showToast('⏳ Mendapatkan alamat...');
+      try {
+        const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`);
+        const data = await res.json();
+        if (data && data.display_name) {
+          inp.value = data.display_name;
+          showToast('📍 Lokasi berhasil dipilih!');
+        } else {
+          inp.value = 'Titik Peta: ' + lat.toFixed(4) + ', ' + lng.toFixed(4);
+          showToast('📍 Lokasi berhasil dipilih (Alamat tidak ditemukan)');
+        }
+      } catch (err) {
+        inp.value = 'Titik Peta: ' + lat.toFixed(4) + ', ' + lng.toFixed(4);
+        showToast('📍 Lokasi berhasil dipilih (Gagal memuat alamat)');
+      }
     }
   }
   closeModal('mapModal');
-  showToast('📍 Lokasi berhasil dipilih!');
 }
 
 async function searchLocation() {
