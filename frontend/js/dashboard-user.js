@@ -121,7 +121,7 @@ function updatePriceDisplay() {
 }
 
 function chgWeight(d) {
-  UserApp.wVal = Math.max(0.5, Math.round((UserApp.wVal + d) * 10) / 10);
+  UserApp.wVal = Math.max(4.0, Math.round((UserApp.wVal + d) * 10) / 10);
   updatePriceDisplay();
 }
 
