@@ -5,7 +5,7 @@
 
 const UserApp = {
   isDark: true,
-  wVal: 2.5,
+  wVal: 5.0,
   charts: {},
   currentPage: 'home',
   currentCatId: 1,
