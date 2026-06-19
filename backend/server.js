@@ -126,3 +126,5 @@ app.listen(PORT, () => {
 module.exports = app;
 
 // Trigger deploy
+
+// Force restart to trigger DB auto-migration
