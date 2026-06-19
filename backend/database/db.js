@@ -300,15 +300,16 @@ db.exec(SCHEMA)
       }
     }
 
-    // Auto-seed Categories
+    // Auto-seed Categories (Forced update for new categories)
     const categoriesCount = await db.get('SELECT COUNT(*) as c FROM waste_categories');
-    if (categoriesCount && categoriesCount.c === 0) {
-      await db.run('ALTER TABLE waste_categories CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
+    await db.run('DELETE FROM waste_categories');
+    await db.run('ALTER TABLE waste_categories CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
       const defaultCategories = [
-        { name: 'Kertas & Kardus', icon: '📦', price: 2500, desc: 'Buku, koran, kardus bekas.' },
+        { name: 'Besi', icon: '⚙️', price: 5000, desc: 'Besi, logam bekas, paku, kaleng.' },
+        { name: 'Kertas/Buku', icon: '📄', price: 1500, desc: 'Buku bekas, koran, kertas HVS.' },
+        { name: 'Kardus', icon: '📦', price: 2500, desc: 'Kardus bekas kemasan.' },
         { name: 'Botol Plastik', icon: '🍾', price: 3000, desc: 'Botol air mineral, botol minuman.' },
-        { name: 'Besi & Logam', icon: '⚙️', price: 5000, desc: 'Kaleng, paku, pipa besi bekas.' },
-        { name: 'Kaca & Beling', icon: '🥃', price: 1000, desc: 'Botol kaca, pecahan kaca.' }
+        { name: 'Kresek', icon: '🛍️', price: 500, desc: 'Plastik kresek bekas.' }
       ];
       for (const cat of defaultCategories) {
         await db.run(
@@ -317,7 +318,6 @@ db.exec(SCHEMA)
         );
       }
       console.log('🌱 Seeded waste categories');
-    }
   })
   .catch(e => console.error('❌ Schema error:', e.message));
 
