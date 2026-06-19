@@ -349,9 +349,25 @@
           </button>
 
           <div class="divider-or"><span>atau masuk dengan</span></div>
-          <div class="social-row">
-            <button class="social-btn" onclick="socialLogin('Google')">Google</button>
-            <button class="social-btn" onclick="socialLogin('Facebook')">Facebook</button>
+          
+          <!-- Konfigurasi Google Identity Services -->
+          <div id="g_id_onload"
+               data-client_id="GANTI_DENGAN_GOOGLE_CLIENT_ID_ANDA"
+               data-context="signin"
+               data-ux_mode="popup"
+               data-callback="handleGoogleLogin"
+               data-auto_prompt="false">
+          </div>
+          
+          <!-- Tempat Tombol Google Asli Dirender -->
+          <div class="g_id_signin"
+               data-type="standard"
+               data-shape="rectangular"
+               data-theme="filled_black"
+               data-text="signin_with"
+               data-size="large"
+               data-logo_alignment="left"
+               style="display: flex; justify-content: center; width: 100%;">
           </div>
         </div>
 
@@ -452,6 +468,7 @@
 <div id="toast"></div>
 
 <script src="js/api.js"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 <script src="js/login.js"></script>
 </body>
 </html>

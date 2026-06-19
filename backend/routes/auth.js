@@ -86,15 +86,102 @@ router.post('/login',
   }
 );
 
+const nodemailer = require('nodemailer');
+const { OAuth2Client } = require('google-auth-library');
+const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
+/* POST /api/auth/google */
+router.post('/google', async (req, res, next) => {
+  try {
+    const { credential } = req.body;
+    if (!credential) return res.status(400).json({ success: false, message: 'Credential tidak valid.' });
+
+    // Verifikasi token Google
+    const ticket = await googleClient.verifyIdToken({
+      idToken: credential,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+    const payload = ticket.getPayload();
+    const { email, name, picture } = payload;
+
+    let user = await db.get('SELECT * FROM users WHERE email = ?', [email]);
+    
+    // Jika belum punya akun, otomatis buat akun (Register with Google)
+    if (!user) {
+      const id = uuidv4();
+      const defaultRole = 'user';
+      // Kita pakai password acak karena dia login pakai google
+      const randomPwd = bcrypt.hashSync(Math.random().toString(36).slice(-8), 12);
+      
+      await db.run(
+        'INSERT INTO users (id, name, email, password, role) VALUES (?,?,?,?,?)',
+        [id, name, email, randomPwd, defaultRole]
+      );
+      await db.run('INSERT INTO user_profiles (user_id, avatar) VALUES (?,?)', [id, picture]);
+      await db.run(
+        'INSERT INTO notifications (id, user_id, title, body, type) VALUES (?,?,?,?,?)',
+        [uuidv4(), id, '🎉 Selamat Datang!', `Hai ${name}! Akun berhasil dibuat via Google.`, 'success']
+      );
+      user = await db.get('SELECT * FROM users WHERE id = ?', [id]);
+    } else {
+      if (!user.is_active) return res.status(403).json({ success: false, message: 'Akun dinonaktifkan.' });
+    }
+
+    const profile = await db.get('SELECT * FROM user_profiles WHERE user_id = ?', [user.id]);
+    const token = makeToken(user);
+    res.json({ success: true, message: 'Login Google berhasil!', data: { token, user: safeUser(user), profile } });
+  } catch (err) {
+    console.error('Google Auth Error:', err);
+    res.status(401).json({ success: false, message: 'Autentikasi Google gagal.' });
+  }
+});
+
+/* KONFIGURASI NODEMAILER */
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.SMTP_EMAIL,
+    pass: process.env.SMTP_PASS
+  }
+});
+
 /* POST /api/auth/send-otp */
 router.post('/send-otp', async (req, res, next) => {
   try {
     const { identifier, purpose = 'verify' } = req.body;
     const code = String(Math.floor(100000 + Math.random() * 900000));
     const expiresAt = new Date(Date.now() + 2 * 60 * 1000).toISOString();
+    
     await db.run('INSERT INTO otp_codes (identifier, code, purpose, expires_at) VALUES (?,?,?,?)',
       [identifier, code, purpose, expiresAt]);
+    
     console.log(`[OTP] ${identifier}: ${code}`);
+    
+    // Jika identifier adalah email dan SMTP sudah diset, kirim email sungguhan
+    if (identifier.includes('@') && process.env.SMTP_EMAIL && process.env.SMTP_PASS) {
+      try {
+        await transporter.sendMail({
+          from: `"PilahPilih System" <${process.env.SMTP_EMAIL}>`,
+          to: identifier,
+          subject: 'Kode Verifikasi OTP Anda',
+          html: `
+            <div style="font-family: Arial, sans-serif; max-width: 400px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
+              <h2 style="color: #00D084; text-align: center;">PilahPilih</h2>
+              <p>Halo,</p>
+              <p>Berikut adalah kode verifikasi OTP Anda. Kode ini berlaku selama 2 menit.</p>
+              <div style="text-align: center; margin: 24px 0;">
+                <span style="font-size: 32px; font-weight: bold; letter-spacing: 4px; color: #111;">${code}</span>
+              </div>
+              <p style="font-size: 12px; color: #666; text-align: center;">Jangan berikan kode ini kepada siapapun.</p>
+            </div>
+          `
+        });
+      } catch (mailErr) {
+        console.error('Gagal mengirim email OTP:', mailErr);
+        // Tetap lanjutkan meski gagal kirim email, agar tidak crash di frontend
+      }
+    }
+
     res.json({ success: true, message: 'OTP berhasil dikirim.',
       ...(process.env.NODE_ENV === 'development' && { _dev_code: code }) });
   } catch (err) { next(err); }

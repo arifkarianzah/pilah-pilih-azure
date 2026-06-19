@@ -161,15 +161,36 @@ async function doLogin() {
   }
 }
 
-// ==================== SOCIAL LOGIN ====================
-function socialLogin(provider) {
-  showToast(`⏳ Menghubungkan ke ${provider}...`);
-  setTimeout(() => {
-    showToast(`✅ Login via ${provider} berhasil!`);
+// ==================== GOOGLE SIGN-IN ====================
+async function handleGoogleLogin(response) {
+  showToast('⏳ Memverifikasi akun Google...');
+  try {
+    const credential = response.credential;
+    const res = await API.Auth.googleLogin(credential);
+    
+    const userRole = res.data.user.role;
+    const roleNames = { admin: 'Admin', petugas: 'Petugas', user: 'User', bank_sampah: 'Pengepul' };
+    
+    // Simpan nama
+    if (res.data.user.name) {
+      localStorage.setItem('user_name', res.data.user.name);
+    }
+    
+    showToast(`✅ Login via Google berhasil sebagai ${roleNames[userRole] || 'User'}!`);
+    
+    const roleMap = {
+      admin: 'dashboard-admin.html',
+      petugas: 'dashboard-petugas.html',
+      user: 'dashboard-user.html',
+      bank_sampah: 'dashboard-pengepul.html'
+    };
+    
     setTimeout(() => {
-      window.location.href = 'dashboard-user.html';
+      window.location.href = roleMap[userRole] || 'dashboard-user.html';
     }, 800);
-  }, 1500);
+  } catch (err) {
+    showToast('❌ Gagal login Google: ' + err.message);
+  }
 }
 
 // ==================== REGISTER ====================

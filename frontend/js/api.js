@@ -88,6 +88,16 @@ const AuthAPI = {
     return res;
   },
 
+  async googleLogin(credential) {
+    const res = await post('/auth/google', { credential });
+    if (res.data?.token) {
+      Storage.setToken(res.data.token);
+      Storage.setUser(res.data.user);
+      Storage.set('pp_profile', res.data.profile);
+    }
+    return res;
+  },
+
   async sendOTP(identifier, purpose = 'verify') {
     return post('/auth/send-otp', { identifier, purpose });
   },
