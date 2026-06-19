@@ -299,6 +299,24 @@ db.exec(SCHEMA)
         await db.run('UPDATE users SET password = ?, is_verified = 1 WHERE email = ?', [seedPwd, u.email]);
       }
     }
+
+    // Auto-seed Categories
+    const categoriesCount = await db.get('SELECT COUNT(*) as c FROM waste_categories');
+    if (categoriesCount && categoriesCount.c === 0) {
+      const defaultCategories = [
+        { name: 'Kertas & Kardus', icon: '📦', price: 2500, desc: 'Buku, koran, kardus bekas.' },
+        { name: 'Botol Plastik', icon: '🍾', price: 3000, desc: 'Botol air mineral, botol minuman.' },
+        { name: 'Besi & Logam', icon: '⚙️', price: 5000, desc: 'Kaleng, paku, pipa besi bekas.' },
+        { name: 'Kaca & Beling', icon: '🥃', price: 1000, desc: 'Botol kaca, pecahan kaca.' }
+      ];
+      for (const cat of defaultCategories) {
+        await db.run(
+          'INSERT INTO waste_categories (name, icon, price_per_kg, description) VALUES (?, ?, ?, ?)',
+          [cat.name, cat.icon, cat.price, cat.desc]
+        );
+      }
+      console.log('🌱 Seeded waste categories');
+    }
   })
   .catch(e => console.error('❌ Schema error:', e.message));
 

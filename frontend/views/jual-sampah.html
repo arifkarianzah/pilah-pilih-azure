@@ -51,9 +51,10 @@
           </div>
         </div>
         <div class="fg"><label>Foto Sampah</label>
-          <div class="upload-box" onclick="handleUpload()">
+          <div class="upload-box" onclick="document.getElementById('wastePhotoInput').click()">
             <div class="ub-inner">📷<p>Upload Foto</p><small>JPG, PNG · Max 5MB</small></div>
           </div>
+          <input type="file" id="wastePhotoInput" accept="image/*" style="display:none;" onchange="showToast('📷 Foto sampah dipilih!')" />
         </div>
         <div class="fg"><label>Lokasi Penjemputan</label>
           <div class="ig"><span></span><input type="text" placeholder="Masukkan alamat penjemputan..."
