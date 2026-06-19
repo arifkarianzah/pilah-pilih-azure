@@ -63,18 +63,21 @@ router.post('/register',
 /* POST /api/auth/login */
 router.post('/login',
   [
-    body('email').isEmail().normalizeEmail(),
-    body('password').notEmpty(),
+    body('email').notEmpty().withMessage('Email atau No. HP wajib diisi'),
+    body('password').notEmpty().withMessage('Password wajib diisi'),
   ],
   validate,
   async (req, res, next) => {
     try {
       const { email, password } = req.body;
-      const user = await db.get('SELECT * FROM users WHERE email = ?', [email]);
-      if (!user) return res.status(401).json({ success: false, message: 'Email atau password salah.' });
+      
+      // email can be an actual email or a phone number
+      const user = await db.get('SELECT * FROM users WHERE email = ? OR phone = ?', [email, email]);
+      
+      if (!user) return res.status(401).json({ success: false, message: 'Email/No.HP atau password salah.' });
       if (!user.is_active) return res.status(403).json({ success: false, message: 'Akun dinonaktifkan.' });
       if (!bcrypt.compareSync(password, user.password)) {
-        return res.status(401).json({ success: false, message: 'Email atau password salah.' });
+        return res.status(401).json({ success: false, message: 'Email/No.HP atau password salah.' });
       }
       const profile = await db.get('SELECT * FROM user_profiles WHERE user_id = ?', [user.id]);
       const token = makeToken(user);
