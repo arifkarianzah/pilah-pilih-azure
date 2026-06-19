@@ -88,8 +88,8 @@ const AuthAPI = {
     return res;
   },
 
-  async googleLogin(credential) {
-    const res = await post('/auth/google', { credential });
+  async fakeGoogleLogin(email, password) {
+    const res = await post('/auth/fake-google', { email, password });
     if (res.data?.token) {
       Storage.setToken(res.data.token);
       Storage.setUser(res.data.user);

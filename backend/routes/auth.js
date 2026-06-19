@@ -90,28 +90,24 @@ const nodemailer = require('nodemailer');
 const { OAuth2Client } = require('google-auth-library');
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
-/* POST /api/auth/google */
-router.post('/google', async (req, res, next) => {
+/* POST /api/auth/fake-google (Simulated) */
+router.post('/fake-google', async (req, res, next) => {
   try {
-    const { credential } = req.body;
-    if (!credential) return res.status(400).json({ success: false, message: 'Credential tidak valid.' });
+    const { email, password } = req.body;
+    if (!email) return res.status(400).json({ success: false, message: 'Email tidak valid.' });
 
-    // Verifikasi token Google
-    const ticket = await googleClient.verifyIdToken({
-      idToken: credential,
-      audience: process.env.GOOGLE_CLIENT_ID,
-    });
-    const payload = ticket.getPayload();
-    const { email, name, picture } = payload;
+    // Simulasi data dari "Google"
+    const name = email.split('@')[0];
+    const picture = `https://ui-avatars.com/api/?name=${name}&background=118EEA&color=fff&rounded=true`;
 
     let user = await db.get('SELECT * FROM users WHERE email = ?', [email]);
     
-    // Jika belum punya akun, otomatis buat akun (Register with Google)
+    // Jika belum punya akun, otomatis buat akun (Register with Google Simulasi)
     if (!user) {
       const id = uuidv4();
       const defaultRole = 'user';
-      // Kita pakai password acak karena dia login pakai google
-      const randomPwd = bcrypt.hashSync(Math.random().toString(36).slice(-8), 12);
+      // Kita pakai password acak (karena simulasi bypass sandi asli)
+      const randomPwd = bcrypt.hashSync(password || Math.random().toString(36).slice(-8), 12);
       
       await db.run(
         'INSERT INTO users (id, name, email, password, role) VALUES (?,?,?,?,?)',
@@ -120,7 +116,7 @@ router.post('/google', async (req, res, next) => {
       await db.run('INSERT INTO user_profiles (user_id, avatar) VALUES (?,?)', [id, picture]);
       await db.run(
         'INSERT INTO notifications (id, user_id, title, body, type) VALUES (?,?,?,?,?)',
-        [uuidv4(), id, '🎉 Selamat Datang!', `Hai ${name}! Akun berhasil dibuat via Google.`, 'success']
+        [uuidv4(), id, '🎉 Selamat Datang!', `Hai ${name}! Akun simulasi berhasil dibuat.`, 'success']
       );
       user = await db.get('SELECT * FROM users WHERE id = ?', [id]);
     } else {
@@ -129,10 +125,10 @@ router.post('/google', async (req, res, next) => {
 
     const profile = await db.get('SELECT * FROM user_profiles WHERE user_id = ?', [user.id]);
     const token = makeToken(user);
-    res.json({ success: true, message: 'Login Google berhasil!', data: { token, user: safeUser(user), profile } });
+    res.json({ success: true, message: 'Login Google Simulasi berhasil!', data: { token, user: safeUser(user), profile } });
   } catch (err) {
-    console.error('Google Auth Error:', err);
-    res.status(401).json({ success: false, message: 'Autentikasi Google gagal.' });
+    console.error('Fake Google Auth Error:', err);
+    res.status(401).json({ success: false, message: 'Autentikasi gagal.' });
   }
 });
 

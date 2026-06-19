@@ -161,17 +161,36 @@ async function doLogin() {
   }
 }
 
-// ==================== GOOGLE SIGN-IN ====================
-async function handleGoogleLogin(response) {
-  showToast('⏳ Memverifikasi akun Google...');
+// ==================== GOOGLE SIGN-IN (FAKE SIMULATION) ====================
+function openFakeGoogle() {
+  const modal = document.getElementById('fakeGoogleModal');
+  if (modal) {
+    modal.style.display = 'flex';
+    document.getElementById('fakeGEmail').value = '';
+    document.getElementById('fakeGPwd').value = '';
+  }
+}
+
+async function processFakeGoogle() {
+  const email = document.getElementById('fakeGEmail').value.trim();
+  const pwd = document.getElementById('fakeGPwd').value;
+  
+  if (!email || !email.includes('@')) {
+    showToast('❌ Masukkan email yang valid'); return;
+  }
+  if (!pwd) {
+    showToast('❌ Masukkan kata sandi (apa saja bebas)'); return;
+  }
+
+  showToast('⏳ Memverifikasi akun Google Simulasi...');
+  document.getElementById('fakeGoogleModal').style.display = 'none';
+
   try {
-    const credential = response.credential;
-    const res = await API.Auth.googleLogin(credential);
+    const res = await API.Auth.fakeGoogleLogin(email, pwd);
     
     const userRole = res.data.user.role;
     const roleNames = { admin: 'Admin', petugas: 'Petugas', user: 'User', bank_sampah: 'Pengepul' };
     
-    // Simpan nama
     if (res.data.user.name) {
       localStorage.setItem('user_name', res.data.user.name);
     }
