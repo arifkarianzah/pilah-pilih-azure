@@ -296,10 +296,14 @@ function handleUserAvatarUpload(event) {
 async function loadJualSampah() {
   // Fetch kategori dari database
   try {
-    const res = await API.Category.getAll();
-    if (res.success && res.data && res.data.length > 0) {
-      const cats = res.data;
-      const catWrap = document.querySelector('.cat-wrap');
+    const cats = [
+      { id: 1, name: 'Besi', price_per_kg: 5000 },
+      { id: 2, name: 'Kertas/Buku', price_per_kg: 1500 },
+      { id: 3, name: 'Kardus', price_per_kg: 2500 },
+      { id: 4, name: 'Botol Plastik', price_per_kg: 3000 },
+      { id: 5, name: 'Kresek', price_per_kg: 500 }
+    ];
+    const catWrap = document.querySelector('.cat-wrap');
       if (catWrap) {
         catWrap.innerHTML = cats.map((cat, idx) =>
           `<div class="cat-chip ${idx === 0 ? 'active' : ''}" onclick="pickCat(this)" data-id="${cat.id}" data-price="${cat.price_per_kg}">${cat.name}</div>`
@@ -309,7 +313,6 @@ async function loadJualSampah() {
         UserApp.currentCatPrice = cats[0].price_per_kg;
         updatePriceDisplay();
       }
-    }
   } catch (err) {
     console.error('Gagal load kategori', err);
   }
