@@ -300,10 +300,12 @@ db.exec(SCHEMA)
       }
     }
 
-    // Auto-seed Categories (Forced update for new categories)
+    // Auto-seed Categories (Restored check)
     const categoriesCount = await db.get('SELECT COUNT(*) as c FROM waste_categories');
-    await db.run('DELETE FROM waste_categories');
-    await db.run('ALTER TABLE waste_categories CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
+    if (categoriesCount && categoriesCount.c === 5) {
+      // Already seeded with the exact 5 items, do nothing
+    } else if (categoriesCount && categoriesCount.c === 0) {
+      await db.run('ALTER TABLE waste_categories CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
       const defaultCategories = [
         { name: 'Besi', icon: '⚙️', price: 5000, desc: 'Besi, logam bekas, paku, kaleng.' },
         { name: 'Kertas/Buku', icon: '📄', price: 1500, desc: 'Buku bekas, koran, kertas HVS.' },
@@ -318,6 +320,7 @@ db.exec(SCHEMA)
         );
       }
       console.log('🌱 Seeded waste categories');
+    }
   })
   .catch(e => console.error('❌ Schema error:', e.message));
 
