@@ -379,6 +379,37 @@ function closeModal(id) {
 
 // ==================== CHAT ====================
 let chatPollInterval = null;
+let homeChatInterval = null;
+
+async function checkUnreadChatBadge() {
+  const badgeEl = document.getElementById('homeChatBadge');
+  if (!badgeEl) return;
+  try {
+    const res = await API.Pickup.getAll();
+    if (res.success && res.data.length > 0) {
+      const latest = res.data[0];
+      if (latest.status === 'completed' || latest.status === 'cancelled') {
+        badgeEl.style.display = 'none';
+        return;
+      }
+      const chatRes = await API.Chat.getChat(latest.id);
+      if (chatRes.success) {
+        const msgs = chatRes.data;
+        const me = API.Storage.getUser();
+        const lastRead = parseInt(localStorage.getItem('last_read_chat_' + latest.id) || '0');
+        let petugasCount = 0;
+        msgs.forEach(m => { if (m.sender_id !== me.id) petugasCount++; });
+        let unread = petugasCount - lastRead;
+        if (unread > 0) {
+          badgeEl.textContent = unread;
+          badgeEl.style.display = 'flex';
+        } else {
+          badgeEl.style.display = 'none';
+        }
+      }
+    } else { badgeEl.style.display = 'none'; }
+  } catch(e) { badgeEl.style.display = 'none'; }
+}
 
 async function loadChat() {
   if (!window.currentPickupId) {
@@ -430,6 +461,9 @@ async function loadChat() {
         avEl.style.background = 'transparent';
       }
       if (statEl) statEl.innerHTML = `● ORD-${p.id.substring(0,6).toUpperCase()} · ${p.status.toUpperCase()}`;
+      
+      checkUnreadChatBadge();
+      if (!homeChatInterval) homeChatInterval = setInterval(checkUnreadChatBadge, 5000);
     }
   } catch(e) { console.error('Gagal memuat header chat', e); }
 
@@ -449,9 +483,14 @@ async function fetchChat() {
       const newCount = res.data.length;
       if (msgsContainer.dataset.msgCount == newCount) return;
       msgsContainer.dataset.msgCount = newCount;
-      
-      msgsContainer.innerHTML = res.data.map(m => {
-        const isMe = m.sender_id === user.id;
+      const msgs = res.data;
+      const me = API.Storage.getUser();
+      let petugasCount = 0;
+
+      msgsContainer.innerHTML = '<div class="chat-date">Hari ini</div>';
+      msgs.forEach(m => {
+        const isMe = (m.sender_id === me.id);
+        if (!isMe) petugasCount++;
         const time = new Date(m.created_at).toLocaleTimeString('id-ID', {hour:'2-digit', minute:'2-digit'});
         
         let avatarHtml = '';
@@ -467,7 +506,7 @@ async function fetchChat() {
             : `<div class="cm-av" style="background:transparent;"><img src="https://ui-avatars.com/api/?name=Petugas&background=0A4222&color=fff&rounded=true" style="width:100%;height:100%;border-radius:50%;object-fit:cover;"></div>`;
         }
 
-        return `
+        msgsContainer.innerHTML += `
           <div class="chat-msg ${isMe ? 'sent' : 'recv'}">
             ${avatarHtml}
             <div class="cm-bubble ${isMe ? 'sent-b-blue' : 'recv-b'}">
@@ -475,7 +514,8 @@ async function fetchChat() {
             </div>
           </div>
         `;
-      }).join('');
+      });
+      localStorage.setItem('last_read_chat_' + window.currentPickupId, petugasCount);
       msgsContainer.scrollTop = msgsContainer.scrollHeight;
     }
   } catch(err) { console.error('Chat error', err); }
@@ -661,6 +701,9 @@ async function initDashboard() {
     
     // Check for unrated pickups
     checkUnratedPickups();
+    
+    checkUnreadChatBadge();
+    if (!homeChatInterval) homeChatInterval = setInterval(checkUnreadChatBadge, 5000);
   } catch (err) {
     console.error('Gagal memuat data dashboard', err);
   }
