@@ -300,11 +300,10 @@ db.exec(SCHEMA)
       }
     }
 
-    // Auto-seed Categories (Restored check)
+    // Auto-seed Categories (Clean up duplicates)
     const categoriesCount = await db.get('SELECT COUNT(*) as c FROM waste_categories');
-    if (categoriesCount && categoriesCount.c === 5) {
-      // Already seeded with the exact 5 items, do nothing
-    } else if (categoriesCount && categoriesCount.c === 0) {
+    if (categoriesCount && categoriesCount.c !== 5) {
+      await db.run('DELETE FROM waste_categories');
       await db.run('ALTER TABLE waste_categories CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
       const defaultCategories = [
         { name: 'Besi', icon: '⚙️', price: 5000, desc: 'Besi, logam bekas, paku, kaleng.' },
