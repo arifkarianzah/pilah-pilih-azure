@@ -175,7 +175,7 @@ async function initPetugasHome() {
     }
     
     // Fetch profile to get rating
-    const profileRes = await fetch('http://localhost:5000/api/users/profile', {
+    const profileRes = await fetch(window.API_BASE + '/users/profile', {
       headers: { 'Authorization': `Bearer ${API.Storage.getToken()}` }
     });
     const profileData = await profileRes.json();
@@ -323,7 +323,7 @@ async function initPetugasProfil() {
     }
   }
   try {
-    const res = await fetch('http://localhost:5000/api/users/profile', {
+    const res = await fetch(window.API_BASE + '/users/profile', {
       headers: { 'Authorization': `Bearer ${API.Storage.getToken()}` }
     });
     const data = await res.json();
@@ -406,7 +406,7 @@ window.processTopUp = async function() {
   btn.disabled = true;
 
   try {
-    const res = await fetch('http://localhost:5000/api/users/topup', {
+    const res = await fetch(window.API_BASE + '/users/topup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -677,7 +677,7 @@ async function konfirmasiTimbang() {
   const btn = document.getElementById('btnKonfirmasiTimbang');
   if (btn) { btn.textContent = '⏳ Memproses...'; btn.disabled = true; }
   try {
-    const res = await fetch(`http://localhost:5000/api/pickups/${window.currentPickupId}/complete`, {
+    const res = await fetch(`${window.API_BASE}/pickups/${window.currentPickupId}/complete`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

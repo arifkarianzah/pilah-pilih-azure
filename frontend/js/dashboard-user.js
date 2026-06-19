@@ -864,7 +864,7 @@ async function searchLocation() {
 async function checkUnratedPickups() {
   try {
     const res = await API.Transaction.getAll(); // Wait, in the user API, it's actually API.Pickup.getAll() or similar. We should check if we can get pickups. Actually let's fetch /api/pickups directly.
-    const pickupRes = await fetch('http://localhost:5000/api/pickups', {
+    const pickupRes = await fetch(window.API_BASE + '/pickups', {
       headers: { 'Authorization': `Bearer ${API.Storage.getToken()}` }
     });
     const pickups = await pickupRes.json();
@@ -903,7 +903,7 @@ async function submitRating() {
   btn.disabled = true;
   
   try {
-    const res = await fetch(`http://localhost:5000/api/pickups/${pickupId}/rate`, {
+    const res = await fetch(`${window.API_BASE}/pickups/${pickupId}/rate`, {
       method: 'POST',
       headers: { 
         'Authorization': `Bearer ${API.Storage.getToken()}`,

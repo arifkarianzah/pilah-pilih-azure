@@ -4,7 +4,11 @@
    ===================================================== */
 'use strict';
 
-const API_BASE = 'http://localhost:5000/api';
+const IS_PROD = window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
+const API_BASE = IS_PROD 
+  ? 'https://pilah-pilih-backend.azurewebsites.net/api' // Ganti dengan nama App Service Anda nanti
+  : 'http://localhost:5000/api';
+window.API_BASE = API_BASE;
 
 /* ── STORAGE HELPERS ── */
 const Storage = {
@@ -278,4 +282,4 @@ window.API = {
   Error: APIError,
 };
 
-console.log('🌱 Pilah Pilih API Client v1.0 loaded → http://localhost:5000/api');
+console.log(`🌱 Pilah Pilih API Client v1.0 loaded → ${API_BASE}`);

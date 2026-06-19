@@ -35,7 +35,7 @@ router.put('/profile', authenticate,
       await db.run(
         `UPDATE users SET name = COALESCE(?,name), phone = COALESCE(?,phone),
          address = COALESCE(?,address), city = COALESCE(?,city), avatar = COALESCE(?,avatar),
-         updated_at = datetime('now') WHERE id = ?`,
+         updated_at = NOW() WHERE id = ?`,
         [name||null, phone||null, address||null, city||null, avatar||null, req.user.id]
       );
       const updated = await db.get('SELECT * FROM users WHERE id = ?', [req.user.id]);
@@ -58,7 +58,7 @@ router.put('/change-password', authenticate,
       if (!bcrypt.compareSync(old_password, user.password)) {
         return res.status(400).json({ success: false, message: 'Password lama salah.' });
       }
-      await db.run('UPDATE users SET password = ?, updated_at = datetime("now") WHERE id = ?',
+      await db.run('UPDATE users SET password = ?, updated_at = NOW() WHERE id = ?',
         [bcrypt.hashSync(new_password, 12), req.user.id]);
       res.json({ success: true, message: 'Password berhasil diubah.' });
     } catch (err) { next(err); }
@@ -75,7 +75,7 @@ router.post('/topup', authenticate, async (req, res, next) => {
     
     // Add to user_profiles
     await db.run(
-      'UPDATE user_profiles SET wallet_balance = wallet_balance + ?, updated_at = datetime("now") WHERE user_id = ?',
+      'UPDATE user_profiles SET wallet_balance = wallet_balance + ?, updated_at = NOW() WHERE user_id = ?',
       [amount, req.user.id]
     );
     
@@ -145,7 +145,7 @@ router.get('/', authenticate, authorize('admin'), async (req, res, next) => {
 router.patch('/:id/status', authenticate, authorize('admin'), async (req, res, next) => {
   try {
     const { is_active } = req.body;
-    await db.run('UPDATE users SET is_active = ?, updated_at = datetime("now") WHERE id = ?',
+    await db.run('UPDATE users SET is_active = ?, updated_at = NOW() WHERE id = ?',
       [is_active ? 1 : 0, req.params.id]);
     res.json({ success: true, message: `User berhasil di${is_active?'aktifkan':'nonaktifkan'}.` });
   } catch (err) { next(err); }

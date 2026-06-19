@@ -61,7 +61,7 @@ router.patch('/transactions/:id/status', authenticate, authorize('admin', 'bank_
     const trx = await db.get('SELECT * FROM pengepul_transactions WHERE id = ?', [req.params.id]);
     if (!trx) return res.status(404).json({ success: false, message: 'Transaksi tidak ditemukan' });
 
-    await db.run('UPDATE pengepul_transactions SET status = ?, updated_at = datetime("now") WHERE id = ?', [status, req.params.id]);
+    await db.run('UPDATE pengepul_transactions SET status = ?, updated_at = NOW() WHERE id = ?', [status, req.params.id]);
     res.json({ success: true, message: 'Status berhasil diubah' });
   } catch (err) { next(err); }
 });
@@ -71,7 +71,7 @@ router.post('/transactions/:id/schedule', authenticate, authorize('bank_sampah',
   try {
     const { pickup_date, pickup_time, driver_name, vehicle_plate, pickup_notes } = req.body;
     await db.run(
-      `UPDATE pengepul_transactions SET pickup_date = ?, pickup_time = ?, driver_name = ?, vehicle_plate = ?, pickup_notes = ?, status = 'DIJADWALKAN', updated_at = datetime("now") WHERE id = ?`,
+      `UPDATE pengepul_transactions SET pickup_date = ?, pickup_time = ?, driver_name = ?, vehicle_plate = ?, pickup_notes = ?, status = 'DIJADWALKAN', updated_at = NOW() WHERE id = ?`,
       [pickup_date, pickup_time, driver_name, vehicle_plate, pickup_notes, req.params.id]
     );
     res.json({ success: true, message: 'Jadwal berhasil diatur' });
@@ -91,7 +91,7 @@ router.post('/transactions/:id/verify', authenticate, authorize('admin', 'bank_s
     const status = diffPercent > 10 ? 'PERLU_VERIFIKASI_ADMIN' : 'DIVERIFIKASI';
 
     await db.run(
-      `UPDATE pengepul_transactions SET actual_weight = ?, weight_difference = ?, verification_notes = ?, status = ?, updated_at = datetime("now") WHERE id = ?`,
+      `UPDATE pengepul_transactions SET actual_weight = ?, weight_difference = ?, verification_notes = ?, status = ?, updated_at = NOW() WHERE id = ?`,
       [actual_weight, weight_difference, verification_notes, status, req.params.id]
     );
     res.json({ success: true, message: 'Verifikasi berhasil', data: { status, weight_difference } });
@@ -124,7 +124,7 @@ router.post('/transactions/:id/pay', authenticate, authorize('admin', 'bank_samp
     // Kurangi stock_kg dari waste_categories
     await db.run('UPDATE waste_categories SET stock_kg = stock_kg - ? WHERE id = ?', [finalWeight, trx.category_id]);
 
-    await db.run('UPDATE pengepul_transactions SET status = "DIBAYAR", updated_at = datetime("now") WHERE id = ?', [req.params.id]);
+    await db.run('UPDATE pengepul_transactions SET status = "DIBAYAR", updated_at = NOW() WHERE id = ?', [req.params.id]);
     
     // Catat mutasi wallet pengepul
     await db.run(

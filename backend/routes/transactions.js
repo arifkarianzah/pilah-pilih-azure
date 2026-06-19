@@ -40,7 +40,7 @@ router.post('/', authenticate, authorize('user'),
       const pm = payment_method || 'wallet';
 
       await db.run(
-        `INSERT INTO transactions (id,user_id,category_id,waste_name,weight_kg,price_per_kg,total_price,points_earned,condition,address,latitude,longitude,notes,pickup_date,pickup_time,payment_method)
+        `INSERT INTO transactions (id,user_id,category_id,waste_name,weight_kg,price_per_kg,total_price,points_earned,\`condition\`,address,latitude,longitude,notes,pickup_date,pickup_time,payment_method)
          VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
         [trxId, req.user.id, category_id, waste_name, weight_kg, price_per_kg, total_price, points_earned,
          condition, address, latitude||null, longitude||null, notes||null, pickup_date||null, pickup_time||null, pm]
@@ -137,15 +137,15 @@ router.patch('/:id/status', authenticate, async (req, res, next) => {
       }
     }
 
-    await db.run(`UPDATE transactions SET status = ?, updated_at = datetime('now') WHERE id = ?`, [status, trx.id]);
-    await db.run(`UPDATE pickups SET status = ?, updated_at = datetime('now') WHERE transaction_id = ?`, [status, trx.id]);
+    await db.run(`UPDATE transactions SET status = ?, updated_at = NOW() WHERE id = ?`, [status, trx.id]);
+    await db.run(`UPDATE pickups SET status = ?, updated_at = NOW() WHERE transaction_id = ?`, [status, trx.id]);
 
     if (status === 'completed') {
       const isCash = (trx.payment_method === 'cash');
       
       if (isCash) {
         await db.run(
-          `UPDATE user_profiles SET points=points+?, xp=xp+?, total_sold_kg=total_sold_kg+?, total_income=total_income+?, total_pickups=total_pickups+1, carbon_saved=carbon_saved+?, updated_at=datetime('now') WHERE user_id=?`,
+          `UPDATE user_profiles SET points=points+?, xp=xp+?, total_sold_kg=total_sold_kg+?, total_income=total_income+?, total_pickups=total_pickups+1, carbon_saved=carbon_saved+?, updated_at=NOW() WHERE user_id=?`,
           [trx.points_earned, trx.points_earned, trx.weight_kg, trx.total_price, trx.weight_kg * 0.5, trx.user_id]
         );
         await db.run(
@@ -156,7 +156,7 @@ router.patch('/:id/status', authenticate, async (req, res, next) => {
       } else {
         // Deduct Petugas Wallet
         if (req.user.role === 'petugas') {
-          await db.run('UPDATE user_profiles SET wallet_balance = wallet_balance - ?, updated_at = datetime("now") WHERE user_id = ?', [trx.total_price, req.user.id]);
+          await db.run('UPDATE user_profiles SET wallet_balance = wallet_balance - ?, updated_at = NOW() WHERE user_id = ?', [trx.total_price, req.user.id]);
           await db.run(
             'INSERT INTO wallet_transactions (id,user_id,type,amount,description,reference) VALUES (?,?,?,?,?,?)',
             [uuidv4(), req.user.id, 'debit', trx.total_price, `Pembayaran ke User untuk ${trx.waste_name}`, trx.id]
@@ -165,7 +165,7 @@ router.patch('/:id/status', authenticate, async (req, res, next) => {
         
         // Add to User Wallet
         await db.run(
-          `UPDATE user_profiles SET wallet_balance=wallet_balance+?, points=points+?, xp=xp+?, total_sold_kg=total_sold_kg+?, total_income=total_income+?, total_pickups=total_pickups+1, carbon_saved=carbon_saved+?, updated_at=datetime('now') WHERE user_id=?`,
+          `UPDATE user_profiles SET wallet_balance=wallet_balance+?, points=points+?, xp=xp+?, total_sold_kg=total_sold_kg+?, total_income=total_income+?, total_pickups=total_pickups+1, carbon_saved=carbon_saved+?, updated_at=NOW() WHERE user_id=?`,
           [trx.total_price, trx.points_earned, trx.points_earned, trx.weight_kg, trx.total_price, trx.weight_kg * 0.5, trx.user_id]
         );
         await db.run(
@@ -191,8 +191,8 @@ router.delete('/:id', authenticate, async (req, res, next) => {
     if (!['pending','confirmed'].includes(trx.status)) {
       return res.status(400).json({ success: false, message: 'Tidak dapat dibatalkan.' });
     }
-    await db.run(`UPDATE transactions SET status='cancelled', updated_at=datetime('now') WHERE id=?`, [trx.id]);
-    await db.run(`UPDATE pickups SET status='cancelled', updated_at=datetime('now') WHERE transaction_id=?`, [trx.id]);
+    await db.run(`UPDATE transactions SET status='cancelled', updated_at=NOW() WHERE id=?`, [trx.id]);
+    await db.run(`UPDATE pickups SET status='cancelled', updated_at=NOW() WHERE transaction_id=?`, [trx.id]);
     res.json({ success: true, message: 'Pesanan berhasil dibatalkan.' });
   } catch (err) { next(err); }
 });

@@ -214,7 +214,7 @@ async function deleteUser(id, role) {
   if (!confirm('AWAS: Anda yakin ingin menghapus user ini? Seluruh data riwayat dan transaksinya akan ikut terhapus secara permanen dari database.')) return;
   
   try {
-    const res = await fetch(`http://localhost:5000/api/admin/users/${id}`, {
+    const res = await fetch(`${window.API_BASE}/admin/users/${id}`, {
       method: 'DELETE',
       headers: { 'Authorization': `Bearer ${API.Storage.getToken()}` }
     });
@@ -290,7 +290,7 @@ async function submitAddData(type) {
   btn.disabled = true;
 
   if (type === 'user' || type === 'petugas' || type === 'bank') {
-    endpoint = 'http://localhost:5000/api/auth/register';
+    endpoint = window.API_BASE + '/auth/register';
     const roleValue = type === 'bank' ? 'bank_sampah' : type;
     payload = {
       name: document.getElementById('addName').value,
@@ -299,7 +299,7 @@ async function submitAddData(type) {
       role: roleValue
     };
   } else if (type === 'kategori') {
-    endpoint = 'http://localhost:5000/api/categories';
+    endpoint = window.API_BASE + '/categories';
     payload = {
       name: document.getElementById('addCatName').value,
       icon: document.getElementById('addCatIcon').value || '♻️',
@@ -307,7 +307,7 @@ async function submitAddData(type) {
       description: document.getElementById('addCatDesc').value
     };
   } else if (type === 'reward') {
-    endpoint = 'http://localhost:5000/api/admin/rewards';
+    endpoint = window.API_BASE + '/admin/rewards';
     payload = {
       name: document.getElementById('addRewName').value,
       icon: document.getElementById('addRewIcon').value || '🎁',
@@ -404,7 +404,7 @@ async function fetchDashboardData() {
 
 async function fetchUsersData() {
   try {
-    const res = await fetch('http://localhost:5000/api/users', {
+    const res = await fetch(window.API_BASE + '/users', {
       headers: { 'Authorization': `Bearer ${API.Storage.getToken()}` }
     });
     const data = await res.json();
@@ -502,7 +502,7 @@ function filterUsersList(query) {
 
 async function fetchPetugasData() {
   try {
-    const res = await fetch('http://localhost:5000/api/admin/petugas-stats', {
+    const res = await fetch(window.API_BASE + '/admin/petugas-stats', {
       headers: { 'Authorization': `Bearer ${API.Storage.getToken()}` }
     });
     const data = await res.json();
@@ -550,7 +550,7 @@ async function fetchPetugasData() {
 
 async function fetchBankData() {
   try {
-    const res = await fetch('http://localhost:5000/api/admin/bank-stats', {
+    const res = await fetch(window.API_BASE + '/admin/bank-stats', {
       headers: { 'Authorization': `Bearer ${API.Storage.getToken()}` }
     });
     const data = await res.json();
@@ -605,7 +605,7 @@ async function updatePrice(id, name) {
   }
   
   try {
-    const res = await fetch(`http://localhost:5000/api/categories/${id}`, {
+    const res = await fetch(`${window.API_BASE}/categories/${id}`, {
       method: 'PUT',
       headers: { 
         'Authorization': `Bearer ${API.Storage.getToken()}`,
@@ -628,7 +628,7 @@ async function updatePrice(id, name) {
 
 async function fetchRewardsData() {
   try {
-    const res = await fetch('http://localhost:5000/api/rewards', {
+    const res = await fetch(window.API_BASE + '/rewards', {
       headers: { 'Authorization': `Bearer ${API.Storage.getToken()}` }
     });
     const data = await res.json();
@@ -651,7 +651,7 @@ async function fetchRewardsData() {
 
 async function fetchSmartCityData() {
   try {
-    const res = await fetch('http://localhost:5000/api/admin/smartcity', {
+    const res = await fetch(window.API_BASE + '/admin/smartcity', {
       headers: { 'Authorization': `Bearer ${API.Storage.getToken()}` }
     });
     const data = await res.json();
@@ -724,7 +724,7 @@ async function fetchSmartCityData() {
 
 async function fetchArticlesData() {
   try {
-    const res = await fetch('http://localhost:5000/api/admin/articles', {
+    const res = await fetch(window.API_BASE + '/admin/articles', {
       headers: { 'Authorization': `Bearer ${API.Storage.getToken()}` }
     });
     const data = await res.json();
@@ -748,7 +748,7 @@ async function fetchArticlesData() {
 
 async function fetchNotifData() {
   try {
-    const res = await fetch('http://localhost:5000/api/admin/notifications', {
+    const res = await fetch(window.API_BASE + '/admin/notifications', {
       headers: { 'Authorization': `Bearer ${API.Storage.getToken()}` }
     });
     const data = await res.json();
@@ -1019,7 +1019,7 @@ async function initAdminDashboard() {
     }
 
     // 3. Fetch Data Users untuk Tabel (jika diperlukan)
-    const usersRes = await fetch('http://localhost:5000/api/users', {
+    const usersRes = await fetch(window.API_BASE + '/users', {
       headers: { 'Authorization': `Bearer ${API.Storage.getToken()}` }
     }).catch(() => null);
     if (usersRes && usersRes.ok && document.getElementById('section-users')) {
@@ -1046,7 +1046,7 @@ async function initAdminDashboard() {
 // ==================== RECENT TRANSACTIONS ====================
 async function fetchRecentTransactions() {
   try {
-    const res = await fetch('http://localhost:5000/api/transactions?limit=15', {
+    const res = await fetch(window.API_BASE + '/transactions?limit=15', {
       headers: { 'Authorization': `Bearer ${API.Storage.getToken()}` }
     });
     const data = await res.json();
@@ -1084,7 +1084,7 @@ async function fetchRecentTransactions() {
 
 async function updateTxnStatus(id, status) {
   try {
-    const res = await fetch(`http://localhost:5000/api/transactions/${id}/status`, {
+    const res = await fetch(`${window.API_BASE}/transactions/${id}/status`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${API.Storage.getToken()}` },
       body: JSON.stringify({ status })

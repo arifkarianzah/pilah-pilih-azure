@@ -110,11 +110,11 @@ router.patch('/:id/accept', authenticate, authorize('petugas'), async (req, res,
 
     const eta = Math.floor(Math.random() * 15) + 5;
     await db.run(
-      `UPDATE pickups SET petugas_id=?, status='confirmed', assigned_at=datetime('now'), eta_minutes=?, updated_at=datetime('now') WHERE id=?`,
+      `UPDATE pickups SET petugas_id=?, status='confirmed', assigned_at=NOW(), eta_minutes=?, updated_at=NOW() WHERE id=?`,
       [req.user.id, eta, req.params.id]
     );
     await db.run(
-      `UPDATE transactions SET petugas_id=?, status='confirmed', updated_at=datetime('now') WHERE id=?`,
+      `UPDATE transactions SET petugas_id=?, status='confirmed', updated_at=NOW() WHERE id=?`,
       [req.user.id, pickup.transaction_id]
     );
     await db.run(
@@ -170,15 +170,15 @@ router.post('/:id/complete', authenticate, authorize('petugas', 'admin', 'bank_s
     }
 
     await db.run(
-      `UPDATE transactions SET weight_kg=?, total_price=?, points_earned=?, status='completed', updated_at=datetime('now') WHERE id=?`,
+      `UPDATE transactions SET weight_kg=?, total_price=?, points_earned=?, status='completed', updated_at=NOW() WHERE id=?`,
       [weight_kg, actual_price, actual_points, trx.id]
     );
-    await db.run(`UPDATE pickups SET status='completed', updated_at=datetime('now') WHERE id=?`, [req.params.id]);
+    await db.run(`UPDATE pickups SET status='completed', updated_at=NOW() WHERE id=?`, [req.params.id]);
     await db.run(`UPDATE waste_categories SET stock_kg = stock_kg + ? WHERE id=?`, [weight_kg, trx.category_id]);
 
     if (isCash) {
       await db.run(
-        `UPDATE user_profiles SET points=points+?, xp=xp+?, total_sold_kg=total_sold_kg+?, total_income=total_income+?, total_pickups=total_pickups+1, carbon_saved=carbon_saved+?, updated_at=datetime('now') WHERE user_id=?`,
+        `UPDATE user_profiles SET points=points+?, xp=xp+?, total_sold_kg=total_sold_kg+?, total_income=total_income+?, total_pickups=total_pickups+1, carbon_saved=carbon_saved+?, updated_at=NOW() WHERE user_id=?`,
         [actual_points, actual_points, weight_kg, actual_price, weight_kg * 0.5, trx.user_id]
       );
       await db.run(
@@ -189,7 +189,7 @@ router.post('/:id/complete', authenticate, authorize('petugas', 'admin', 'bank_s
     } else {
       // Pembayaran Saldo (Wallet)
       if (req.user.role === 'petugas') {
-        await db.run('UPDATE user_profiles SET wallet_balance = wallet_balance - ?, updated_at = datetime("now") WHERE user_id = ?', [actual_price, req.user.id]);
+        await db.run('UPDATE user_profiles SET wallet_balance = wallet_balance - ?, updated_at = NOW() WHERE user_id = ?', [actual_price, req.user.id]);
         await db.run(
           'INSERT INTO wallet_transactions (id,user_id,type,amount,description,reference) VALUES (?,?,?,?,?,?)',
           [uuidv4(), req.user.id, 'debit', actual_price, `Pembayaran ke User untuk ${trx.waste_name}`, trx.id]
@@ -198,7 +198,7 @@ router.post('/:id/complete', authenticate, authorize('petugas', 'admin', 'bank_s
       await db.run(
         `UPDATE user_profiles SET wallet_balance=wallet_balance+?, points=points+?, xp=xp+?,
          total_sold_kg=total_sold_kg+?, total_income=total_income+?, total_pickups=total_pickups+1,
-         carbon_saved=carbon_saved+?, updated_at=datetime('now') WHERE user_id=?`,
+         carbon_saved=carbon_saved+?, updated_at=NOW() WHERE user_id=?`,
         [actual_price, actual_points, actual_points, weight_kg, actual_price, weight_kg * 0.5, trx.user_id]
       );
       await db.run(
@@ -226,10 +226,10 @@ router.patch('/:id/status', authenticate, async (req, res, next) => {
 
     await db.run(
       `UPDATE pickups SET status=?, petugas_latitude=COALESCE(?,petugas_latitude),
-       petugas_longitude=COALESCE(?,petugas_longitude), updated_at=datetime('now') WHERE id=?`,
+       petugas_longitude=COALESCE(?,petugas_longitude), updated_at=NOW() WHERE id=?`,
       [status, petugas_latitude||null, petugas_longitude||null, req.params.id]
     );
-    await db.run(`UPDATE transactions SET status=?, updated_at=datetime('now') WHERE id=?`,
+    await db.run(`UPDATE transactions SET status=?, updated_at=NOW() WHERE id=?`,
       [status, pickup.transaction_id]);
     res.json({ success: true, message: `Status: ${status}` });
   } catch (err) { next(err); }

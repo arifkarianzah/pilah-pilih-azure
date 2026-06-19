@@ -93,7 +93,7 @@ async function loadWalletData() {
 
 async function loadStockData() {
   try {
-    const res = await fetch('http://localhost:5000/api/categories');
+    const res = await fetch(window.API_BASE + '/categories');
     const data = await res.json();
     if(data.success) {
       const grid = document.getElementById('stockGrid') || document.getElementById('stokPageGrid');
@@ -162,7 +162,7 @@ async function simulatePayment() {
   await new Promise(r => setTimeout(r, 1500));
   
   try {
-    const res = await fetch('http://localhost:5000/api/wallet/topup', {
+    const res = await fetch(window.API_BASE + '/wallet/topup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${API.Storage.getToken()}` },
       body: JSON.stringify({ amount: amt })
@@ -298,7 +298,7 @@ async function submitBuy(isDraft) {
   if(!price || price <= 0) return showToast('Harga tidak valid');
 
   try {
-    const res = await fetch('http://localhost:5000/api/pengepul/transactions', {
+    const res = await fetch(window.API_BASE + '/pengepul/transactions', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${API.Storage.getToken()}` },
       body: JSON.stringify({
@@ -325,7 +325,7 @@ async function submitBuy(isDraft) {
 // ==================== TRANSACTIONS ====================
 async function loadTransactions() {
   try {
-    const res = await fetch('http://localhost:5000/api/pengepul/transactions', {
+    const res = await fetch(window.API_BASE + '/pengepul/transactions', {
       headers: { 'Authorization': `Bearer ${API.Storage.getToken()}` }
     });
     const data = await res.json();
@@ -460,7 +460,7 @@ function getActionButtons(t) {
 
 async function updateStatus(id, newStatus) {
   try {
-    const res = await fetch(`http://localhost:5000/api/pengepul/transactions/${id}/status`, {
+    const res = await fetch(`${window.API_BASE}/pengepul/transactions/${id}/status`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${API.Storage.getToken()}` },
       body: JSON.stringify({ status: newStatus })
@@ -488,7 +488,7 @@ async function submitSchedule() {
   };
   
   try {
-    const res = await fetch(`http://localhost:5000/api/pengepul/transactions/${id}/schedule`, {
+    const res = await fetch(`${window.API_BASE}/pengepul/transactions/${id}/schedule`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${API.Storage.getToken()}` },
       body: JSON.stringify(body)
@@ -516,7 +516,7 @@ async function submitVerify() {
   if(!actual_weight || actual_weight <= 0) return showToast('Berat aktual tidak valid');
 
   try {
-    const res = await fetch(`http://localhost:5000/api/pengepul/transactions/${id}/verify`, {
+    const res = await fetch(`${window.API_BASE}/pengepul/transactions/${id}/verify`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${API.Storage.getToken()}` },
       body: JSON.stringify({ actual_weight, verification_notes: notes })
@@ -536,7 +536,7 @@ async function payTransaction(id) {
   // Di spesifikasi: Pengepul -> Bayar User -> Status = DIBAYAR.
   // Jadi kita ubah auth route /pay bisa bank_sampah.
   try {
-    const res = await fetch(`http://localhost:5000/api/pengepul/transactions/${id}/pay`, {
+    const res = await fetch(`${window.API_BASE}/pengepul/transactions/${id}/pay`, {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${API.Storage.getToken()}` }
     });

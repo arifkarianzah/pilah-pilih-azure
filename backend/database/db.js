@@ -1,25 +1,32 @@
 /* =====================================================
-   PILAH PILIH – DATABASE LAYER (sqlite3 async)
+   PILAH PILIH – DATABASE LAYER (MySQL)
    ===================================================== */
 'use strict';
 
-const sqlite3 = require('sqlite3').verbose();
-const path = require('path');
-const fs = require('fs');
+const mysql = require('mysql2/promise');
 const bcrypt = require('bcryptjs');
 require('dotenv').config();
 
-const DB_PATH = process.env.DB_PATH || path.join(__dirname, 'pilahpilih.db');
-const dbDir = path.dirname(DB_PATH);
-if (!fs.existsSync(dbDir)) fs.mkdirSync(dbDir, { recursive: true });
-
-const _db = new sqlite3.Database(DB_PATH, (err) => {
-  if (err) console.error('[DB] Gagal buka database:', err.message);
-  else console.log('[DB] Database terhubung:', DB_PATH);
+// Create connection pool
+const pool = mysql.createPool({
+  host: process.env.DB_HOST || 'localhost',
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASS || '',
+  database: process.env.DB_NAME || 'pilah_pilih_db',
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
+  multipleStatements: true // Required for executing multiple schema creation queries
 });
 
-_db.run('PRAGMA journal_mode = WAL');
-_db.run('PRAGMA foreign_keys = ON');
+pool.getConnection()
+  .then(conn => {
+    console.log('[DB] Database terhubung ke MySQL:', process.env.DB_NAME);
+    conn.release();
+  })
+  .catch(err => {
+    console.error('[DB] Gagal koneksi ke MySQL. Pastikan database server jalan dan database sudah dibuat. Error:', err.message);
+  });
 
 /* UUID v4 */
 function uuidv4() {
@@ -29,148 +36,235 @@ function uuidv4() {
   });
 }
 
-/* Promisified helpers */
+/* Promisified helpers - wrapper agar sesuai dengan usage SQLite lama */
 const db = {
-  run(sql, params = []) {
-    return new Promise((resolve, reject) => {
-      _db.run(sql, params, function(err) {
-        if (err) reject(err);
-        else resolve({ lastID: this.lastID, changes: this.changes });
-      });
-    });
+  async run(sql, params = []) {
+    const [result] = await pool.query(sql, params);
+    return { lastID: result.insertId, changes: result.affectedRows };
   },
-  get(sql, params = []) {
-    return new Promise((resolve, reject) => {
-      _db.get(sql, params, (err, row) => {
-        if (err) reject(err); else resolve(row);
-      });
-    });
+  async get(sql, params = []) {
+    const [rows] = await pool.query(sql, params);
+    return rows.length > 0 ? rows[0] : undefined;
   },
-  all(sql, params = []) {
-    return new Promise((resolve, reject) => {
-      _db.all(sql, params, (err, rows) => {
-        if (err) reject(err); else resolve(rows || []);
-      });
-    });
+  async all(sql, params = []) {
+    const [rows] = await pool.query(sql, params);
+    return rows;
   },
-  exec(sql) {
-    return new Promise((resolve, reject) => {
-      _db.exec(sql, (err) => {
-        if (err) reject(err); else resolve();
-      });
-    });
+  async exec(sql) {
+    await pool.query(sql);
   }
 };
 
-/* ── Schema SQL ── */
+/* ── Schema SQL (MySQL Dialect) ── */
 const SCHEMA = `
   CREATE TABLE IF NOT EXISTS users (
-    id TEXT PRIMARY KEY, name TEXT NOT NULL, email TEXT UNIQUE NOT NULL,
-    phone TEXT UNIQUE, password TEXT NOT NULL,
-    role TEXT NOT NULL DEFAULT 'user', avatar TEXT, address TEXT, city TEXT,
-    is_active INTEGER NOT NULL DEFAULT 1, is_verified INTEGER NOT NULL DEFAULT 0,
-    created_at TEXT NOT NULL DEFAULT (datetime('now')), updated_at TEXT NOT NULL DEFAULT (datetime('now'))
+    id VARCHAR(255) PRIMARY KEY, 
+    name VARCHAR(255) NOT NULL, 
+    email VARCHAR(255) UNIQUE NOT NULL,
+    phone VARCHAR(50) UNIQUE, 
+    password VARCHAR(255) NOT NULL,
+    role VARCHAR(50) NOT NULL DEFAULT 'user', 
+    avatar VARCHAR(255), 
+    address TEXT, 
+    city VARCHAR(100),
+    is_active TINYINT(1) NOT NULL DEFAULT 1, 
+    is_verified TINYINT(1) NOT NULL DEFAULT 0,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
   );
   CREATE TABLE IF NOT EXISTS user_profiles (
-    user_id TEXT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
-    level TEXT NOT NULL DEFAULT 'bronze', xp INTEGER NOT NULL DEFAULT 0,
-    points INTEGER NOT NULL DEFAULT 0, total_sold_kg REAL NOT NULL DEFAULT 0,
-    total_income INTEGER NOT NULL DEFAULT 0, total_pickups INTEGER NOT NULL DEFAULT 0,
-    carbon_saved REAL NOT NULL DEFAULT 0, wallet_balance INTEGER NOT NULL DEFAULT 0,
-    escrow_balance INTEGER NOT NULL DEFAULT 0,
-    rank_pos INTEGER, updated_at TEXT NOT NULL DEFAULT (datetime('now'))
+    user_id VARCHAR(255) PRIMARY KEY,
+    level VARCHAR(50) NOT NULL DEFAULT 'bronze', 
+    xp INT NOT NULL DEFAULT 0,
+    points INT NOT NULL DEFAULT 0, 
+    total_sold_kg DOUBLE NOT NULL DEFAULT 0,
+    total_income INT NOT NULL DEFAULT 0, 
+    total_pickups INT NOT NULL DEFAULT 0,
+    carbon_saved DOUBLE NOT NULL DEFAULT 0, 
+    wallet_balance INT NOT NULL DEFAULT 0,
+    escrow_balance INT NOT NULL DEFAULT 0,
+    rank_pos INT, 
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
   );
   CREATE TABLE IF NOT EXISTS waste_categories (
-    id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, icon TEXT NOT NULL,
-    price_per_kg INTEGER NOT NULL, description TEXT, is_active INTEGER NOT NULL DEFAULT 1,
-    stock_kg REAL NOT NULL DEFAULT 0,
-    created_at TEXT NOT NULL DEFAULT (datetime('now'))
+    id INT AUTO_INCREMENT PRIMARY KEY, 
+    name VARCHAR(255) NOT NULL, 
+    icon VARCHAR(255) NOT NULL,
+    price_per_kg INT NOT NULL, 
+    description TEXT, 
+    is_active TINYINT(1) NOT NULL DEFAULT 1,
+    stock_kg DOUBLE NOT NULL DEFAULT 0,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
   );
   CREATE TABLE IF NOT EXISTS transactions (
-    id TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    petugas_id TEXT REFERENCES users(id), category_id INTEGER REFERENCES waste_categories(id),
-    waste_name TEXT NOT NULL, weight_kg REAL NOT NULL, price_per_kg INTEGER NOT NULL,
-    total_price INTEGER NOT NULL, points_earned INTEGER NOT NULL DEFAULT 0,
-    condition TEXT, address TEXT NOT NULL, latitude REAL, longitude REAL,
-    pickup_date TEXT, pickup_time TEXT, notes TEXT, photo_url TEXT,
-    status TEXT NOT NULL DEFAULT 'pending', payment_method TEXT, paid_at TEXT,
-    created_at TEXT NOT NULL DEFAULT (datetime('now')), updated_at TEXT NOT NULL DEFAULT (datetime('now'))
+    id VARCHAR(255) PRIMARY KEY, 
+    user_id VARCHAR(255) NOT NULL,
+    petugas_id VARCHAR(255), 
+    category_id INT,
+    waste_name VARCHAR(255) NOT NULL, 
+    weight_kg DOUBLE NOT NULL, 
+    price_per_kg INT NOT NULL,
+    total_price INT NOT NULL, 
+    points_earned INT NOT NULL DEFAULT 0,
+    \`condition\` VARCHAR(255), 
+    address TEXT NOT NULL, 
+    latitude DOUBLE, 
+    longitude DOUBLE,
+    pickup_date VARCHAR(50), 
+    pickup_time VARCHAR(50), 
+    notes TEXT, 
+    photo_url VARCHAR(255),
+    status VARCHAR(50) NOT NULL DEFAULT 'pending', 
+    payment_method VARCHAR(100), 
+    paid_at VARCHAR(50),
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (petugas_id) REFERENCES users(id),
+    FOREIGN KEY (category_id) REFERENCES waste_categories(id)
   );
   CREATE TABLE IF NOT EXISTS pengepul_transactions (
-    id TEXT PRIMARY KEY, pengepul_id TEXT NOT NULL REFERENCES users(id),
-    category_id INTEGER REFERENCES waste_categories(id),
-    estimated_weight REAL NOT NULL, actual_weight REAL,
-    price_per_kg INTEGER NOT NULL, total_price INTEGER NOT NULL,
-    notes TEXT, status TEXT NOT NULL DEFAULT 'DRAFT',
-    pickup_date TEXT, pickup_time TEXT, driver_name TEXT, vehicle_plate TEXT, pickup_notes TEXT,
-    weight_difference REAL, photo_scale_url TEXT, photo_waste_url TEXT, verification_notes TEXT,
-    created_at TEXT NOT NULL DEFAULT (datetime('now')), updated_at TEXT NOT NULL DEFAULT (datetime('now'))
+    id VARCHAR(255) PRIMARY KEY, 
+    pengepul_id VARCHAR(255) NOT NULL,
+    category_id INT,
+    estimated_weight DOUBLE NOT NULL, 
+    actual_weight DOUBLE,
+    price_per_kg INT NOT NULL, 
+    total_price INT NOT NULL,
+    notes TEXT, 
+    status VARCHAR(50) NOT NULL DEFAULT 'DRAFT',
+    pickup_date VARCHAR(50), 
+    pickup_time VARCHAR(50), 
+    driver_name VARCHAR(255), 
+    vehicle_plate VARCHAR(50), 
+    pickup_notes TEXT,
+    weight_difference DOUBLE, 
+    photo_scale_url VARCHAR(255), 
+    photo_waste_url VARCHAR(255), 
+    verification_notes TEXT,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (pengepul_id) REFERENCES users(id),
+    FOREIGN KEY (category_id) REFERENCES waste_categories(id)
   );
   CREATE TABLE IF NOT EXISTS pickups (
-    id TEXT PRIMARY KEY, transaction_id TEXT UNIQUE REFERENCES transactions(id) ON DELETE CASCADE,
-    petugas_id TEXT REFERENCES users(id), user_id TEXT NOT NULL REFERENCES users(id),
-    order_number TEXT UNIQUE NOT NULL, address TEXT NOT NULL,
-    latitude REAL, longitude REAL, petugas_latitude REAL, petugas_longitude REAL,
-    eta_minutes INTEGER, status TEXT NOT NULL DEFAULT 'waiting',
-    assigned_at TEXT, arrived_at TEXT, completed_at TEXT, rating INTEGER, review TEXT,
-    created_at TEXT NOT NULL DEFAULT (datetime('now')), updated_at TEXT NOT NULL DEFAULT (datetime('now'))
+    id VARCHAR(255) PRIMARY KEY, 
+    transaction_id VARCHAR(255) UNIQUE,
+    petugas_id VARCHAR(255), 
+    user_id VARCHAR(255) NOT NULL,
+    order_number VARCHAR(100) UNIQUE NOT NULL, 
+    address TEXT NOT NULL,
+    latitude DOUBLE, 
+    longitude DOUBLE, 
+    petugas_latitude DOUBLE, 
+    petugas_longitude DOUBLE,
+    eta_minutes INT, 
+    status VARCHAR(50) NOT NULL DEFAULT 'waiting',
+    assigned_at TIMESTAMP NULL, 
+    arrived_at TIMESTAMP NULL, 
+    completed_at TIMESTAMP NULL, 
+    rating INT, 
+    review TEXT,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (transaction_id) REFERENCES transactions(id) ON DELETE CASCADE,
+    FOREIGN KEY (petugas_id) REFERENCES users(id),
+    FOREIGN KEY (user_id) REFERENCES users(id)
   );
   CREATE TABLE IF NOT EXISTS rewards (
-    id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, icon TEXT NOT NULL,
-    category TEXT NOT NULL, cost_points INTEGER NOT NULL, stock INTEGER NOT NULL DEFAULT 100,
-    description TEXT, is_active INTEGER NOT NULL DEFAULT 1,
-    created_at TEXT NOT NULL DEFAULT (datetime('now'))
+    id INT AUTO_INCREMENT PRIMARY KEY, 
+    name VARCHAR(255) NOT NULL, 
+    icon VARCHAR(255) NOT NULL,
+    category VARCHAR(100) NOT NULL, 
+    cost_points INT NOT NULL, 
+    stock INT NOT NULL DEFAULT 100,
+    description TEXT, 
+    is_active TINYINT(1) NOT NULL DEFAULT 1,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
   );
   CREATE TABLE IF NOT EXISTS reward_redemptions (
-    id TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    reward_id INTEGER NOT NULL REFERENCES rewards(id), cost_points INTEGER NOT NULL,
-    status TEXT NOT NULL DEFAULT 'pending',
-    redeemed_at TEXT NOT NULL DEFAULT (datetime('now')), completed_at TEXT
+    id VARCHAR(255) PRIMARY KEY, 
+    user_id VARCHAR(255) NOT NULL,
+    reward_id INT NOT NULL, 
+    cost_points INT NOT NULL,
+    status VARCHAR(50) NOT NULL DEFAULT 'pending',
+    redeemed_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+    completed_at TIMESTAMP NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (reward_id) REFERENCES rewards(id)
   );
   CREATE TABLE IF NOT EXISTS wallet_transactions (
-    id TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    type TEXT NOT NULL, amount INTEGER NOT NULL, description TEXT NOT NULL,
-    reference TEXT, method TEXT, status TEXT NOT NULL DEFAULT 'completed',
-    created_at TEXT NOT NULL DEFAULT (datetime('now'))
+    id VARCHAR(255) PRIMARY KEY, 
+    user_id VARCHAR(255) NOT NULL,
+    type VARCHAR(50) NOT NULL, 
+    amount INT NOT NULL, 
+    description VARCHAR(255) NOT NULL,
+    reference VARCHAR(255), 
+    method VARCHAR(50), 
+    status VARCHAR(50) NOT NULL DEFAULT 'completed',
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
   );
   CREATE TABLE IF NOT EXISTS notifications (
-    id TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    title TEXT NOT NULL, body TEXT NOT NULL, type TEXT NOT NULL DEFAULT 'info',
-    is_read INTEGER NOT NULL DEFAULT 0, data TEXT,
-    created_at TEXT NOT NULL DEFAULT (datetime('now'))
+    id VARCHAR(255) PRIMARY KEY, 
+    user_id VARCHAR(255) NOT NULL,
+    title VARCHAR(255) NOT NULL, 
+    body TEXT NOT NULL, 
+    type VARCHAR(50) NOT NULL DEFAULT 'info',
+    is_read TINYINT(1) NOT NULL DEFAULT 0, 
+    data TEXT,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
   );
   CREATE TABLE IF NOT EXISTS price_history (
-    id INTEGER PRIMARY KEY AUTOINCREMENT, category_id INTEGER NOT NULL REFERENCES waste_categories(id),
-    price_per_kg INTEGER NOT NULL, changed_by TEXT REFERENCES users(id),
-    changed_at TEXT NOT NULL DEFAULT (datetime('now'))
+    id INT AUTO_INCREMENT PRIMARY KEY, 
+    category_id INT NOT NULL,
+    price_per_kg INT NOT NULL, 
+    changed_by VARCHAR(255),
+    changed_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (category_id) REFERENCES waste_categories(id),
+    FOREIGN KEY (changed_by) REFERENCES users(id)
   );
   CREATE TABLE IF NOT EXISTS articles (
-    id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, content TEXT NOT NULL,
-    thumbnail TEXT, category TEXT NOT NULL DEFAULT 'tips', author_id TEXT REFERENCES users(id),
-    views INTEGER NOT NULL DEFAULT 0, is_published INTEGER NOT NULL DEFAULT 1,
-    created_at TEXT NOT NULL DEFAULT (datetime('now')), updated_at TEXT NOT NULL DEFAULT (datetime('now'))
+    id INT AUTO_INCREMENT PRIMARY KEY, 
+    title VARCHAR(255) NOT NULL, 
+    content TEXT NOT NULL,
+    thumbnail VARCHAR(255), 
+    category VARCHAR(100) NOT NULL DEFAULT 'tips', 
+    author_id VARCHAR(255),
+    views INT NOT NULL DEFAULT 0, 
+    is_published TINYINT(1) NOT NULL DEFAULT 1,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (author_id) REFERENCES users(id)
   );
   CREATE TABLE IF NOT EXISTS otp_codes (
-    id INTEGER PRIMARY KEY AUTOINCREMENT, identifier TEXT NOT NULL, code TEXT NOT NULL,
-    purpose TEXT NOT NULL, expires_at TEXT NOT NULL, is_used INTEGER NOT NULL DEFAULT 0,
-    created_at TEXT NOT NULL DEFAULT (datetime('now'))
+    id INT AUTO_INCREMENT PRIMARY KEY, 
+    identifier VARCHAR(255) NOT NULL, 
+    code VARCHAR(50) NOT NULL,
+    purpose VARCHAR(50) NOT NULL, 
+    expires_at TIMESTAMP NOT NULL, 
+    is_used TINYINT(1) NOT NULL DEFAULT 0,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
   );
   CREATE TABLE IF NOT EXISTS messages (
-    id INTEGER PRIMARY KEY AUTOINCREMENT, pickup_id TEXT NOT NULL REFERENCES pickups(id) ON DELETE CASCADE,
-    sender_id TEXT NOT NULL REFERENCES users(id), message TEXT NOT NULL,
-    created_at TEXT NOT NULL DEFAULT (datetime('now'))
+    id INT AUTO_INCREMENT PRIMARY KEY, 
+    pickup_id VARCHAR(255) NOT NULL,
+    sender_id VARCHAR(255) NOT NULL, 
+    message TEXT NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (pickup_id) REFERENCES pickups(id) ON DELETE CASCADE,
+    FOREIGN KEY (sender_id) REFERENCES users(id)
   );
-  CREATE INDEX IF NOT EXISTS idx_transactions_user ON transactions(user_id);
-  CREATE INDEX IF NOT EXISTS idx_pickups_status ON pickups(status);
-  CREATE INDEX IF NOT EXISTS idx_notifs_user ON notifications(user_id);
-  CREATE INDEX IF NOT EXISTS idx_wallet_user ON wallet_transactions(user_id);
   CREATE TABLE IF NOT EXISTS admin_income (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    petugas_id TEXT REFERENCES users(id) ON DELETE SET NULL,
-    amount INTEGER NOT NULL,
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    petugas_id VARCHAR(255),
+    amount INT NOT NULL,
     description TEXT,
-    method TEXT,
-    created_at TEXT NOT NULL DEFAULT (datetime('now'))
+    method VARCHAR(50),
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (petugas_id) REFERENCES users(id) ON DELETE SET NULL
   );
 `;
 
@@ -179,9 +273,8 @@ db.exec(SCHEMA)
   .then(async () => {
     console.log('✅ Database schema siap!');
     
-    // Auto-migrate missing columns just in case
-    db.exec("ALTER TABLE user_profiles ADD COLUMN escrow_balance INTEGER NOT NULL DEFAULT 0;").catch(()=>console.log("escrow_balance already exists"));
-    db.exec("ALTER TABLE waste_categories ADD COLUMN stock_kg REAL NOT NULL DEFAULT 0;").catch(()=>console.log("stock_kg already exists"));
+    try { await db.exec("ALTER TABLE user_profiles ADD COLUMN escrow_balance INT NOT NULL DEFAULT 0;"); } catch(e){}
+    try { await db.exec("ALTER TABLE waste_categories ADD COLUMN stock_kg DOUBLE NOT NULL DEFAULT 0;"); } catch(e){}
     
     // Auto-seed Demo Users
     const seedPwd = bcrypt.hashSync('password123', 10);
@@ -202,7 +295,6 @@ db.exec(SCHEMA)
         await db.run('INSERT INTO user_profiles (user_id) VALUES (?)', [u.id]);
         console.log('🌱 Seeded:', u.email);
       } else {
-        // Pastikan password di-update ke hash yang valid
         await db.run('UPDATE users SET password = ?, is_verified = 1 WHERE email = ?', [seedPwd, u.email]);
       }
     }

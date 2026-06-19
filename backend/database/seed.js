@@ -3,8 +3,7 @@
    ===================================================== */
 'use strict';
 
-const initSqlite3 = require('sqlite3').verbose;
-const sqlite3 = initSqlite3();
+
 const path = require('path');
 const fs = require('fs');
 const bcrypt = require('bcryptjs');
@@ -48,8 +47,8 @@ async function seed() {
   }
 
   /* ── 2. Users ── */
-  const userCount = await db.get('SELECT COUNT(*) as c FROM users');
-  if (userCount.c === 0) {
+  const hasUsr = await db.get("SELECT id FROM users WHERE id = 'usr-001'");
+  if (!hasUsr) {
     const hash = (pw) => bcrypt.hashSync(pw, 10);
     const users = [
       ['usr-001', 'Rizki Dinata',       'rizki@example.com',   '081234567890', hash('password123'), 'user',        1, 'Jl. Sudirman No.45',     'Jakarta'],
@@ -111,7 +110,7 @@ async function seed() {
     ];
     for (const [id,uid,pid,cid,wname,wkg,ppkg,total,pts,cond,addr,status] of trxs) {
       await db.run(
-        'INSERT INTO transactions (id,user_id,petugas_id,category_id,waste_name,weight_kg,price_per_kg,total_price,points_earned,condition,address,status) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',
+        'INSERT INTO transactions (id,user_id,petugas_id,category_id,waste_name,weight_kg,price_per_kg,total_price,points_earned,`condition`,address,status) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',
         [id,uid,pid,cid,wname,wkg,ppkg,total,pts,cond,addr,status]
       );
     }
