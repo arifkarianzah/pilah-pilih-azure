@@ -50,7 +50,7 @@ router.post('/register',
       await db.run('INSERT INTO user_profiles (user_id) VALUES (?)', [id]);
       await db.run(
         'INSERT INTO notifications (id, user_id, title, body, type) VALUES (?,?,?,?,?)',
-        [uuidv4(), id, '🎉 Selamat Datang!', `Hai ${name}! Akun berhasil dibuat.`, 'success']
+        [uuidv4(), id, 'Selamat Datang!', `Hai ${name}! Akun berhasil dibuat.`, 'success']
       );
 
       const user = await db.get('SELECT * FROM users WHERE id = ?', [id]);
@@ -114,9 +114,11 @@ router.post('/fake-google', async (req, res, next) => {
         [id, name, email, randomPwd, defaultRole]
       );
       await db.run('INSERT INTO user_profiles (user_id, avatar) VALUES (?,?)', [id, picture]);
+      
+      // Hapus emoji agar database tidak error (jika tabel belum disetel utf8mb4)
       await db.run(
         'INSERT INTO notifications (id, user_id, title, body, type) VALUES (?,?,?,?,?)',
-        [uuidv4(), id, '🎉 Selamat Datang!', `Hai ${name}! Akun simulasi berhasil dibuat.`, 'success']
+        [uuidv4(), id, 'Selamat Datang!', `Hai ${name}! Akun simulasi berhasil dibuat.`, 'success']
       );
       user = await db.get('SELECT * FROM users WHERE id = ?', [id]);
     } else {
