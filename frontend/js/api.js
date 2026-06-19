@@ -6,7 +6,7 @@
 
 const IS_PROD = window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
 const API_BASE = IS_PROD 
-  ? 'https://pilah-pilih-backend.azurewebsites.net/api' // Ganti dengan nama App Service Anda nanti
+  ? 'https://pilahpilih-backend-abc.azurewebsites.net/api' 
   : 'http://localhost:5000/api';
 window.API_BASE = API_BASE;
 
