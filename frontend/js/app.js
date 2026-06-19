@@ -292,7 +292,7 @@ function initSig() {
   const canvas = document.getElementById('sigCanvas');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
-  ctx.strokeStyle = '#00D084';
+  ctx.strokeStyle = '#0A4222';
   ctx.lineWidth = 2;
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
@@ -412,7 +412,7 @@ function initAdminCharts() {
     type: 'doughnut',
     data: {
       labels: ['Plastik','Kertas','Besi','Elektronik','Kaca','Lainnya'],
-      datasets: [{ data: [35,25,18,12,6,4], backgroundColor: ['#00D084','#3B82F6','#8B5CF6','#F59E0B','#14B8A6','#6B7280'], borderWidth: 0, hoverOffset: 8 }]
+      datasets: [{ data: [35,25,18,12,6,4], backgroundColor: ['#0A4222','#3B82F6','#8B5CF6','#F59E0B','#14B8A6','#6B7280'], borderWidth: 0, hoverOffset: 8 }]
     },
     options: { responsive: true, cutout: '65%', plugins: { legend: { position: 'bottom', labels: { padding: 12, usePointStyle: true } } } }
   });
@@ -460,7 +460,7 @@ function initLaporan() {
     type: 'pie',
     data: {
       labels: ['Plastik','Kertas','Logam','Elektronik','Kaca'],
-      datasets: [{ data: [38,24,20,12,6], backgroundColor: ['#00D084','#3B82F6','#8B5CF6','#F59E0B','#14B8A6'], borderWidth: 0 }]
+      datasets: [{ data: [38,24,20,12,6], backgroundColor: ['#0A4222','#3B82F6','#8B5CF6','#F59E0B','#14B8A6'], borderWidth: 0 }]
     },
     options: { responsive: true, plugins: { legend: { position: 'right', labels: { padding: 10, usePointStyle: true } } } }
   });

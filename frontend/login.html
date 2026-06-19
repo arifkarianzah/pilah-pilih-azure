@@ -34,7 +34,7 @@
     .splash-center { text-align: center; z-index: 1; padding: 24px; }
     .splash-logo-ring {
       width:96px;height:96px;
-      background:linear-gradient(135deg,#00D084,#00A86B);
+      background:linear-gradient(135deg,#0A4222,#00A86B);
       border-radius:28px;display:flex;align-items:center;justify-content:center;
       margin:0 auto 24px;
       box-shadow:0 4px 24px rgba(0,208,132,0.35);
@@ -43,10 +43,10 @@
     .splash-logo-ring svg { width:52px;height:52px;fill:white; }
     @keyframes logoFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
     .splash-name { font-size:42px;font-weight:900;color:#fff;letter-spacing:-1px;margin-bottom:8px; }
-    .splash-name span { color:#00D084; }
+    .splash-name span { color:#0A4222; }
     .splash-tagline { font-size:13px;font-weight:500;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:2px;margin-bottom:48px; }
     .splash-loader-track { width:220px;height:3px;background:rgba(255,255,255,0.1);border-radius:99px;overflow:hidden;margin:0 auto 12px; }
-    .splash-loader-fill { height:100%;background:linear-gradient(90deg,#00D084,#00FFB0);border-radius:99px;width:0;transition:width 0.3s ease; }
+    .splash-loader-fill { height:100%;background:linear-gradient(90deg,#0A4222,#00FFB0);border-radius:99px;width:0;transition:width 0.3s ease; }
     .splash-loading-text { font-size:12px;color:rgba(255,255,255,0.4); }
     .splash-badge { position:absolute;bottom:24px;font-size:12px;color:rgba(255,255,255,0.25);z-index:1; }
 
@@ -72,10 +72,10 @@
     }
     .sl-glow { position: absolute; width: 800px; height: 800px; background: radial-gradient(rgba(0,208,132,0.12), transparent 70%); top: -200px; left: -200px; border-radius: 50%; pointer-events: none; }
     .sl-content { z-index: 2; max-width: 520px; width: 100%; }
-    .sl-logo { width: 80px; height: 80px; background: linear-gradient(135deg, #00D084, #00A86B); border-radius: 24px; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 32px rgba(0,208,132,0.4); margin-bottom: 40px; position: relative; }
+    .sl-logo { width: 80px; height: 80px; background: linear-gradient(135deg, #0A4222, #00A86B); border-radius: 24px; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 32px rgba(0,208,132,0.4); margin-bottom: 40px; position: relative; }
     .sl-logo svg { width: 44px; height: 44px; fill: white; }
     .sl-title { font-size: 52px; font-weight: 900; line-height: 1.1; margin-bottom: 24px; letter-spacing: -1.5px; }
-    .sl-title span { color: #00D084; }
+    .sl-title span { color: #0A4222; }
     .sl-desc { font-size: 16px; color: rgba(255,255,255,0.6); line-height: 1.6; margin-bottom: 48px; max-width: 400px; }
     
     .sl-cards { display: flex; flex-direction: column; gap: 16px; }
@@ -118,7 +118,7 @@
       border-radius:14px;margin-bottom:12px;
       transition:all 0.15s ease;overflow:hidden;
     }
-    .input-group:focus-within { border-color:#00D084;box-shadow:0 0 0 3px rgba(0,208,132,0.12); }
+    .input-group:focus-within { border-color:#0A4222;box-shadow:0 0 0 3px rgba(0,208,132,0.12); }
     .ig-icon { padding:0 14px;font-size:18px;flex-shrink:0; }
     .ig-input { flex:1;padding:15px 0;background:transparent;border:none;font-size:14px;color:var(--t1);font-family:var(--font); }
     .ig-input::placeholder { color:var(--t4); }
@@ -126,8 +126,8 @@
 
     .auth-meta-row { display:flex;justify-content:space-between;align-items:center;margin-bottom:16px; }
     .check-label { display:flex;align-items:center;gap:8px;font-size:13px;color:var(--t3);cursor:pointer; }
-    .check-label input { accent-color:#00D084; }
-    .txt-link { font-size:13px;color:#00D084;font-weight:600;cursor:pointer; }
+    .check-label input { accent-color:#0A4222; }
+    .txt-link { font-size:13px;color:#0A4222;font-weight:600;cursor:pointer; }
     
     /* KTP UPLOAD */
     .ktp-upload-wrap { margin-bottom: 16px; transition: all 0.3s ease; }
@@ -139,8 +139,8 @@
       background: var(--card); transition: all 0.2s ease;
       position: relative; overflow: hidden; min-height: 120px;
     }
-    .ktp-dropzone:hover { border-color: #00D084; background: rgba(0,208,132,0.05); }
-    .ktp-dropzone.has-file { border-color: #00D084; border-style: solid; padding: 0; }
+    .ktp-dropzone:hover { border-color: #0A4222; background: rgba(0,208,132,0.05); }
+    .ktp-dropzone.has-file { border-color: #0A4222; border-style: solid; padding: 0; }
     .ktp-icon { font-size: 28px; margin-bottom: 8px; opacity: 0.8; }
     .ktp-text { font-size: 12px; color: var(--t3); font-weight: 500; }
     .ktp-sub { font-size: 10px; color: var(--t4); margin-top: 4px; }
@@ -157,12 +157,12 @@
       cursor:pointer;transition:all 0.2s cubic-bezier(0.4,0,0.2,1);
     }
     .role-c:hover { border-color:var(--t3); color:var(--t2); }
-    .role-c.active { background:rgba(0,208,132,0.1);border-color:#00D084;color:#00D084; box-shadow: 0 4px 12px rgba(0,208,132,0.15); }
+    .role-c.active { background:rgba(0,208,132,0.1);border-color:#0A4222;color:#0A4222; box-shadow: 0 4px 12px rgba(0,208,132,0.15); }
 
     /* MAIN BUTTON */
     .btn-login {
       width:100%;padding:15px 24px;
-      background:linear-gradient(135deg,#00D084,#00A86B);
+      background:linear-gradient(135deg,#0A4222,#00A86B);
       color:white;border-radius:14px;font-size:15px;font-weight:700;
       cursor:pointer;transition:all 0.25s cubic-bezier(0.4,0,0.2,1);
       box-shadow:0 4px 24px rgba(0,208,132,0.35);
@@ -178,7 +178,7 @@
       cursor:pointer;transition:all 0.15s ease;font-family:var(--font);
       margin-top:10px;
     }
-    .btn-ghost-login:hover { border-color:#00D084;color:#00D084;background:rgba(0,208,132,0.08); }
+    .btn-ghost-login:hover { border-color:#0A4222;color:#0A4222;background:rgba(0,208,132,0.08); }
 
     /* DIVIDER */
     .divider-or { display:flex;align-items:center;gap:12px;margin:16px 0;color:var(--t4);font-size:12px; }
@@ -192,7 +192,7 @@
       font-size:13px;font-weight:500;color:var(--t2);
       cursor:pointer;transition:all 0.15s ease;font-family:var(--font);
     }
-    .social-btn:hover { border-color:#00D084;background:rgba(0,208,132,0.08); }
+    .social-btn:hover { border-color:#0A4222;background:rgba(0,208,132,0.08); }
 
     /* OTP SCREEN */
     .otp-screen { display:none; }
@@ -206,9 +206,9 @@
       background:var(--card);border:2px solid var(--border);
       border-radius:14px;transition:all 0.15s ease;font-family:var(--font);
     }
-    .otp-box:focus { border-color:#00D084;box-shadow:0 0 0 3px rgba(0,208,132,0.15);outline:none; }
+    .otp-box:focus { border-color:#0A4222;box-shadow:0 0 0 3px rgba(0,208,132,0.15);outline:none; }
     .otp-timer-txt { font-size:13px;color:var(--t3);margin-bottom:20px; }
-    .text-accent { color:#00D084;font-weight:700; }
+    .text-accent { color:#0A4222;font-weight:700; }
 
     /* FORGOT PASSWORD */
     .forgot-screen { display:none; }
@@ -216,7 +216,7 @@
 
     /* SELECT / INPUT BASE */
     .ig { display:flex;align-items:center;background:var(--card);border:1.5px solid var(--border);border-radius:14px;transition:all 0.15s ease;overflow:hidden;margin-bottom:12px; }
-    .ig:focus-within { border-color:#00D084;box-shadow:0 0 0 3px rgba(0,208,132,0.12); }
+    .ig:focus-within { border-color:#0A4222;box-shadow:0 0 0 3px rgba(0,208,132,0.12); }
     .ig span { padding:0 14px;font-size:16px;flex-shrink:0; }
     .ig input,.ig select { flex:1;padding:14px 0;background:transparent;border:none;font-size:14px;color:var(--t1);font-family:var(--font); }
     .ig input::placeholder { color:var(--t4); }
@@ -242,7 +242,7 @@
       cursor:pointer;margin-bottom:24px;width:fit-content;
       transition:color 0.15s ease;
     }
-    .back-link:hover { color:#00D084; }
+    .back-link:hover { color:#0A4222; }
     .back-link svg { width:18px;height:18px; }
 
     .w-full { width:100%; }
@@ -292,14 +292,14 @@
       
       <div class="sl-cards">
         <div class="sl-card">
-          <div class="slc-icon"><svg viewBox="0 0 24 24" width="28" height="28" stroke="#00D084" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>
+          <div class="slc-icon"><svg viewBox="0 0 24 24" width="28" height="28" stroke="#0A4222" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>
           <div class="slc-text">
             <h4>1M+ Kg</h4>
             <p>Sampah berhasil didaur ulang</p>
           </div>
         </div>
         <div class="sl-card">
-          <div class="slc-icon"><svg viewBox="0 0 24 24" width="28" height="28" stroke="#00D084" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <div class="slc-icon"><svg viewBox="0 0 24 24" width="28" height="28" stroke="#0A4222" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
           <div class="slc-text">
             <h4>50K+ Mitra</h4>
             <p>Terhubung dalam ekosistem hijau</p>
@@ -406,7 +406,7 @@
           
           <button class="btn-login" onclick="doRegister()">Daftar Sekarang</button>
           <p style="text-align:center;font-size:11px;color:var(--t4);margin-top:12px;">
-            Dengan mendaftar, Anda menyetujui <span style="color:#00D084;cursor:pointer;">Syarat & Ketentuan</span>
+            Dengan mendaftar, Anda menyetujui <span style="color:#0A4222;cursor:pointer;">Syarat & Ketentuan</span>
           </p>
         </div>
       </div>

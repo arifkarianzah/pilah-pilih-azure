@@ -689,7 +689,7 @@ async function fetchSmartCityData() {
 
       data.data.hotspots.forEach(h => {
         // Define color based on status
-        let color = '#00D084'; // aman
+        let color = '#0A4222'; // aman
         if (h.status === 'kritis') color = '#EF4444';
         else if (h.status === 'penuh') color = '#F97316';
         else if (h.status === 'sedang') color = '#EAB308';
@@ -832,7 +832,7 @@ function initDashboardCharts(apiData) {
         data: {
           labels: revLabels,
           datasets: [
-            { label: 'Pendapatan (Juta)', data: revData, backgroundColor: gradBar, borderColor: '#00D084', borderWidth: 1, borderRadius: {topLeft: 6, topRight: 6}, barPercentage: 0.6 },
+            { label: 'Pendapatan (Juta)', data: revData, backgroundColor: gradBar, borderColor: '#0A4222', borderWidth: 1, borderRadius: {topLeft: 6, topRight: 6}, barPercentage: 0.6 },
             { label: 'Target', data: [2,2,3,3,4,5,5,5,6,6,7,8], type: 'line', borderColor: '#3B82F6', borderDash: [5,5], borderWidth: 3, pointBackgroundColor: '#3B82F6', pointBorderColor: '#fff', pointRadius: 4, pointHoverRadius: 6, fill: false, tension: 0.4 }
           ]
         },
@@ -853,7 +853,7 @@ function initDashboardCharts(apiData) {
         type: 'doughnut',
         data: {
           labels: catLabels,
-          datasets: [{ data: catData.length ? catData : [1], backgroundColor: ['#00D084','#3B82F6','#EAB308','#8B5CF6','#14B8A6','#94A3B8'], borderWidth: 3, borderColor: isDark ? '#111827' : '#ffffff', hoverOffset: 8 }]
+          datasets: [{ data: catData.length ? catData : [1], backgroundColor: ['#0A4222','#3B82F6','#EAB308','#8B5CF6','#14B8A6','#94A3B8'], borderWidth: 3, borderColor: isDark ? '#111827' : '#ffffff', hoverOffset: 8 }]
         },
         options: { responsive: true, maintainAspectRatio: false, cutout: '70%', plugins: { legend: { position: 'right', labels: { usePointStyle: true, padding: 15 } }, tooltip: tooltipOptions } }
       });
@@ -871,7 +871,7 @@ function initDashboardCharts(apiData) {
         type: 'line',
         data: {
           labels: ['Jan','Feb','Mar','Apr','Mei','Jun'],
-          datasets: [{ label: 'Pickup', data: [2400,3200,4100,5800,7200,8900], borderColor: '#00D084', backgroundColor: gradLine, fill: true, tension: 0.4, borderWidth: 3, pointBackgroundColor: '#fff', pointBorderColor: '#00D084', pointRadius: 4, pointHoverRadius: 6 }]
+          datasets: [{ label: 'Pickup', data: [2400,3200,4100,5800,7200,8900], borderColor: '#0A4222', backgroundColor: gradLine, fill: true, tension: 0.4, borderWidth: 3, pointBackgroundColor: '#fff', pointBorderColor: '#0A4222', pointRadius: 4, pointHoverRadius: 6 }]
         },
         options: { responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false }, plugins: { legend: { display: false }, tooltip: tooltipOptions }, scales: { x: { grid: { display: false } }, y: { grid: gridOptions, border: { display: false }, ticks: { callback: v => v >= 1000 ? `${(v/1000).toFixed(0)}K` : v } } } }
       });
@@ -924,7 +924,7 @@ function initLaporanCharts() {
         type: 'pie',
         data: {
           labels: ['Plastik','Kertas','Logam','Elektronik','Kaca'],
-          datasets: [{ data: [35,28,18,12,7], backgroundColor: ['#00D084','#3B82F6','#EAB308','#8B5CF6','#14B8A6'], borderWidth: 2 }]
+          datasets: [{ data: [35,28,18,12,7], backgroundColor: ['#0A4222','#3B82F6','#EAB308','#8B5CF6','#14B8A6'], borderWidth: 2 }]
         },
         options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
       });

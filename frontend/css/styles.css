@@ -9,10 +9,10 @@
 /* ==================== CSS VARIABLES ==================== */
 :root {
   /* — Brand Green (PilahPilih Premium Green) */
-  --primary:       #00D084;
-  --primary-dark:  #00A86B;
-  --primary-light: rgba(0, 208, 132, 0.1);
-  --primary-glow:  rgba(0, 208, 132, 0.25);
+  --primary:       #0A4222;
+  --primary-dark:  #062E17;
+  --primary-light: rgba(10, 66, 34, 0.1);
+  --primary-glow:  rgba(10, 66, 34, 0.25);
 
   /* — Neutral palette (putih & abu bersih) */
   --bg:       #F4F6F9;

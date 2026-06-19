@@ -405,7 +405,7 @@ async function loadChat() {
       if (avEl) {
         avEl.innerHTML = savedPetugasAv 
           ? `<img src="${savedPetugasAv}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">`
-          : `<img src="https://ui-avatars.com/api/?name=${partnerName}&background=00D084&color=fff&rounded=true" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">`;
+          : `<img src="https://ui-avatars.com/api/?name=${partnerName}&background=0A4222&color=fff&rounded=true" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">`;
         avEl.style.background = 'transparent';
       }
       if (statEl) statEl.innerHTML = `● ORD-${p.id.substring(0,6).toUpperCase()} · ${p.status.toUpperCase()}`;
@@ -438,12 +438,12 @@ async function fetchChat() {
           const myAv = user.avatar || localStorage.getItem('user_avatar');
           avatarHtml = myAv 
             ? `<div class="cm-av" style="background:transparent;"><img src="${myAv}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;"></div>`
-            : `<div class="cm-av" style="background:transparent;"><img src="https://ui-avatars.com/api/?name=${user.name||'U'}&background=00D084&color=fff&rounded=true" style="width:100%;height:100%;border-radius:50%;object-fit:cover;"></div>`;
+            : `<div class="cm-av" style="background:transparent;"><img src="https://ui-avatars.com/api/?name=${user.name||'U'}&background=0A4222&color=fff&rounded=true" style="width:100%;height:100%;border-radius:50%;object-fit:cover;"></div>`;
         } else {
           const senderAv = m.sender_avatar || localStorage.getItem('petugas_avatar');
           avatarHtml = senderAv
             ? `<div class="cm-av" style="background:transparent;"><img src="${senderAv}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;"></div>`
-            : `<div class="cm-av" style="background:transparent;"><img src="https://ui-avatars.com/api/?name=Petugas&background=00D084&color=fff&rounded=true" style="width:100%;height:100%;border-radius:50%;object-fit:cover;"></div>`;
+            : `<div class="cm-av" style="background:transparent;"><img src="https://ui-avatars.com/api/?name=Petugas&background=0A4222&color=fff&rounded=true" style="width:100%;height:100%;border-radius:50%;object-fit:cover;"></div>`;
         }
 
         return `
@@ -532,11 +532,11 @@ async function initMiniChart() {
       datasets: [{
         label: 'Pendapatan',
         data: chartData,
-        borderColor: '#00D084',
+        borderColor: '#0A4222',
         backgroundColor: 'rgba(0,208,132,0.1)',
         fill: true,
         tension: 0.4,
-        pointBackgroundColor: '#00D084',
+        pointBackgroundColor: '#0A4222',
         pointRadius: 4,
         borderWidth: 2,
       }]
