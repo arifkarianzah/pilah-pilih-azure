@@ -56,10 +56,33 @@ if (process.env.NODE_ENV === 'development') {
 app.get('/api/fix-db', async (req, res) => {
   try {
     const db = require('./database/db');
+    await db.run('SET FOREIGN_KEY_CHECKS=0;');
     await db.run('ALTER TABLE messages CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
-    res.json({ success: true, message: 'Messages table encoding fixed!' });
+    await db.run('ALTER TABLE pickups CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
+    await db.run('ALTER TABLE users CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
+    await db.run('ALTER TABLE transactions CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
+    await db.run('ALTER TABLE waste_categories CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
+    await db.run('SET FOREIGN_KEY_CHECKS=1;');
+    res.json({ success: true, message: 'Messages table encoding fixed properly!' });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+app.get('/api/test-chat', async (req, res) => {
+  try {
+    const db = require('./database/db');
+    const pickup = await db.get('SELECT id FROM pickups LIMIT 1');
+    const user = await db.get('SELECT id FROM users LIMIT 1');
+    if (!pickup || !user) return res.json({error: 'No pickup or user'});
+    
+    await db.run(
+      'INSERT INTO messages (pickup_id, sender_id, message) VALUES (?, ?, ?)',
+      [pickup.id, user.id, 'Test message']
+    );
+    res.json({ success: true, message: 'Inserted test message' });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message, stack: err.stack });
   }
 });
 app.get('/api/seed', async (req, res) => {
