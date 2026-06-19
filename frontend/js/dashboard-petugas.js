@@ -209,7 +209,7 @@ async function initPetugasHome() {
           elAPC.innerHTML = `
             <div class="active-pickup-card" style="background:var(--card); border:1px solid var(--border); border-radius:16px; padding:16px; box-shadow:var(--sh-md); margin-bottom:16px; cursor:pointer;" onclick="window.currentPickupId='${p.id}'; goPage('${p.status === 'weighing' ? 'penimbangan' : 'pickup-berjalan'}')">
               <div class="apc-hdr" style="display:flex; justify-content:space-between; align-items:center; border-bottom: 1px dashed var(--border); padding-bottom: 12px; margin-bottom: 12px;">
-                <span style="font-weight:700; color:var(--t1); font-size:12px; display:flex; align-items:center; gap:6px;"><img src="https://img.icons8.com/fluency-systems-regular/48/118EEA/box.png" width="14"> ORD-${p.id.substring(0,6).toUpperCase()}</span>
+                <span style="font-weight:700; color:var(--t1); font-size:12px; display:flex; align-items:center; gap:6px;"><img src="https://img.icons8.com/fluency-systems-regular/48/00D084/box.png" width="14"> ORD-${p.id.substring(0,6).toUpperCase()}</span>
                 <span class="tag-onway" style="background:rgba(17,142,234,0.1); color:var(--primary); padding:4px 8px; border-radius:99px; font-size:9px; font-weight:800;">${p.status.toUpperCase()}</span>
               </div>
               <div class="apc-user" style="display:flex; gap:12px; align-items:center;">
@@ -217,11 +217,11 @@ async function initPetugasHome() {
                 <div class="apc-info" style="flex:1;">
                   <p style="font-size:14px; font-weight:700; color:var(--t1); margin:0 0 4px;">${p.user_name || 'User'}</p>
                   <p style="font-size:11px; color:var(--t3); margin:0; display:flex; gap:4px; align-items:center;">
-                    <img src="https://img.icons8.com/fluency-systems-regular/48/118EEA/map-pin.png" width="12"> 
+                    <img src="https://img.icons8.com/fluency-systems-regular/48/00D084/map-pin.png" width="12"> 
                     <span style="display:-webkit-box; -webkit-line-clamp:1; -webkit-box-orient:vertical; overflow:hidden; text-overflow:ellipsis;">${p.address || '-'}</span>
                   </p>
                 </div>
-                <div class="apc-actions"><button class="btn-ghost" style="padding:8px; border:1px solid var(--border); border-radius:12px; display:flex; align-items:center; justify-content:center;" onclick="event.stopPropagation();goPage('chat')"><img src="https://img.icons8.com/fluency-systems-regular/48/118EEA/chat.png" width="18"></button></div>
+                <div class="apc-actions"><button class="btn-ghost" style="padding:8px; border:1px solid var(--border); border-radius:12px; display:flex; align-items:center; justify-content:center;" onclick="event.stopPropagation();goPage('chat')"><img src="https://img.icons8.com/fluency-systems-regular/48/00D084/chat.png" width="18"></button></div>
               </div>
             </div>
           `;
@@ -532,7 +532,7 @@ async function loadPickupBerjalan() {
       container.innerHTML = active.map(p => `
         <div class="active-pickup-card large" style="background:var(--card); border:1px solid var(--border); border-radius:16px; padding:20px; box-shadow:var(--sh-md); margin-bottom:16px;">
           <div class="apc-hdr" style="display:flex; justify-content:space-between; align-items:center; border-bottom: 1px dashed var(--border); padding-bottom: 12px; margin-bottom: 16px;">
-            <span style="font-weight:700; color:var(--t1); font-size:13px; display:flex; align-items:center; gap:6px;"><img src="https://img.icons8.com/fluency-systems-regular/48/118EEA/box.png" width="16"> ORD-${p.id.substring(0,6).toUpperCase()}</span>
+            <span style="font-weight:700; color:var(--t1); font-size:13px; display:flex; align-items:center; gap:6px;"><img src="https://img.icons8.com/fluency-systems-regular/48/00D084/box.png" width="16"> ORD-${p.id.substring(0,6).toUpperCase()}</span>
             <span class="tag-onway" style="background:rgba(17,142,234,0.1); color:var(--primary); padding:4px 10px; border-radius:99px; font-size:10px; font-weight:800;">${p.status.toUpperCase()}</span>
           </div>
           <div class="apc-user" style="display:flex; gap:16px; align-items:flex-start; margin-bottom: 20px;">
@@ -540,11 +540,11 @@ async function loadPickupBerjalan() {
             <div class="apc-info" style="flex:1;">
               <p style="font-size:15px; font-weight:700; color:var(--t1); margin:0 0 6px;">${p.user_name || 'User'}</p>
               <p style="font-size:12px; color:var(--t3); margin:0 0 4px; display:flex; gap:6px; align-items:flex-start;">
-                <img src="https://img.icons8.com/fluency-systems-regular/48/118EEA/map-pin.png" width="14" style="margin-top:2px;"> 
+                <img src="https://img.icons8.com/fluency-systems-regular/48/00D084/map-pin.png" width="14" style="margin-top:2px;"> 
                 <span style="display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; text-overflow:ellipsis; line-height:1.4;">${p.address || '-'}</span>
               </p>
               <p style="font-size:12px; color:var(--t3); margin:0; display:flex; gap:6px; align-items:center;">
-                <img src="https://img.icons8.com/fluency-systems-regular/48/118EEA/phone.png" width="14"> 
+                <img src="https://img.icons8.com/fluency-systems-regular/48/00D084/phone.png" width="14"> 
                 ${p.user_phone || '-'}
               </p>
             </div>
@@ -571,10 +571,10 @@ async function loadPickupBerjalan() {
             ${p.status === 'weighing' ? `<button class="btn-primary w-full" style="padding:12px; font-size:14px;" onclick="window.currentPickupId='${p.id}'; goPage('penimbangan')">⚖️ Lanjutkan Penimbangan</button>` : ''}
             <div style="display:flex; gap:8px; width:100%; margin-top:4px;">
                 <button class="btn-ghost" style="flex:1; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; gap:6px; padding:10px;" onclick="window.currentPickupId='${p.id}'; goPage('chat')">
-                  <img src="https://img.icons8.com/fluency-systems-regular/48/118EEA/chat.png" width="18"> Chat
+                  <img src="https://img.icons8.com/fluency-systems-regular/48/00D084/chat.png" width="18"> Chat
                 </button>
                 <button class="btn-ghost" style="flex:1; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; gap:6px; padding:10px;" onclick="goPage('tracking')">
-                  <img src="https://img.icons8.com/fluency-systems-regular/48/118EEA/map.png" width="18"> Peta
+                  <img src="https://img.icons8.com/fluency-systems-regular/48/00D084/map.png" width="18"> Peta
                 </button>
             </div>
           </div>
@@ -798,7 +798,7 @@ async function loadChat() {
       if (avEl) {
         avEl.innerHTML = savedUserAv 
           ? `<img src="${savedUserAv}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">`
-          : `<img src="https://ui-avatars.com/api/?name=${partnerName}&background=118EEA&color=fff&rounded=true" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">`;
+          : `<img src="https://ui-avatars.com/api/?name=${partnerName}&background=00D084&color=fff&rounded=true" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">`;
         avEl.style.background = 'transparent';
       }
       if (statEl) statEl.innerHTML = `● ORD-${p.id.substring(0,6).toUpperCase()} · ${p.status.toUpperCase()}`;
@@ -831,12 +831,12 @@ async function fetchChat() {
           const myAv = user.avatar || localStorage.getItem('petugas_avatar');
           avatarHtml = myAv 
             ? `<div class="cm-av" style="background:transparent;"><img src="${myAv}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;"></div>`
-            : `<div class="cm-av" style="background:transparent;"><img src="https://ui-avatars.com/api/?name=Petugas&background=118EEA&color=fff&rounded=true" style="width:100%;height:100%;border-radius:50%;object-fit:cover;"></div>`;
+            : `<div class="cm-av" style="background:transparent;"><img src="https://ui-avatars.com/api/?name=Petugas&background=00D084&color=fff&rounded=true" style="width:100%;height:100%;border-radius:50%;object-fit:cover;"></div>`;
         } else {
           const senderAv = m.sender_avatar || localStorage.getItem('user_avatar');
           avatarHtml = senderAv
             ? `<div class="cm-av" style="background:transparent;"><img src="${senderAv}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;"></div>`
-            : `<div class="cm-av" style="background:transparent;"><img src="https://ui-avatars.com/api/?name=${m.sender_name||'U'}&background=118EEA&color=fff&rounded=true" style="width:100%;height:100%;border-radius:50%;object-fit:cover;"></div>`;
+            : `<div class="cm-av" style="background:transparent;"><img src="https://ui-avatars.com/api/?name=${m.sender_name||'U'}&background=00D084&color=fff&rounded=true" style="width:100%;height:100%;border-radius:50%;object-fit:cover;"></div>`;
         }
 
         return `
