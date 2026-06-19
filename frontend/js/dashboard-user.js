@@ -392,7 +392,7 @@ async function checkUnreadChatBadge() {
         badgeEl.style.display = 'none';
         return;
       }
-      const chatRes = await API.Chat.getChat(latest.id);
+      const chatRes = await API.Pickup.getChat(latest.id);
       if (chatRes.success) {
         const msgs = chatRes.data;
         const me = API.Storage.getUser();
