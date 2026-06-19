@@ -472,6 +472,14 @@ function esc(t) {
   return d.innerHTML;
 }
 
+window.callPetugas = function() {
+  if (window.currentPetugasPhone) {
+    window.location.href = 'tel:' + window.currentPetugasPhone;
+  } else {
+    showToast('⚠️ Nomor telepon petugas belum tersedia');
+  }
+};
+
 // ==================== MINI CHART ====================
 async function initMiniChart() {
   const el = document.getElementById('miniChart');
@@ -791,8 +799,11 @@ async function initTrackingMap() {
   try {
     const res = await API.Pickup.getAll();
     if (res.success && res.data) {
-      const active = res.data.find(p => ['confirmed', 'on_way', 'arrived', 'weighing'].includes(p.status));
-      if (active) window.currentPickupId = active.id;
+      const active = res.data.find(p => ['waiting', 'pending', 'confirmed', 'on_way', 'arrived', 'weighing'].includes(p.status));
+      if (active) {
+        window.currentPickupId = active.id;
+        window.currentPetugasPhone = active.petugas_phone;
+      }
     }
   } catch(e) { console.error(e); }
 
