@@ -386,7 +386,7 @@ async function loadChat() {
       const res = await API.Pickup.getAll();
       if (res.success && res.data.length > 0) {
         const latestPickup = res.data[0];
-        if (latestPickup.status === 'selesai' || latestPickup.status === 'batal') {
+        if (latestPickup.status === 'completed' || latestPickup.status === 'cancelled') {
           showToast('⚠️ Barang sudah diambil, chat dinonaktifkan.');
           goPage('home');
           return;
@@ -408,7 +408,7 @@ async function loadChat() {
     const pickupRes = await API.Pickup.getById(window.currentPickupId);
     if (pickupRes.success) {
       const p = pickupRes.data;
-      if (p.status === 'selesai' || p.status === 'batal') {
+      if (p.status === 'completed' || p.status === 'cancelled') {
         showToast('⚠️ Barang sudah diambil, chat dinonaktifkan.');
         goPage('home');
         return;
