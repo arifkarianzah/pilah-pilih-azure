@@ -53,6 +53,15 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 /* ── Routes ── */
+app.get('/api/fix-db', async (req, res) => {
+  try {
+    const db = require('./database/db');
+    await db.run('ALTER TABLE messages CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
+    res.json({ success: true, message: 'Messages table encoding fixed!' });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
 app.get('/api/seed', async (req, res) => {
   try {
     const db = require('./database/db');
