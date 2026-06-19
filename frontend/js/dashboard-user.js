@@ -230,6 +230,24 @@ async function processWithdrawal() {
   }
 }
 
+// ==================== PREVIEW PHOTO ====================
+function previewPhoto(input) {
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const uploadBox = input.closest('.fg').querySelector('.upload-box');
+      uploadBox.style.backgroundImage = `url(${e.target.result})`;
+      uploadBox.style.backgroundSize = 'cover';
+      uploadBox.style.backgroundPosition = 'center';
+      uploadBox.style.border = 'none';
+      const inner = uploadBox.querySelector('.ub-inner');
+      if (inner) inner.style.display = 'none';
+      showToast('📷 Foto siap diupload!');
+    }
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
 // ==================== SUBMIT PICKUP ====================
 async function submitPickup() {
   const wasteName = document.getElementById('wasteNameInput')?.value?.trim();
