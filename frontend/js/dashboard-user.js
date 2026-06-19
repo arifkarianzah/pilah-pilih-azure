@@ -385,9 +385,15 @@ async function loadChat() {
     try {
       const res = await API.Pickup.getAll();
       if (res.success && res.data.length > 0) {
-        window.currentPickupId = res.data[0].id; // Ambil riwayat chat terbaru
+        const latestPickup = res.data[0];
+        if (latestPickup.status === 'selesai' || latestPickup.status === 'batal') {
+          showToast('⚠️ Barang sudah diambil, chat dinonaktifkan.');
+          goPage('home');
+          return;
+        }
+        window.currentPickupId = latestPickup.id;
       } else {
-        showToast('⚠️ Belum ada riwayat chat/pickup');
+        showToast('⚠️ Belum ada pesanan aktif.');
         goPage('home');
         return;
       }
@@ -402,6 +408,11 @@ async function loadChat() {
     const pickupRes = await API.Pickup.getById(window.currentPickupId);
     if (pickupRes.success) {
       const p = pickupRes.data;
+      if (p.status === 'selesai' || p.status === 'batal') {
+        showToast('⚠️ Barang sudah diambil, chat dinonaktifkan.');
+        goPage('home');
+        return;
+      }
       const me = API.Storage.getUser();
       // If user is logged in, chat partner is petugas
       const partnerName = p.petugas_name || 'Petugas PilahPilih';
