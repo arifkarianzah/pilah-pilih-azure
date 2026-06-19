@@ -187,7 +187,7 @@ function openDetailModal(type, index) {
     title.textContent = 'Profil User';
     html = `<div style="display:flex; align-items:center; gap:16px; margin-bottom:20px;">
       <div class="t-av" style="width:50px; height:50px; font-size:18px;">${data.name.substring(0,2).toUpperCase()}</div>
-      <div><h3 style="color:var(--t1); margin-bottom:4px;">${data.name}</h3><span class="role-tag blue-role">${data.role}</span></div>
+      <div><h3 style="color:var(--t1); margin-bottom:4px;">${data.name}</h3><span class="role-tag green-role">${data.role}</span></div>
     </div>
     <div style="background:var(--card2); padding:16px; border-radius:12px; display:grid; grid-template-columns:1fr 1fr; gap:12px;">
       <div><p style="color:var(--t4); font-size:12px;">Email</p><p style="color:var(--t1);">${data.email}</p></div>
@@ -417,7 +417,7 @@ async function fetchUsersData() {
           <td>${i+1}</td>
           <td><div class="t-user"><div class="t-av">${u.name.substring(0,2).toUpperCase()}</div>${u.name}</div></td>
           <td>${u.email}</td>
-          <td><span class="role-tag ${u.role === 'petugas' ? 'green-role' : (u.role === 'admin' ? 'purple-role' : 'blue-role')}">${u.role}</span></td>
+          <td><span class="role-tag ${u.role === 'petugas' ? 'green-role' : (u.role === 'admin' ? 'purple-role' : 'green-role')}">${u.role}</span></td>
           <td><span class="lvl-tag">Level --</span></td>
           <td>--</td>
           <td><span class="s-dot green"></span>Aktif</td>
@@ -454,7 +454,7 @@ function switchUserTab(btn, filterRole) {
       <td>${i+1}</td>
       <td><div class="t-user"><div class="t-av">${u.name.substring(0,2).toUpperCase()}</div>${u.name}</div></td>
       <td>${u.email}</td>
-      <td><span class="role-tag ${u.role === 'petugas' ? 'green-role' : (u.role === 'admin' ? 'purple-role' : 'blue-role')}">${u.role}</span></td>
+      <td><span class="role-tag ${u.role === 'petugas' ? 'green-role' : (u.role === 'admin' ? 'purple-role' : 'green-role')}">${u.role}</span></td>
       <td><span class="lvl-tag">Level --</span></td>
       <td>--</td>
       <td><span class="s-dot green"></span>Aktif</td>
@@ -525,7 +525,7 @@ async function fetchPetugasData() {
         const statusHtml = isOnline ? '<span class="status-online">🟢 Online</span>' : '<span class="status-offline" style="color:var(--red);">🔴 Offline</span>';
         
         html += `<tr>
-          <td><div class="t-user"><div class="t-av blue-av-t">${u.name.substring(0,2).toUpperCase()}</div>${u.name}</div></td>
+          <td><div class="t-user"><div class="t-av">${u.name.substring(0,2).toUpperCase()}</div>${u.name}</div></td>
           <td>${u.city || '-'}</td>
           <td>${statusHtml}</td>
           <td>${u.total_pickups || 0}</td>
@@ -1029,7 +1029,7 @@ async function initAdminDashboard() {
       if (tb && data.data && data.data.length > 0) {
         let html = '';
         data.data.forEach((u, i) => {
-          const roleClass = u.role === 'admin' ? 'gold-role' : (u.role === 'petugas' ? 'green-role' : 'blue-role');
+          const roleClass = u.role === 'admin' ? 'gold-role' : (u.role === 'petugas' ? 'green-role' : 'green-role');
           const roleName = u.role === 'admin' ? 'Admin' : (u.role === 'petugas' ? 'Petugas' : 'User');
           const initials = u.name.substring(0, 2).toUpperCase();
           html += `<tr><td>${i+1}</td><td><div class="t-user"><div class="t-av">${initials}</div>${u.name}</div></td><td>${u.email}</td><td><span class="role-tag ${roleClass}">${roleName}</span></td><td>—</td><td>—</td><td><span class="s-dot green"></span>Aktif</td><td>-</td><td><div class="t-act-btns"><button class="t-edit">Edit</button></div></td></tr>`;
