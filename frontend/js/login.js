@@ -228,26 +228,30 @@ async function doRegister() {
   if (!phone) { showToast('❌ Nomor HP wajib diisi'); return; }
   if (!pwd || pwd.length < 8) { showToast('❌ Password minimal 8 karakter'); return; }
 
-  const ktpFile = document.getElementById('regKTP')?.files[0];
-  if ((roleSelect === 'user' || roleSelect === 'petugas') && !ktpFile) {
-    showToast('❌ Foto KTP wajib diunggah untuk pendaftaran ini'); return;
-  }
-
-  showToast('⏳ Mengunggah data & Mendaftar...');
+  showToast('⏳ Mendaftar...');
   
   try {
     const roleIdMap = { admin: 'admin', petugas: 'petugas', user: 'user', bank: 'bank_sampah', pengepul: 'bank_sampah' };
     const mappedRole = roleIdMap[roleSelect] || 'user';
     
+    // Auth.register will also log the user in automatically (stores token in localStorage)
     await API.Auth.register({ name, email, phone, password: pwd, role: mappedRole });
     
     // Simpan nama ke localStorage agar tampil di dashboard
     localStorage.setItem('user_name', name);
     
-    const otpTgt = document.getElementById('otpTarget');
-    if (otpTgt) otpTgt.textContent = phone;
-    showToast('✅ Registrasi berhasil! Silakan verifikasi OTP');
-    setTimeout(() => showView('otp'), 600);
+    showToast('✅ Registrasi berhasil! Mengarahkan ke Dashboard...');
+    
+    // Langsung arahkan ke dashboard yang sesuai (Bypass OTP)
+    setTimeout(() => {
+      const roleMap = {
+        admin: 'dashboard-admin.html',
+        petugas: 'dashboard-petugas.html',
+        user: 'dashboard-user.html',
+        bank_sampah: 'dashboard-pengepul.html'
+      };
+      window.location.href = roleMap[mappedRole] || 'dashboard-user.html';
+    }, 1000);
   } catch (err) {
     showToast('❌ ' + err.message);
   }

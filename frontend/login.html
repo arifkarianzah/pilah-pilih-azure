@@ -404,25 +404,14 @@
             <button class="ig-eye" onclick="togglePwd('regPwd',this)" type="button"><svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
           </div>
           <div class="input-group" style="margin-bottom: 24px; position: relative;">
-            <span class="ig-icon"><svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
-            <select class="ig-input" id="regRole" onchange="toggleKtpUpload(this.value)" style="cursor: pointer; appearance: none; padding-right: 40px; font-weight: 600;">
+            <span class="ig-icon"><svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 17 22 12"/></svg></span>
+            <select class="ig-input" id="regRole" style="cursor: pointer; appearance: none; padding-right: 40px; font-weight: 600;">
               <option value="user">Daftar sebagai User</option>
               <option value="petugas">Daftar sebagai Petugas</option>
             </select>
             <span style="position: absolute; right: 16px; top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--t3); display: flex;">
               <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
             </span>
-          </div>
-          
-          <div class="ktp-upload-wrap" id="ktpWrap">
-            <p class="ktp-label">Upload Foto KTP (Wajib)</p>
-            <label class="ktp-dropzone" id="ktpDropzone">
-              <input type="file" id="regKTP" accept="image/*" hidden onchange="handleKtpUpload(this)" />
-              <div class="ktp-icon"><svg viewBox="0 0 24 24" width="32" height="32" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
-              <p class="ktp-text">Klik atau seret foto KTP ke sini</p>
-              <p class="ktp-sub">Format: JPG, PNG (Maks. 5MB)</p>
-              <img id="ktpPreview" src="" alt="KTP Preview" />
-            </label>
           </div>
           
           <button class="btn-login" onclick="doRegister()">Daftar Sekarang</button>
