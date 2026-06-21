@@ -1,280 +1,132 @@
 <!-- ==================== DASHBOARD USER ==================== -->
 <div id="page-home" class="page">
   <div class="phone-frame app-frame">
-    <!-- TOP BAR (Only icons on right) -->
-    <div class="app-header top-bar-transparent" style="background: transparent; border: none; padding: 20px 32px 10px;">
-      <div class="hdr-left mobile-only" onclick="goPage('profile')" style="cursor:pointer; display: none;">
-        <!-- Kept for mobile fallback if needed, hidden on desktop -->
+    <div class="app-header" style="background: var(--primary); border: none;">
+      <div class="hdr-left" onclick="goPage('profile')" style="cursor:pointer;" title="Buka Profil">
         <div class="hdr-av" style="background: white; border: none; display: flex; align-items: center; justify-content: center; box-shadow: none;">
           <img src="https://img.icons8.com/fluency-systems-filled/48/0A4222/leaf.png" width="24" height="24">
         </div>
         <div>
-          <p class="hdr-greet" style="color: var(--t1);">Selamat Pagi</p>
-          <p class="hdr-name ph-name" style="color: var(--t1); font-weight: 700;">User</p>
+          <p class="hdr-greet" id="greetText" style="color: rgba(255,255,255,0.8);">Selamat Pagi</p>
+          <p class="hdr-name ph-name" style="color: white; font-weight: 700;">User PilahPilih</p>
         </div>
       </div>
-      <div class="hdr-right" style="margin-left: auto;">
-        <button class="icon-btn" id="themeBtn" onclick="toggleTheme()" style="background: transparent; border: none; color: var(--t1);">
-          <img src="https://img.icons8.com/fluency-systems-regular/48/000000/moon-symbol.png" width="24" class="theme-icon">
-        </button>
-        <button class="icon-btn has-badge" onclick="goPage('notifikasi-user')" style="background: transparent; border: none; color: var(--t1);">
-          <img src="https://img.icons8.com/fluency-systems-regular/48/000000/bell.png" width="24" class="theme-icon">
-          <span class="badge-dot" style="border-color: var(--bg); background: #10B981;">3</span>
-        </button>
+      <div class="hdr-right">
+        <button class="icon-btn" id="themeBtn" onclick="toggleTheme()" style="background: rgba(255,255,255,0.15); border: none; color: white;"><img src="https://img.icons8.com/fluency-systems-regular/48/ffffff/moon-symbol.png" width="20"></button>
+        <button class="icon-btn has-badge" onclick="goPage('notifikasi-user')" style="background: rgba(255,255,255,0.15); border: none; color: white;"><img src="https://img.icons8.com/fluency-systems-regular/48/ffffff/bell.png" width="20"><span class="badge-dot" style="border-color: var(--primary);">3</span></button>
       </div>
     </div>
 
     <div class="scroll-content" style="background: var(--bg); padding-top: 0;">
-      
-      <!-- NEW HERO SECTION -->
-      <div class="hero-card-premium">
-        <div class="hcp-top">
-          <div class="hcp-profile">
-            <div class="hcp-av ph-av">R</div>
-            <div class="hcp-greet-box">
-              <p id="greetText">Selamat Malam 👋</p>
-              <h2 class="ph-name">Rian</h2>
-            </div>
+      <!-- DANA STYLE HERO -->
+      <div class="dana-hero" style="background: var(--primary); padding: 12px 20px 48px; color: white; border-bottom-left-radius: 24px; border-bottom-right-radius: 24px; position: relative; overflow: hidden;">
+        <img src="https://img.icons8.com/fluency-systems-filled/200/FFFFFF/leaf.png" style="position: absolute; right: -50px; top: -30px; opacity: 0.05; transform: rotate(15deg); pointer-events: none;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; position: relative; z-index: 1;">
+          <div>
+            <p style="font-size:13px; font-weight:500; opacity:0.9; margin-bottom:4px;">Saldo Aktif</p>
+            <h2 id="statEarning" style="font-size:32px; font-weight:800; letter-spacing:-0.02em;">Rp 0</h2>
           </div>
-        </div>
-        
-        <div class="hcp-bottom">
-          <div class="hcp-balance">
-            <p>Saldo Aktif</p>
-            <div class="hcp-bal-val">
-              <h1 id="statEarning">Rp 214.450</h1>
-              <img src="https://img.icons8.com/fluency-systems-regular/48/FFFFFF/visible.png" width="20" style="opacity: 0.7; cursor: pointer;">
+          <div style="text-align:right;">
+            <p style="font-size:11px; opacity:0.8; margin-bottom:4px;">Poin & Level</p>
+            <div style="display:flex; gap:8px; font-size:12px; font-weight:700; background:rgba(255,255,255,0.15); padding:4px 10px; border-radius:99px;">
+              <span id="statPoints">0</span> • <span id="statLevel">Bronze</span>
             </div>
-          </div>
-          
-          <div class="hcp-badge-card" onclick="goPage('reward')">
-            <div class="hcp-badge-ico"><img src="https://img.icons8.com/color/48/000000/bronze-medal.png" width="28"></div>
-            <div class="hcp-badge-text">
-              <h4 id="statLevel">Bronze</h4>
-              <p><span id="statPoints">1078</span> Poin</p>
-            </div>
-            <div class="hcp-badge-arrow">›</div>
           </div>
         </div>
       </div>
 
-      <!-- NEW QUICK ACTIONS BAR -->
-      <div class="quick-actions-bar">
-        <div class="qa-item" onclick="goPage('ai-scan')">
-          <img src="https://img.icons8.com/fluency-systems-filled/48/0A4222/robot-2.png" width="32">
-          <div class="qa-text">
-            <h4>AI Scan</h4>
-            <p>Scan sampah</p>
-          </div>
+      <!-- DANA QUICK ACTIONS -->
+      <div class="dana-actions" style="margin: -32px 20px 20px; background: var(--surface); border-radius: 16px; padding: 16px; display: flex; justify-content: space-between; box-shadow: var(--sh-md); border: 1px solid var(--border); position: relative; z-index: 10;">
+        <div class="da-item" onclick="goPage('ai-scan')" style="text-align:center; flex:1; cursor:pointer;">
+          <div style="width:44px; height:44px; margin:0 auto 8px; border-radius:14px; background:var(--primary-light); display:flex; align-items:center; justify-content:center;"><img src="https://img.icons8.com/fluency-systems-regular/48/0A4222/robot-2.png" width="24"></div>
+          <p style="font-size:11px; font-weight:600; color:var(--t1);">AI Scan</p>
         </div>
-        <div class="qa-item" onclick="goPage('dompet')">
-          <img src="https://img.icons8.com/fluency-systems-filled/48/0A4222/wallet.png" width="32">
-          <div class="qa-text">
-            <h4>Tarik Saldo</h4>
-            <p>Tarik ke rekening</p>
-          </div>
+        <div class="da-item" onclick="goPage('dompet')" style="text-align:center; flex:1; cursor:pointer;">
+          <div style="width:44px; height:44px; margin:0 auto 8px; border-radius:14px; background:var(--primary-light); display:flex; align-items:center; justify-content:center;"><img src="https://img.icons8.com/fluency-systems-regular/48/0A4222/wallet.png" width="24"></div>
+          <p style="font-size:11px; font-weight:600; color:var(--t1);">Tarik Saldo</p>
         </div>
-        <div class="qa-item" onclick="goPage('jual-sampah')">
-          <img src="https://img.icons8.com/fluency-systems-filled/48/0A4222/recycle-sign.png" width="32">
-          <div class="qa-text">
-            <h4>Jual Sampah</h4>
-            <p>Jual sampahmu</p>
-          </div>
+        <div class="da-item" onclick="goPage('jual-sampah')" style="text-align:center; flex:1; cursor:pointer;">
+          <div style="width:44px; height:44px; margin:0 auto 8px; border-radius:14px; background:var(--primary-light); display:flex; align-items:center; justify-content:center;"><img src="https://img.icons8.com/fluency-systems-regular/48/0A4222/recycle-sign.png" width="24"></div>
+          <p style="font-size:11px; font-weight:600; color:var(--t1);">Jual</p>
         </div>
-        <div class="qa-item" onclick="goPage('riwayat-pickup')">
-          <img src="https://img.icons8.com/fluency-systems-filled/48/0A4222/order-history.png" width="32">
-          <div class="qa-text">
-            <h4>Riwayat</h4>
-            <p>Lihat riwayat</p>
-          </div>
+        <div class="da-item" onclick="goPage('riwayat-pickup')" style="text-align:center; flex:1; cursor:pointer;">
+          <div style="width:44px; height:44px; margin:0 auto 8px; border-radius:14px; background:var(--primary-light); display:flex; align-items:center; justify-content:center;"><img src="https://img.icons8.com/fluency-systems-regular/48/0A4222/order-history.png" width="24"></div>
+          <p style="font-size:11px; font-weight:600; color:var(--t1);">Riwayat</p>
         </div>
       </div>
 
-      <!-- DESKTOP GRID 3 -->
-      <div class="desktop-grid-3 mt24">
-        
-        <!-- MENU UTAMA -->
-        <div class="db-card">
-          <div class="dbc-hdr"><h3>Menu Utama</h3></div>
-          <div class="menu-grid">
-            <div class="menu-item" onclick="goPage('jual-sampah')">
-              <div class="mi-ico"><img src="https://img.icons8.com/fluency-systems-regular/48/0A4222/recycle-sign.png" width="28"></div><p>Jual Sampah</p>
-            </div>
-            <div class="menu-item" onclick="goPage('ai-scan')">
-              <div class="mi-ico"><img src="https://img.icons8.com/fluency-systems-regular/48/0A4222/robot-2.png" width="28"></div><p>AI Scan</p><div class="mi-badge">New</div>
-            </div>
-            <div class="menu-item" onclick="goPage('riwayat-pickup')">
-              <div class="mi-ico"><img src="https://img.icons8.com/fluency-systems-regular/48/0A4222/box.png" width="28"></div><p>Pickup</p>
-            </div>
-            <div class="menu-item" onclick="goPage('reward')">
-              <div class="mi-ico"><img src="https://img.icons8.com/fluency-systems-regular/48/0A4222/gift.png" width="28"></div><p>Reward</p>
-            </div>
-            <div class="menu-item" onclick="goPage('edukasi')">
-              <div class="mi-ico"><img src="https://img.icons8.com/fluency-systems-regular/48/0A4222/books.png" width="28"></div><p>Edukasi</p>
-            </div>
-            <div class="menu-item" onclick="goPage('chat')">
-              <div class="mi-ico" style="position: relative;">
-                <img src="https://img.icons8.com/fluency-systems-regular/48/0A4222/chat--v1.png" width="28">
-                <div id="homeChatBadge" class="mi-badge" style="position: absolute; top: -4px; right: -4px; background: #EF4444; color: white; align-items: center; justify-content: center; border: 2px solid white;">4</div>
-              </div>
-              <p>Chat</p>
-            </div>
-            <div class="menu-item" onclick="goPage('profile')">
-              <div class="mi-ico"><img src="https://img.icons8.com/fluency-systems-regular/48/0A4222/user-male-circle--v1.png" width="28"></div><p>Profil</p>
-            </div>
-          </div>
+      <!-- MAIN ACTIONS -->
+      <div class="section-hdr mt12"><h3>Menu Utama</h3></div>
+      <div class="menu-grid">
+        <div class="menu-item" onclick="goPage('jual-sampah')">
+          <div class="mi-ico"><img src="https://img.icons8.com/fluency-systems-regular/48/0A4222/recycle-sign.png" width="30" height="30" alt="Jual Sampah"></div><p>Jual Sampah</p>
         </div>
-
-        <!-- HARGA SAMPAH -->
-        <div class="db-card">
-          <div class="dbc-hdr">
-            <h3>Harga Sampah Hari Ini</h3>
-            <a onclick="goPage('jual-sampah')" class="link-sm">Lihat Semua</a>
-          </div>
-          <div class="price-list" id="homePriceList">
-            <!-- Will be populated by JS -->
-            <p style="text-align:center;color:var(--t4);font-size:12px;padding:20px;">Memuat harga...</p>
-          </div>
+        <div class="menu-item" onclick="goPage('ai-scan')">
+          <div class="mi-ico"><img src="https://img.icons8.com/fluency-systems-regular/48/0A4222/robot-2.png" width="30" height="30" alt="AI Scan"></div><p>AI Scan</p><div class="mi-badge">New</div>
         </div>
-
-        <!-- INFORMASI -->
-        <div class="db-card">
-          <div class="dbc-hdr">
-            <h3>Informasi</h3>
-          </div>
-          <div class="info-list" id="homeInfoList">
-            <!-- Will be populated by JS -->
-            <p style="text-align:center;color:var(--t4);font-size:12px;padding:20px;">Memuat informasi...</p>
-          </div>
-          <button class="btn-ghost-full mt12" onclick="goPage('notifikasi-user')">Lihat Semua Info</button>
+        <div class="menu-item" onclick="goPage('riwayat-pickup')">
+          <div class="mi-ico"><img src="https://img.icons8.com/fluency-systems-regular/48/0A4222/box.png" width="30" height="30" alt="Pickup"></div><p>Pickup</p><div class="mi-badge active">1</div>
         </div>
-
+        <div class="menu-item" onclick="goPage('reward')">
+          <div class="mi-ico"><img src="https://img.icons8.com/fluency-systems-regular/48/0A4222/gift.png" width="30" height="30" alt="Reward"></div><p>Reward</p>
+        </div>
+        <div class="menu-item" onclick="goPage('edukasi')">
+          <div class="mi-ico"><img src="https://img.icons8.com/fluency-systems-regular/48/0A4222/books.png" width="30" height="30" alt="Edukasi"></div><p>Edukasi</p>
+        </div>
+        <div class="menu-item" onclick="goPage('chat')">
+          <div class="mi-ico" style="position: relative;">
+            <img src="https://img.icons8.com/fluency-systems-regular/48/0A4222/chat--v1.png" width="30" height="30" alt="Chat">
+            <div id="homeChatBadge" class="mi-badge" style="position: absolute; top: -4px; right: -4px; background: #EF4444; color: white; display: none; align-items: center; justify-content: center; border: 2px solid white;">0</div>
+          </div>
+          <p>Chat</p>
+        </div>
+        <div class="menu-item" onclick="goPage('profile')">
+          <div class="mi-ico"><img src="https://img.icons8.com/fluency-systems-regular/48/0A4222/user-male-circle--v1.png" width="30" height="30" alt="Profil"></div><p>Profil</p>
+        </div>
       </div>
 
-      <!-- DESKTOP GRID 2 -->
-      <div class="desktop-grid-2 mt24">
-        
-        <!-- STATISTIK PENJUALAN -->
-        <div class="db-card stat-card-wide">
-          <div class="dbc-hdr">
-            <h3>Statistik Penjualan</h3>
-            <select class="chart-sel"><option>Bulan Ini</option><option>Bulan Lalu</option></select>
-          </div>
-          
-          <div class="stat-wide-content">
-            <div class="swc-left">
-              <div class="swc-total">
-                <p>Total Penjualan</p>
-                <h2>Rp 214.450</h2>
-                <span class="badge-up">▲ 12% dari bulan lalu</span>
-              </div>
-              <div class="swc-chart">
-                <canvas id="miniChart" height="150"></canvas>
-              </div>
-            </div>
-            
-            <div class="swc-right">
-              <div class="swc-box">
-                <div>
-                  <p>Total Sampah</p>
-                  <h3>45 Kg</h3>
-                  <span class="badge-up-sm">▲ 8%</span>
-                </div>
-                <div class="swc-ico green-bg"><img src="https://img.icons8.com/fluency-systems-filled/48/0A4222/recycle-sign.png" width="24"></div>
-              </div>
-              <div class="swc-box">
-                <div>
-                  <p>Total Pickup</p>
-                  <h3>12</h3>
-                  <span class="badge-up-sm">▲ 5%</span>
-                </div>
-                <div class="swc-ico green-bg"><img src="https://img.icons8.com/fluency-systems-filled/48/0A4222/truck.png" width="24"></div>
-              </div>
-              <div class="swc-box">
-                <div>
-                  <p>Total Pendapatan</p>
-                  <h3>Rp 214.450</h3>
-                  <span class="badge-up-sm">▲ 12%</span>
-                </div>
-                <div class="swc-ico green-bg"><img src="https://img.icons8.com/fluency-systems-filled/48/0A4222/money-bag.png" width="24"></div>
-              </div>
-            </div>
-          </div>
+      <!-- MINI CHART -->
+      <div class="chart-mini-card mt12">
+        <div class="cmc-hdr">
+          <h3>Statistik Penjualan</h3>
+          <span class="cmc-badge up">+12%</span>
         </div>
+        <canvas id="miniChart" height="120"></canvas>
+      </div>
 
-        <!-- AKTIVITAS TERBARU -->
-        <div class="db-card">
-          <div class="dbc-hdr">
-            <h3>Aktivitas Terbaru</h3>
-          </div>
-          <div class="history-list-compact" id="homeRecentTxns">
-            <!-- Will be populated by JS -->
-            <p style="text-align:center;color:var(--t4);font-size:12px;padding:20px;">Memuat transaksi...</p>
-          </div>
-          <button class="btn-ghost-full mt12" onclick="goPage('riwayat-penjualan')">Lihat Semua Aktivitas</button>
-        </div>
-
+      <!-- RECENT TRX -->
+      <div class="section-hdr mt16"><h3>Transaksi Terakhir</h3><a onclick="goPage('riwayat-penjualan')">Lihat Semua ›</a></div>
+      <div class="history-list" id="homeRecentTxns">
+        <p style="text-align:center;color:var(--t4);font-size:12px;padding:10px;">Memuat transaksi...</p>
       </div>
 
       <div style="height:90px"></div>
     </div>
 
-    <!-- BOTTOM NAV / DESKTOP SIDEBAR -->
+    <!-- BOTTOM NAV -->
     <nav class="bottom-nav">
-      <!-- These extra items will have desktop-only class to hide them on mobile -->
       <div class="bn-item active" onclick="goPage('home')">
-        <img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/home.png" width="24" height="24">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/home.png" width="24" height="24">
         <p>Beranda</p>
       </div>
       <div class="bn-item" onclick="goPage('riwayat-pickup')">
-        <img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/truck.png" width="24" height="24">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/box.png" width="24" height="24">
         <p>Pickup</p>
       </div>
-      <div class="bn-item desktop-only" onclick="goPage('jual-sampah')">
-        <img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/recycle-sign.png" width="24" height="24">
-        <p>Jual Sampah</p>
-      </div>
-      <div class="bn-item desktop-only" onclick="goPage('ai-scan')">
-        <img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/robot-2.png" width="24" height="24">
-        <p>AI Scan</p>
-      </div>
-      <div class="bn-item" onclick="goPage('reward')">
-        <img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/gift.png" width="24" height="24">
-        <p>Reward</p>
-      </div>
-      <div class="bn-item desktop-only" onclick="goPage('edukasi')">
-        <img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/books.png" width="24" height="24">
-        <p>Edukasi</p>
-      </div>
-      <div class="bn-item desktop-only" onclick="goPage('riwayat-penjualan')">
-        <img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/order-history.png" width="24" height="24">
-        <p>Riwayat</p>
-      </div>
-      <div class="bn-item desktop-only" onclick="goPage('chat')">
-        <img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/chat.png" width="24" height="24">
-        <p>Chat</p>
-        <span class="bn-badge">4</span>
-      </div>
-      <div class="bn-item" onclick="goPage('profile')">
-        <img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/user.png" width="24" height="24">
-        <p>Profil</p>
-      </div>
-      
-      <!-- Special FAB for mobile -->
-      <div class="bn-fab mobile-only" onclick="goPage('jual-sampah')">
+      <div class="bn-fab" onclick="goPage('jual-sampah')">
         <div class="fab-circle">
           <img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/recycle-sign.png" width="28" height="28">
         </div>
         <p>Jual</p>
       </div>
-
-      <div class="bn-spacer desktop-only" style="flex:1;"></div>
-      
-      <div class="bn-item desktop-only" onclick="logout()" style="margin-top: auto;">
-        <img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/export.png" width="24" height="24">
-        <p>Logout</p>
+      <div class="bn-item" onclick="goPage('reward')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/gift.png" width="24" height="24">
+        <p>Reward</p>
+      </div>
+      <div class="bn-item" onclick="goPage('profile')">
+        <img src="https://img.icons8.com/fluency-systems-regular/48/000000/user.png" width="24" height="24">
+        <p>Profil</p>
       </div>
     </nav>
   </div>
 </div>
-
