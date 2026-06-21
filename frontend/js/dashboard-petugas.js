@@ -992,19 +992,20 @@ window.savePetugasProfil = function() {
 }
 
 // ==================== SUBSCRIPTION LOGIC ====================
-let isSubPaid = localStorage.getItem('petugas_sub_paid') === 'true';
+let isSubPaid = true; // localStorage.getItem('petugas_sub_paid') === 'true';
 
 window.checkSubscription = function() {
-  if (!isSubPaid) {
-    const lock = document.getElementById('subLockOverlay');
-    if (lock) lock.style.display = 'flex';
-    
-    const notifBadge = document.getElementById('notifBadge');
-    if (notifBadge) {
-      notifBadge.style.display = 'block';
-      notifBadge.textContent = '1';
-    }
-  }
+  // Disabled for now, app is free
+  // if (!isSubPaid) {
+  //   const lock = document.getElementById('subLockOverlay');
+  //   if (lock) lock.style.display = 'flex';
+  //   
+  //   const notifBadge = document.getElementById('notifBadge');
+  //   if (notifBadge) {
+  //     notifBadge.style.display = 'block';
+  //     notifBadge.textContent = '1';
+  //   }
+  // }
 }
 
 window.openMockPayment = function() {
