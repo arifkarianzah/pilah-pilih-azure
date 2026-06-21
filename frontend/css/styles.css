@@ -1824,12 +1824,14 @@ svg { fill: currentColor; display: inline-block; }
       0 0 0 8px #ffffff,
       0 0 0 10px #e2e8f0,
       0 32px 80px rgba(0,0,0,0.1);
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
   .bottom-nav {
-    position: absolute;
+    position: sticky;
     bottom: 0;
+    z-index: 200;
   }
 
   .history-list {
@@ -1863,20 +1865,23 @@ svg { fill: currentColor; display: inline-block; }
     margin: 0;
     border-radius: 40px;
     min-height: 860px;
+    height: 860px; /* Force height so it scrolls inside */
     box-shadow:
       0 0 0 10px #1a3a2a,
       0 0 0 12px rgba(10,66,34,0.5),
       0 40px 120px rgba(0,0,0,0.7),
       0 0 60px rgba(10,66,34,0.15);
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
     flex-direction: column;
     background: var(--surface);
     outline: 2px solid rgba(255,255,255,0.04);
   }
 
   .bottom-nav {
-    position: absolute;
+    position: sticky;
     bottom: 0;
+    z-index: 200;
   }
 }
 
