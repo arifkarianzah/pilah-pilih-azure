@@ -42,6 +42,8 @@ async function goPage(id) {
     const html = await res.text();
     document.getElementById('app-root').innerHTML = html;
     window.scrollTo(0, 0);
+    document.querySelectorAll('.blue-nav').forEach(el => el.classList.remove('blue-nav'));
+    document.querySelectorAll('.blue-fab').forEach(el => el.classList.remove('blue-fab'));
     updateNavActive(id);
     if (id === 'tracking') setTimeout(initMap, 100);
     if (id === 'pickup-masuk') setTimeout(loadPickups, 100);
