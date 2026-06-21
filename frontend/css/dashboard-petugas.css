@@ -2,6 +2,12 @@
    PILAH PILIH – Dashboard Petugas Specific Styles
    ================================================ */
 
+@media (min-width: 500px) {
+  .phone-frame {
+    max-width: 420px !important;
+  }
+}
+
 .page { display: block; width: 100%; min-height: 100vh; animation: fadeIn 0.3s ease; }
 .page.active { display: block; animation: fadeIn 0.3s ease; }
 @keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
