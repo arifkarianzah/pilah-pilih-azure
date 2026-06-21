@@ -5,7 +5,7 @@
     <!-- ===== HERO HEADER ===== -->
     <div class="prf-hero">
       <div class="prf-hero-bg"></div>
-      <div class="prf-hero-mesh"></div>
+      <img src="https://img.icons8.com/fluency-systems-filled/200/FFFFFF/leaf.png" style="position: absolute; left: 50%; top: 30%; transform: translate(-50%, -50%) scale(1.8); opacity: 0.05; pointer-events: none; z-index: 0;">
 
       <!-- Top Bar -->
       <div class="prf-topbar">
@@ -28,7 +28,6 @@
       <div class="prf-avatar-section">
         <div class="prf-avatar-wrap" onclick="document.getElementById('avatarUploadInput').click()">
           <div class="prf-avatar ph-av">RD</div>
-          <div class="prf-avatar-ring"></div>
           <div class="prf-avatar-cam">
             <svg viewBox="0 0 24 24" width="14" height="14" stroke="white" stroke-width="2.5" fill="none">
               <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
@@ -283,23 +282,19 @@
 /* ========== PROFILE PREMIUM CSS ========== */
 .prf-hero {
   position: relative;
-  background: linear-gradient(145deg, #0A4222, #0A4222, #062E17);
-  padding-bottom: 24px;
+  background: linear-gradient(135deg, #0A4222 0%, #062815 100%);
+  padding-bottom: 32px;
+  border-bottom-left-radius: 32px;
+  border-bottom-right-radius: 32px;
   overflow: hidden;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.1);
 }
 .prf-hero-bg {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse at 80% 20%, rgba(255,255,255,0.12) 0%, transparent 50%),
-    radial-gradient(ellipse at 10% 80%, rgba(0,0,0,0.15) 0%, transparent 50%);
-}
-.prf-hero-mesh {
-  position: absolute;
-  inset: 0;
-  background-image:
-    repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(255,255,255,0.03) 28px, rgba(255,255,255,0.03) 29px),
-    repeating-linear-gradient(90deg, transparent, transparent 28px, rgba(255,255,255,0.03) 28px, rgba(255,255,255,0.03) 29px);
+    radial-gradient(ellipse at 80% 0%, rgba(0,208,132,0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 20% 100%, rgba(0,0,0,0.2) 0%, transparent 50%);
 }
 
 /* Topbar */
@@ -356,26 +351,17 @@
 .prf-avatar-wrap {
   position: relative;
   cursor: pointer;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 .prf-avatar {
-  width: 90px; height: 90px;
+  width: 96px; height: 96px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.2);
-  border: none;
-  font-size: 30px; font-weight: 900; color: white;
+  background: white;
+  border: 4px solid white;
+  font-size: 32px; font-weight: 900; color: var(--primary);
   display: flex; align-items: center; justify-content: center;
-}
-.prf-avatar-ring {
-  position: absolute;
-  inset: -4px;
-  border-radius: 50%;
-  border: 2px solid rgba(255,255,255,0.5);
-  animation: ring-pulse 3s ease-in-out infinite;
-}
-@keyframes ring-pulse {
-  0%, 100% { opacity: 0.5; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.03); }
+  box-shadow: 0 12px 32px rgba(0,0,0,0.2);
+  object-fit: cover;
 }
 .prf-avatar-cam {
   position: absolute;
