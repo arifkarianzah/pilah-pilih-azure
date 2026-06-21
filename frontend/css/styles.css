@@ -1820,13 +1820,15 @@ svg { fill: currentColor; display: inline-block; }
   }
   
   .phone-frame {
-    max-width: 1200px;
-    margin: 30px auto;
+    max-width: 100%;
+    width: 100%;
+    margin: 0;
     flex-direction: column; /* Keep vertical for header and content */
-    border-radius: var(--r-xl);
-    min-height: calc(100vh - 60px);
-    box-shadow: 0 24px 80px rgba(0,0,0,0.2);
-    background: var(--surface);
+    border-radius: 0;
+    min-height: 100vh;
+    box-sizing: border-box;
+    box-shadow: none;
+    background: var(--bg);
     overflow: hidden;
     padding-left: 260px; /* Make room for the sidebar on the left */
   }
@@ -1835,76 +1837,135 @@ svg { fill: currentColor; display: inline-block; }
     padding-bottom: 0; /* Remove bottom nav padding */
   }
 
+  /* FULL WIDTH HEADER */
+  .app-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
   /* SIDEBAR TRANSFORMATION */
   .bottom-nav {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     bottom: 0;
     transform: none;
     flex-direction: column;
     width: 260px;
-    height: 100%;
+    height: 100vh;
     border-top: none;
-    border-right: 1px solid var(--border);
-    padding: 32px 16px;
+    border-right: 1px solid rgba(255,255,255,0.06);
+    padding: 24px 16px;
     align-items: flex-start;
     justify-content: flex-start;
-    gap: 8px;
-    box-shadow: none;
-    background: var(--surface);
-    z-index: 10;
+    gap: 4px;
+    box-shadow: 4px 0 24px rgba(0,0,0,0.2);
+    background: linear-gradient(180deg, #0A1628 0%, #112844 100%);
+    overflow-y: auto;
+    z-index: 200;
+  }
+
+  /* Brand Header for Sidebar */
+  .bottom-nav::before {
+    content: 'PilahPilih';
+    display: flex;
+    align-items: center;
+    padding: 0 14px 20px 14px;
+    font-size: 18px;
+    font-weight: 800;
+    color: white;
+    letter-spacing: -0.5px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    margin-bottom: 16px;
+    width: 100%;
   }
 
   .bn-item {
     width: 100%;
     flex-direction: row;
-    padding: 14px 20px;
-    font-size: 14px;
-    border-radius: 12px;
-    gap: 16px;
+    padding: 12px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: 10px;
+    gap: 12px;
     justify-content: flex-start;
+    color: rgba(255,255,255,0.55);
+    border: 1px solid transparent;
   }
 
-  .bn-item:hover, .bn-item.active {
-    background: var(--primary-light);
+  .bn-item p {
+    color: inherit;
+  }
+
+  .bn-item:hover {
+    background: rgba(255,255,255,0.08);
+    color: white;
+  }
+
+  .bn-item.active {
+    background: rgba(0,208,132,0.15);
+    border-color: rgba(0,208,132,0.3);
+    color: #00D084;
+    font-weight: 700;
   }
 
   .bn-item img {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
+    opacity: 0.8;
+  }
+  
+  .bn-item.active img {
+    filter: invert(40%) sepia(80%) saturate(400%) hue-rotate(105deg) brightness(120%);
+    opacity: 1;
   }
 
   /* Middle FAB inside Sidebar */
   .bn-fab {
     width: 100%;
     flex-direction: row;
-    margin-top: 16px;
-    margin-bottom: 16px;
+    margin: 12px 0;
+    padding: 12px 14px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    gap: 12px;
+    justify-content: flex-start;
   }
   
   .fab-circle {
-    width: 100%;
-    height: 48px;
-    border-radius: 12px;
-    font-size: 14px;
-    font-weight: 700;
+    width: 24px;
+    height: 24px;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   
-  .bn-fab p { display: none; }
+  .fab-circle img {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .bn-fab p {
+    display: inline;
+    font-size: 13px;
+    font-weight: 700;
+    color: white;
+  }
 
   /* Adjust internal grid columns for desktop */
+  .scroll-content {
+    padding: 24px 32px;
+  }
+  
   .menu-grid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(7, 1fr);
   }
 
   .history-list {
     grid-template-columns: repeat(3, 1fr);
-  }
-  
-  /* Restrict inner contents from getting too wide if needed */
-  .scroll-content > div {
-    max-width: 900px;
-    margin: 0 auto;
   }
 }
