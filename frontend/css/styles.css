@@ -1837,7 +1837,7 @@ svg { fill: currentColor; display: inline-block; }
     z-index: 200;
     border-bottom-left-radius: 32px;
     border-bottom-right-radius: 32px;
-    padding-bottom: 24px;
+    padding-bottom: 14px; /* Default */
   }
 
   .history-list {
@@ -1893,7 +1893,7 @@ svg { fill: currentColor; display: inline-block; }
     z-index: 200;
     border-bottom-left-radius: 40px;
     border-bottom-right-radius: 40px;
-    padding-bottom: 24px;
+    padding-bottom: 14px; /* Default */
   }
 }
 
