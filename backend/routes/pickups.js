@@ -119,7 +119,7 @@ router.patch('/:id/accept', authenticate, authorize('petugas'), async (req, res,
     );
     await db.run(
       'INSERT INTO notifications (id,user_id,title,body,type) VALUES (?,?,?,?,?)',
-      [uuidv4(), pickup.user_id, '🚛 Petugas Ditemukan!', `Petugas dalam perjalanan. ETA: ~${eta} menit`, 'pickup']
+      [uuidv4(), pickup.user_id, 'Petugas Ditemukan!', `Petugas dalam perjalanan. ETA: ~${eta} menit`, 'pickup']
     );
 
     res.json({ success: true, message: 'Pickup berhasil diterima.' });
@@ -137,7 +137,7 @@ router.patch('/:id/reject', authenticate, authorize('petugas'), async (req, res,
     await db.run(
       'INSERT INTO notifications (id,user_id,title,body,type) VALUES (?,?,?,?,?)',
       [uuidv4(), pickup.user_id,
-       '⚠️ Pickup Belum Diterima',
+       'Pickup Belum Diterima',
        reason || 'Petugas tidak dapat menerima pesanan saat ini. Pesanan Anda masih aktif dan akan segera diproses petugas lain.',
        'info']
     );
@@ -183,7 +183,7 @@ router.post('/:id/complete', authenticate, authorize('petugas', 'admin', 'bank_s
       );
       await db.run(
         'INSERT INTO notifications (id,user_id,title,body,type) VALUES (?,?,?,?,?)',
-        [uuidv4(), trx.user_id, '🎉 Penjualan Selesai (Tunai)!',
+        [uuidv4(), trx.user_id, 'Penjualan Selesai (Tunai)!',
          `+${actual_points} poin dari ${trx.waste_name}. Pembayaran tunai Rp ${actual_price.toLocaleString('id-ID')} telah diterima.`, 'success']
       );
     } else {
@@ -208,7 +208,7 @@ router.post('/:id/complete', authenticate, authorize('petugas', 'admin', 'bank_s
       );
       await db.run(
         'INSERT INTO notifications (id,user_id,title,body,type) VALUES (?,?,?,?,?)',
-        [uuidv4(), trx.user_id, '🎉 Penjualan Selesai!',
+        [uuidv4(), trx.user_id, 'Penjualan Selesai!',
          `+Rp ${actual_price.toLocaleString('id-ID')} & +${actual_points} poin dari ${trx.waste_name}`, 'success']
       );
     }

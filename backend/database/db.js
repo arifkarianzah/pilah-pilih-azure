@@ -276,6 +276,9 @@ db.exec(SCHEMA)
     
     try { await db.exec("ALTER TABLE user_profiles ADD COLUMN escrow_balance INT NOT NULL DEFAULT 0;"); } catch(e){}
     try { await db.exec("ALTER TABLE waste_categories ADD COLUMN stock_kg DOUBLE NOT NULL DEFAULT 0;"); } catch(e){}
+    try { await db.exec("ALTER TABLE notifications CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"); } catch(e){}
+    try { await db.exec("ALTER TABLE messages CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"); } catch(e){}
+    try { await db.exec("ALTER TABLE pickups CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"); } catch(e){}
     
     // Auto-seed Demo Users
     const seedPwd = bcrypt.hashSync('password123', 10);
