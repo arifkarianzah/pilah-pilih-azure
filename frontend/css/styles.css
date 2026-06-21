@@ -1814,6 +1814,7 @@ svg { fill: currentColor; display: inline-block; }
   }
 
   .phone-frame {
+    position: relative;
     max-width: 480px;
     width: 100%;
     margin: 0 auto;
@@ -1824,6 +1825,11 @@ svg { fill: currentColor; display: inline-block; }
       0 0 0 10px #e2e8f0,
       0 32px 80px rgba(0,0,0,0.1);
     overflow: hidden;
+  }
+
+  .bottom-nav {
+    position: absolute;
+    bottom: 0;
   }
 
   .history-list {
@@ -1865,8 +1871,12 @@ svg { fill: currentColor; display: inline-block; }
     overflow: hidden;
     flex-direction: column;
     background: var(--surface);
-    /* Side button decorations via outline */
     outline: 2px solid rgba(255,255,255,0.04);
+  }
+
+  .bottom-nav {
+    position: absolute;
+    bottom: 0;
   }
 }
 
