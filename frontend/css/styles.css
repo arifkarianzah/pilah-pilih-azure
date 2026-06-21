@@ -1805,7 +1805,7 @@ svg { fill: currentColor; display: inline-block; }
 /* TABLET: slight expand */
 @media (min-width: 768px) and (max-width: 1023px) {
   body {
-    background: linear-gradient(135deg, #071A0E 0%, #0A2518 50%, #071A0E 100%);
+    background: linear-gradient(135deg, #ecf0ee 0%, #ecf0ee 50%, #f2f7f4 100%);
     min-height: 100vh;
     display: flex;
     align-items: flex-start;
@@ -1820,9 +1820,9 @@ svg { fill: currentColor; display: inline-block; }
     border-radius: 32px;
     min-height: calc(100vh - 40px);
     box-shadow:
-      0 0 0 8px #1a1a2e,
-      0 0 0 10px #0d2135,
-      0 32px 80px rgba(0,0,0,0.6);
+      0 0 0 8px #ffffff,
+      0 0 0 10px #e2e8f0,
+      0 32px 80px rgba(0,0,0,0.1);
     overflow: hidden;
   }
 
@@ -1836,7 +1836,7 @@ svg { fill: currentColor; display: inline-block; }
 /* DESKTOP: virtual phone centered on screen */
 @media (min-width: 1024px) {
   body {
-    background: linear-gradient(135deg, #071A0E 0%, #0A2518 50%, #071A0E 100%);
+    background: linear-gradient(135deg, #ecf0ee 0%, #ecf0ee 50%, #f2f7f4 100%);
     min-height: 100vh;
     display: flex;
     align-items: flex-start;
@@ -1844,26 +1844,9 @@ svg { fill: currentColor; display: inline-block; }
     padding: 40px 0 60px;
   }
 
-  /* Subtle decorative orbs in background */
-  body::before {
-    content: '';
-    position: fixed;
-    top: -100px; left: -100px;
-    width: 400px; height: 400px;
-    background: radial-gradient(circle, rgba(10,66,34,0.3) 0%, transparent 70%);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 0;
-  }
-  body::after {
-    content: '';
-    position: fixed;
-    bottom: -100px; right: -100px;
-    width: 500px; height: 500px;
-    background: radial-gradient(circle, rgba(10,66,34,0.2) 0%, transparent 70%);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 0;
+  /* No orbs needed on light background */
+  body::before, body::after {
+    display: none;
   }
 
   .phone-frame {
