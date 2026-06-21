@@ -160,6 +160,19 @@ router.delete('/users/:id', authenticate, authorize('admin'), async (req, res, n
   } catch (err) { next(err); }
 });
 
+router.put('/users/:id/role', authenticate, authorize('admin'), async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { role } = req.body;
+    if (!['user', 'petugas', 'bank_sampah', 'admin'].includes(role)) {
+      return res.status(400).json({ success: false, error: 'Role tidak valid' });
+    }
+    
+    await db.run('UPDATE users SET role = ? WHERE id = ?', [role, id]);
+    res.json({ success: true, message: 'Role berhasil diubah' });
+  } catch (err) { next(err); }
+});
+
 router.put('/categories/:id', authenticate, authorize('admin'), async (req, res, next) => {
   try {
     const { id } = req.params;

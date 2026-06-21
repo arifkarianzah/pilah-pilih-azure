@@ -195,8 +195,8 @@ function openDetailModal(type, index) {
       <div><p style="color:var(--t4); font-size:12px;">Alamat</p><p style="color:var(--t1); grid-column:1/-1;">${data.address || '-'} ${data.city ? ', '+data.city : ''}</p></div>
       <div><p style="color:var(--t4); font-size:12px;">Bergabung Sejak</p><p style="color:var(--t1);">${new Date(data.created_at).toLocaleDateString()}</p></div>
     </div>
-    <div style="margin-top:20px; display:flex; gap:10px; justify-content:flex-end;">
-      <button class="t-unblock" onclick="showToast('Edit profil belum didukung oleh API')">Edit</button>
+    <div style="margin-top:20px; display:flex; gap:10px; justify-content:flex-end; flex-wrap:wrap;">
+      <button class="t-unblock" onclick="changeUserRole('${data.id}', '${data.role === 'petugas' ? 'user' : 'petugas'}')">Jadikan ${data.role === 'petugas' ? 'User' : 'Petugas'}</button>
       <button class="t-block" onclick="showToast('Fitur Suspend / Nonaktifkan User Segera Hadir')">Nonaktifkan</button>
       <button class="t-block" style="background:var(--red); color:white;" onclick="deleteUser('${data.id}', '${data.role}')">Hapus</button>
     </div>`;
@@ -208,6 +208,34 @@ function openDetailModal(type, index) {
 
 function closeDetailModal() {
   document.getElementById('detailModal')?.classList.remove('show');
+}
+
+async function changeUserRole(id, newRole) {
+  if (!confirm(`Yakin ingin mengubah user ini menjadi ${newRole.toUpperCase()}?`)) return;
+  
+  try {
+    const res = await fetch(`${window.API_BASE}/admin/users/${id}/role`, {
+      method: 'PUT',
+      headers: { 
+        'Authorization': `Bearer ${API.Storage.getToken()}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ role: newRole })
+    });
+    const data = await res.json();
+    if (data.success) {
+      showToast(`✅ Role berhasil diubah menjadi ${newRole.toUpperCase()}`);
+      closeDetailModal();
+      // Refresh both users and petugas tables to reflect changes
+      fetchUsersData();
+      fetchPetugasData();
+    } else {
+      showToast('❌ Gagal: ' + (data.error || 'Unknown Error'));
+    }
+  } catch (err) {
+    console.error(err);
+    showToast('❌ Terjadi kesalahan jaringan');
+  }
 }
 
 async function deleteUser(id, role) {
