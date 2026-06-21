@@ -1799,3 +1799,112 @@ svg { fill: currentColor; display: inline-block; }
 .mt16 { margin-top: 16px; }
 .mb90 { margin-bottom: 90px; }
 .half { width: calc(50% - 5px); }
+
+/* ==================== RESPONSIVE LAYOUT (TABLET & DESKTOP) ==================== */
+@media (min-width: 768px) {
+  .phone-frame {
+    max-width: 768px; /* Expand on tablet */
+    margin: 20px auto;
+  }
+  
+  .history-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+}
+
+@media (min-width: 1024px) {
+  body {
+    background-color: var(--bg);
+  }
+  
+  .phone-frame {
+    max-width: 1200px;
+    margin: 30px auto;
+    flex-direction: column; /* Keep vertical for header and content */
+    border-radius: var(--r-xl);
+    min-height: calc(100vh - 60px);
+    box-shadow: 0 24px 80px rgba(0,0,0,0.2);
+    background: var(--surface);
+    overflow: hidden;
+    padding-left: 260px; /* Make room for the sidebar on the left */
+  }
+
+  .app-frame {
+    padding-bottom: 0; /* Remove bottom nav padding */
+  }
+
+  /* SIDEBAR TRANSFORMATION */
+  .bottom-nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    transform: none;
+    flex-direction: column;
+    width: 260px;
+    height: 100%;
+    border-top: none;
+    border-right: 1px solid var(--border);
+    padding: 32px 16px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 8px;
+    box-shadow: none;
+    background: var(--surface);
+    z-index: 10;
+  }
+
+  .bn-item {
+    width: 100%;
+    flex-direction: row;
+    padding: 14px 20px;
+    font-size: 14px;
+    border-radius: 12px;
+    gap: 16px;
+    justify-content: flex-start;
+  }
+
+  .bn-item:hover, .bn-item.active {
+    background: var(--primary-light);
+  }
+
+  .bn-item img {
+    width: 24px;
+    height: 24px;
+  }
+
+  /* Middle FAB inside Sidebar */
+  .bn-fab {
+    width: 100%;
+    flex-direction: row;
+    margin-top: 16px;
+    margin-bottom: 16px;
+  }
+  
+  .fab-circle {
+    width: 100%;
+    height: 48px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  
+  .bn-fab p { display: none; }
+
+  /* Adjust internal grid columns for desktop */
+  .menu-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .history-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  /* Restrict inner contents from getting too wide if needed */
+  .scroll-content > div {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+}
