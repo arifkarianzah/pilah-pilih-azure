@@ -1829,6 +1829,7 @@ svg { fill: currentColor; display: inline-block; }
     overflow-x: hidden;
     background: var(--surface);
     outline: none;
+    transform: scale(1); /* Create containing block for fixed elements (modals) */
   }
 
   .bottom-nav {
