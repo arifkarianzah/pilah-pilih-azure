@@ -18,18 +18,34 @@ function initMap() {
   }
   const mapEl = document.getElementById('map');
   if (!mapEl) return;
-  mapInstance = L.map('map').setView([0.5071, 101.4451], 13);
+  const petugasPos = [0.5071, 101.4451];
+  const userPos = [0.4980, 101.4480];
+
+  mapInstance = L.map('map').setView(petugasPos, 13);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '© OpenStreetMap'
   }).addTo(mapInstance);
+  
   const petugasIcon = L.divIcon({ html: '🚛', className: 'map-marker', iconSize: [30, 30] });
-  L.marker([0.5071, 101.4451], { icon: petugasIcon }).addTo(mapInstance)
+  L.marker(petugasPos, { icon: petugasIcon }).addTo(mapInstance)
     .bindPopup('Posisi Anda').openPopup();
+    
   const userIcon = L.divIcon({ html: '🏠', className: 'map-marker', iconSize: [30, 30] });
-  L.marker([0.4980, 101.4480], { icon: userIcon }).addTo(mapInstance)
+  L.marker(userPos, { icon: userIcon }).addTo(mapInstance)
     .bindPopup('Lokasi Penjemputan');
-  setTimeout(() => mapInstance.invalidateSize(), 300);
+
+  L.polyline([petugasPos, userPos], {
+    color: '#0A4222',
+    weight: 4,
+    dashArray: '8, 8',
+    opacity: 0.8
+  }).addTo(mapInstance);
+
+  setTimeout(() => {
+    mapInstance.invalidateSize();
+    mapInstance.fitBounds(L.latLngBounds([petugasPos, userPos]), { padding: [50, 50] });
+  }, 300);
 }
 
 async function goPage(id) {
