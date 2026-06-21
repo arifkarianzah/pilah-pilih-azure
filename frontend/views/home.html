@@ -19,39 +19,65 @@
 
     <div class="scroll-content" style="background: var(--bg); padding-top: 0;">
       <!-- DANA STYLE HERO -->
-      <div class="dana-hero" style="background: var(--primary); padding: 12px 20px 48px; color: white; border-bottom-left-radius: 24px; border-bottom-right-radius: 24px; position: relative; overflow: hidden;">
-        <img src="https://img.icons8.com/fluency-systems-filled/200/FFFFFF/leaf.png" style="position: absolute; right: -50px; top: -30px; opacity: 0.05; transform: rotate(15deg); pointer-events: none;">
-        <div style="display:flex; justify-content:space-between; align-items:flex-start; position: relative; z-index: 1;">
+      <div class="dana-hero" style="background: linear-gradient(135deg, #0A4222 0%, #062815 100%); padding: 24px 24px 60px; color: white; border-bottom-left-radius: 32px; border-bottom-right-radius: 32px; position: relative; overflow: hidden;">
+        <img src="https://img.icons8.com/fluency-systems-filled/200/FFFFFF/leaf.png" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) scale(1.8); opacity: 0.05; pointer-events: none;">
+        
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; position: relative; z-index: 1; margin-bottom: 32px;">
+          <div style="display:flex; align-items:center; gap:12px; cursor:pointer;" onclick="goPage('profile')">
+            <div style="position:relative;">
+              <div class="hdr-av" style="background: white; width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                <img src="https://img.icons8.com/fluency-systems-filled/48/0A4222/leaf.png" width="32" height="32">
+              </div>
+              <div style="position:absolute; bottom:0; right:0; width:14px; height:14px; background:#10B981; border:2px solid #062815; border-radius:50%;"></div>
+            </div>
+            <div>
+              <p class="hdr-greet" id="greetText" style="color: rgba(255,255,255,0.9); font-size: 13px; font-weight: 500; margin-bottom: 2px;">Selamat Pagi ☀️</p>
+              <p class="hdr-name ph-name" style="color: white; font-weight: 700; font-size: 18px; margin: 0;">Demo Admin</p>
+            </div>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <button class="icon-btn" id="themeBtn" onclick="toggleTheme()" style="background: rgba(255,255,255,0.1); border: none; color: white; border-radius: 50%; width: 40px; height: 40px;"><img src="https://img.icons8.com/fluency-systems-regular/48/ffffff/moon-symbol.png" width="20"></button>
+            <button class="icon-btn has-badge" onclick="goPage('notifikasi-user')" style="background: rgba(255,255,255,0.1); border: none; color: white; border-radius: 50%; width: 40px; height: 40px;">
+              <img src="https://img.icons8.com/fluency-systems-regular/48/ffffff/bell.png" width="20">
+              <span class="badge-dot" style="background: white; color: #062815; border: none; font-size: 10px; right: -2px; top: -2px;">3</span>
+            </button>
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:flex-end; position: relative; z-index: 1;">
           <div>
             <p style="font-size:13px; font-weight:500; opacity:0.9; margin-bottom:4px;">Saldo Aktif</p>
-            <h2 id="statEarning" style="font-size:32px; font-weight:800; letter-spacing:-0.02em;">Rp 0</h2>
+            <h2 id="statEarning" style="font-size:36px; font-weight:800; letter-spacing:-0.02em; margin:0;">Rp 0</h2>
           </div>
           <div style="text-align:right;">
-            <p style="font-size:11px; opacity:0.8; margin-bottom:4px;">Poin & Level</p>
-            <div style="display:flex; gap:8px; font-size:12px; font-weight:700; background:rgba(255,255,255,0.15); padding:4px 10px; border-radius:99px;">
-              <span id="statPoints">0</span> • <span id="statLevel">Bronze</span>
+            <p style="font-size:12px; opacity:0.9; margin-bottom:8px;">Poin & Level</p>
+            <div style="display:flex; gap:8px; font-size:13px; font-weight:700; background:rgba(255,255,255,0.15); padding:6px 12px; border-radius:99px; align-items:center;">
+              <span id="statPoints">0 pts</span> ⭐ <span style="opacity:0.5">•</span> <span id="statLevel">bronze</span> 🥉
             </div>
           </div>
         </div>
       </div>
 
       <!-- DANA QUICK ACTIONS -->
-      <div class="dana-actions" style="margin: -32px 20px 20px; background: var(--surface); border-radius: 16px; padding: 16px; display: flex; justify-content: space-between; box-shadow: var(--sh-md); border: 1px solid var(--border); position: relative; z-index: 10;">
-        <div class="da-item" onclick="goPage('ai-scan')" style="text-align:center; flex:1; cursor:pointer;">
-          <div style="width:44px; height:44px; margin:0 auto 8px; border-radius:14px; background:var(--primary-light); display:flex; align-items:center; justify-content:center;"><img src="https://img.icons8.com/fluency-systems-regular/48/0A4222/robot-2.png" width="24"></div>
-          <p style="font-size:11px; font-weight:600; color:var(--t1);">AI Scan</p>
+      <div class="dana-actions" style="margin: -36px 24px 24px; background: var(--surface); border-radius: 20px; padding: 20px 0; display: flex; justify-content: space-between; box-shadow: 0 12px 32px rgba(0,0,0,0.06); border: 1px solid var(--border); position: relative; z-index: 10;">
+        <div class="da-item" onclick="goPage('ai-scan')" style="text-align:center; flex:1; cursor:pointer; position:relative;">
+          <div style="margin:0 auto 10px;"><img src="https://img.icons8.com/fluency-systems-regular/48/0A4222/robot-2.png" width="28"></div>
+          <p style="font-size:12px; font-weight:700; color:var(--t1);">AI Scan</p>
+          <div style="position:absolute; right:0; top:10%; height:80%; width:1px; background:var(--border);"></div>
         </div>
-        <div class="da-item" onclick="goPage('dompet')" style="text-align:center; flex:1; cursor:pointer;">
-          <div style="width:44px; height:44px; margin:0 auto 8px; border-radius:14px; background:var(--primary-light); display:flex; align-items:center; justify-content:center;"><img src="https://img.icons8.com/fluency-systems-regular/48/0A4222/wallet.png" width="24"></div>
-          <p style="font-size:11px; font-weight:600; color:var(--t1);">Tarik Saldo</p>
+        <div class="da-item" onclick="goPage('dompet')" style="text-align:center; flex:1; cursor:pointer; position:relative;">
+          <div style="margin:0 auto 10px;"><img src="https://img.icons8.com/fluency-systems-regular/48/0A4222/wallet.png" width="28"></div>
+          <p style="font-size:12px; font-weight:700; color:var(--t1);">Tarik Saldo</p>
+          <div style="position:absolute; right:0; top:10%; height:80%; width:1px; background:var(--border);"></div>
         </div>
-        <div class="da-item" onclick="goPage('jual-sampah')" style="text-align:center; flex:1; cursor:pointer;">
-          <div style="width:44px; height:44px; margin:0 auto 8px; border-radius:14px; background:var(--primary-light); display:flex; align-items:center; justify-content:center;"><img src="https://img.icons8.com/fluency-systems-regular/48/0A4222/recycle-sign.png" width="24"></div>
-          <p style="font-size:11px; font-weight:600; color:var(--t1);">Jual</p>
+        <div class="da-item" onclick="goPage('jual-sampah')" style="text-align:center; flex:1; cursor:pointer; position:relative;">
+          <div style="margin:0 auto 10px;"><img src="https://img.icons8.com/fluency-systems-regular/48/0A4222/recycle-sign.png" width="28"></div>
+          <p style="font-size:12px; font-weight:700; color:var(--t1);">Jual</p>
+          <div style="position:absolute; right:0; top:10%; height:80%; width:1px; background:var(--border);"></div>
         </div>
         <div class="da-item" onclick="goPage('riwayat-pickup')" style="text-align:center; flex:1; cursor:pointer;">
-          <div style="width:44px; height:44px; margin:0 auto 8px; border-radius:14px; background:var(--primary-light); display:flex; align-items:center; justify-content:center;"><img src="https://img.icons8.com/fluency-systems-regular/48/0A4222/order-history.png" width="24"></div>
-          <p style="font-size:11px; font-weight:600; color:var(--t1);">Riwayat</p>
+          <div style="margin:0 auto 10px;"><img src="https://img.icons8.com/fluency-systems-regular/48/0A4222/order-history.png" width="28"></div>
+          <p style="font-size:12px; font-weight:700; color:var(--t1);">Riwayat</p>
         </div>
       </div>
 

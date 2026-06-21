@@ -502,25 +502,24 @@ svg { fill: currentColor; display: inline-block; }
 .section-hdr a { font-size: 13px; color: var(--primary); font-weight: 600; cursor: pointer; }
 
 /* ==================== MENU GRID ==================== */
-.menu-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; padding: 0 16px; margin-bottom: 20px; }
+.menu-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; padding: 0 24px; margin-bottom: 24px; }
 .menu-item {
-  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
   cursor: pointer; position: relative; transition: var(--t-norm);
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.03); padding: 16px 8px;
 }
-.menu-item:hover { transform: translateY(-3px); }
+.menu-item:hover { transform: translateY(-4px); box-shadow: var(--sh-md); border-color: var(--primary); }
 .mi-ico {
-  width: 56px; height: 56px; border-radius: 18px;
+  width: auto; height: auto; border-radius: 0;
   display: flex; align-items: center; justify-content: center;
-  font-size: 22px; transition: var(--t-norm);
-  background: var(--surface);
-  border: 1.5px solid var(--border);
-  box-shadow: var(--sh-sm);
+  background: transparent; border: none; box-shadow: none; transition: var(--t-norm);
 }
-.mi-ico:hover { transform: scale(1.06); border-color: var(--primary); background: var(--primary-light); }
+.menu-item:hover .mi-ico { transform: scale(1.1); }
 .mi-ico.green, .mi-ico.blue, .mi-ico.orange, .mi-ico.purple, .mi-ico.teal, .mi-ico.gold, .mi-ico.pink, .mi-ico.indigo {
-  background: var(--surface); border: 1.5px solid var(--border); box-shadow: var(--sh-sm);
+  background: transparent; border: none; box-shadow: none;
 }
-.menu-item p { font-size: 11px; font-weight: 600; color: var(--t2); text-align: center; letter-spacing: -0.01em; }
+.menu-item p { font-size: 12px; font-weight: 700; color: var(--t1); text-align: center; letter-spacing: -0.01em; }
 .mi-badge {
   position: absolute; top: -4px; right: 0;
   min-width: 18px; height: 18px; padding: 0 5px;
@@ -1818,7 +1817,7 @@ svg { fill: currentColor; display: inline-block; }
 
   .phone-frame {
     position: relative;
-    max-width: 420px;
+    max-width: 680px;
     width: 100%;
     margin: 0;
     border-radius: 32px;
