@@ -219,7 +219,7 @@
 .er-amt { font-size:14px;font-weight:800;color:var(--primary); }
 
 /* PROFILE HERO BLUE */
-.profile-hero-blue { background:linear-gradient(160deg, #00D084 0%, #0A73C2 100%);padding:24px 20px 36px;position:relative;overflow:hidden; }
+.profile-hero-blue { background:linear-gradient(160deg, #00D084 0%, #0A4222 100%);padding:24px 20px 36px;position:relative;overflow:hidden; }
 .phb-blur { position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(74,222,128,0.2),transparent 70%);pointer-events:none; }
 .phb-top-bar { display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;position:relative; }
 .phb-av-wrap { position:relative;width:fit-content;margin:0 auto 16px; }
