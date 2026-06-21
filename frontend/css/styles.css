@@ -1853,9 +1853,9 @@ svg { fill: currentColor; display: inline-block; }
     background: linear-gradient(135deg, #ecf0ee 0%, #ecf0ee 50%, #f2f7f4 100%);
     min-height: 100vh;
     display: flex;
-    align-items: flex-start;
+    align-items: center; /* Center vertically on smaller monitors */
     justify-content: center;
-    padding: 40px 0 60px;
+    padding: 20px 0; /* Reduced padding to maximize frame height */
   }
 
   /* No orbs needed on light background */
@@ -1870,8 +1870,8 @@ svg { fill: currentColor; display: inline-block; }
     width: 420px;
     margin: 0;
     border-radius: 40px;
-    min-height: 860px;
-    height: 860px; /* Force height so it scrolls inside */
+    height: 860px; 
+    max-height: calc(100vh - 40px); /* Will shrink to fit smaller screens! */
     box-shadow:
       0 0 0 10px #1a3a2a,
       0 0 0 12px rgba(10,66,34,0.5),
