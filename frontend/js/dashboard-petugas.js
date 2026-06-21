@@ -74,8 +74,12 @@ function updateNavActive(id) {
   const map = {
     home: 'nav-home',
     'pickup-masuk': 'nav-masuk',
+    'pickup-berjalan': 'nav-home',
     penimbangan: 'nav-timbang',
     profil: 'nav-profil',
+    tracking: 'nav-home',
+    chat: 'nav-home',
+    riwayat: 'nav-profil'
   };
   document.querySelectorAll('.bn-item').forEach(b => b.classList.remove('active'));
   if (map[id]) document.getElementById(map[id])?.classList.add('active');
