@@ -246,7 +246,7 @@ async function initPetugasHome() {
                     <span style="display:-webkit-box; -webkit-line-clamp:1; -webkit-box-orient:vertical; overflow:hidden; text-overflow:ellipsis;">${p.address || '-'}</span>
                   </p>
                 </div>
-                <div class="apc-actions"><button class="btn-ghost" style="padding:8px; border:1px solid var(--border); border-radius:12px; display:flex; align-items:center; justify-content:center;" onclick="event.stopPropagation();goPage('chat')"><img src="https://img.icons8.com/fluency-systems-regular/48/0A4222/chat.png" width="18"></button></div>
+                <div class="apc-actions"><button class="btn-ghost" style="padding:8px; border:1px solid var(--border); border-radius:12px; display:flex; align-items:center; justify-content:center;" onclick="event.stopPropagation(); window.currentPickupId='${p.id}'; goPage('chat')"><img src="https://img.icons8.com/fluency-systems-regular/48/0A4222/chat.png" width="18"></button></div>
               </div>
             </div>
           `;
