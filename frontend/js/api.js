@@ -120,8 +120,7 @@ const AuthAPI = {
 
   logout() {
     Storage.clear();
-    goTo('login');
-    showToast('👋 Berhasil logout');
+    window.location.href = 'login.html';
   },
 
   isLoggedIn() {
@@ -262,7 +261,7 @@ async function initAPI() {
     // Token expired
     if (err.status === 401) {
       Storage.clear();
-      goTo('login');
+      window.location.href = 'login.html';
     }
     console.warn('[API] Init error:', err.message);
   }

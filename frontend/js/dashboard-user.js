@@ -662,7 +662,7 @@ async function initDashboard() {
 
   try {
     const meRes = await API.Auth.getMe();
-    const user = meRes.data?.user || Storage.getUser();
+    const user = meRes.data?.user || API.Storage.getUser();
     if (user) {
       document.querySelectorAll('.ph-name').forEach(el => el.textContent = user.name);
       document.querySelectorAll('.ph-email').forEach(el => el.textContent = user.email);
