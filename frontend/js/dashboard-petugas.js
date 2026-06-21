@@ -12,7 +12,10 @@ const PetugasApp = {
 let mapInstance = null;
 
 function initMap() {
-  if (mapInstance) return;
+  if (mapInstance) {
+    mapInstance.remove();
+    mapInstance = null;
+  }
   const mapEl = document.getElementById('map');
   if (!mapEl) return;
   mapInstance = L.map('map').setView([0.5071, 101.4451], 13);
