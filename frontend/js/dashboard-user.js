@@ -725,6 +725,10 @@ async function initDashboard() {
     
     checkUnreadChatBadge();
     if (!homeChatInterval) homeChatInterval = setInterval(checkUnreadChatBadge, 5000);
+
+    // NEW LAYOUT FETCHES
+    if(typeof loadHomePrices === 'function') loadHomePrices();
+    if(typeof loadHomeInfo === 'function') loadHomeInfo();
   } catch (err) {
     console.error('Gagal memuat data dashboard', err);
   }
@@ -1090,5 +1094,77 @@ async function saveProfileChanges() {
   } catch(e) {
     console.error('Error save profile:', e);
     showToast('❌ Terjadi kesalahan jaringan');
+  }
+}
+
+// ==================== NEW LAYOUT DATA LOADERS ====================
+async function loadHomePrices() {
+  const container = document.getElementById('homePriceList');
+  if (!container) return;
+  try {
+    const res = await apiCall('/api/categories/prices/latest');
+    if (res.success && res.data.length > 0) {
+      container.innerHTML = res.data.slice(0, 4).map(c => `
+        <div class="price-item">
+          <div class="pi-left">
+            <img src="${c.icon || 'https://img.icons8.com/fluency/48/box.png'}" width="28">
+            <p>${c.name}</p>
+          </div>
+          <div class="pi-right">Rp ${c.price_per_kg.toLocaleString('id-ID')} / Kg</div>
+        </div>
+      `).join('');
+    } else {
+      container.innerHTML = '<p style="text-align:center;color:var(--t4);font-size:12px;padding:20px;">Harga belum tersedia</p>';
+    }
+  } catch(err) {
+    console.error('Failed to load prices', err);
+    container.innerHTML = '<p style="text-align:center;color:var(--t4);font-size:12px;padding:20px;">Gagal memuat harga</p>';
+  }
+}
+
+async function loadHomeInfo() {
+  const container = document.getElementById('homeInfoList');
+  if (!container) return;
+  try {
+    const res = await API.Notification.getAll({ limit: 3 });
+    if (res.success && res.data.length > 0) {
+      container.innerHTML = res.data.slice(0, 3).map(n => `
+        <div class="info-item">
+          <div class="info-ico"><img src="https://img.icons8.com/fluency-systems-filled/48/10B981/info.png" width="20"></div>
+          <div class="info-text">
+            <h4>${n.title}</h4>
+            <p>${n.body}</p>
+          </div>
+        </div>
+      `).join('');
+    } else {
+      // Fallback dummy info matching the mockup if no real notifications exist
+      container.innerHTML = `
+        <div class="info-item">
+          <div class="info-ico"><img src="https://img.icons8.com/fluency-systems-filled/48/10B981/bullish.png" width="20"></div>
+          <div class="info-text">
+            <h4>Harga plastik naik 5%</h4>
+            <p>Mulai hari ini</p>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-ico"><img src="https://img.icons8.com/fluency-systems-filled/48/10B981/star.png" width="20"></div>
+          <div class="info-text">
+            <h4>Reward baru tersedia</h4>
+            <p>Tukar poinmu sekarang</p>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-ico"><img src="https://img.icons8.com/fluency-systems-filled/48/10B981/truck.png" width="20"></div>
+          <div class="info-text">
+            <h4>Pickup tersedia 24 jam</h4>
+            <p>Kami siap menjemput</p>
+          </div>
+        </div>
+      `;
+    }
+  } catch(err) {
+    console.error('Failed to load info', err);
+    container.innerHTML = '<p style="text-align:center;color:var(--t4);font-size:12px;padding:20px;">Gagal memuat informasi</p>';
   }
 }
