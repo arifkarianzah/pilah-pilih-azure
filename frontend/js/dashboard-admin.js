@@ -1143,6 +1143,7 @@ async function updateTxnStatus(id, status) {
 
 // ==================== INIT ====================
 document.addEventListener('DOMContentLoaded', () => {
+  goSection('dashboard');
   setTimeout(initDashboardCharts, 500);
   initAdminDashboard();
   fetchDashboardData();
